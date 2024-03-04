@@ -10,6 +10,7 @@ import express from 'express';
 import cors from 'cors'
 // conection db
 import db from './database/db.js'
+import { UserModel, ListModel, GameModel, PreferencesModel, ListGameModel } from './models/index.js';
 
 const app = express()
 
