@@ -7,10 +7,6 @@ const PreferencesModel = db.define('preferences', {
     rating:{
         type: DataType.INTEGER,
         allowNull: false
-    },
-    game_id:{
-        type: DataType.INTEGER,
-        allowNull: false
     }
 },{
     //Other model options

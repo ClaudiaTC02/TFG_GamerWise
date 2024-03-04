@@ -8,7 +8,7 @@ const GameModel = db.define('game', {
         type: DataType.STRING,
         allowNull: false
     },
-    compamy:{
+    company:{
         type: DataType.STRING,
         allowNull: false
     },
