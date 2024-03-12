@@ -1,5 +1,6 @@
 //connection db
-import db from '../database/db.js'
+//import db from '../database/db.js'
+import db from '../database/db_test.js'
 import DataType from 'sequelize'
 
 const GameModel = db.define('game', {

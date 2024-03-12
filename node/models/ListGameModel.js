@@ -1,5 +1,6 @@
 //connection db
-import db from '../database/db.js'
+//import db from '../database/db.js'
+import db from '../database/db_test.js'
 
 const ListGameModel = db.define('list_game', {},{
     //Other model options
