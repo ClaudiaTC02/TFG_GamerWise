@@ -1,12 +1,14 @@
 //connection db
-import db from '../database/db.js'
+//import db from '../database/db.js'
+import db from '../database/db_test.js'
 import DataType from 'sequelize'
 
 const UserModel = db.define('user', {
     //Atributes
-    address:{
+    email:{
         type: DataType.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     name:{
         type: DataType.STRING,
