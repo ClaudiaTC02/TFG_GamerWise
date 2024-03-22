@@ -9,7 +9,7 @@
 import express from 'express';
 import cors from 'cors'
 // conection db
-import db from './database/db_test.js'
+import db from './database/db.js'
 import { UserModel, ListModel, GameModel, PreferencesModel, ListGameModel } from './models/index.js';
 // import router
 import userRoutes from './routes/UserRoutes.js'
@@ -18,7 +18,8 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use('/user', userRoutes) // userRoutes will execute in /user
+
+userRoutes(app) // userRoutes will execute in /user
 
 try {
     await db.authenticate()

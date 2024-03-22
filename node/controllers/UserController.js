@@ -10,6 +10,7 @@ const saltRounds = 10;
 
 // Create user
 export const createUser = async (req, res) => {
+    console.log(req.body)
   try {
     let { email, name, password } = req.body;
     // validation

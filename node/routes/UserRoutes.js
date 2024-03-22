@@ -5,4 +5,4 @@ const router = express.Router();
 router.post('/login', login)
 router.post('/', createUser)
 
-export default router;
+export default (app) => {app.use("/user", router)}
