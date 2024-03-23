@@ -19,11 +19,11 @@ const dbConfig = {
 
 const getDBInstance = () => {
     const env = process.env.NODE_ENV || 'production';
-    console.log(env)
     const config = dbConfig[env];
     return new Sequelize(config.database, config.username, config.password, {
       host: config.host,
-      dialect: config.dialect
+      dialect: config.dialect,
+      logging: false
     });
   };
   

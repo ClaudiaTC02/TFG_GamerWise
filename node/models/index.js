@@ -81,6 +81,5 @@ const syncModels = async ()=>{
         console.error('Error synchronizing models:', error);
     }
 }
-syncModels()
 
-export {GameModel, UserModel, ListModel, ListGameModel, PreferencesModel}
+export {GameModel, UserModel, ListModel, ListGameModel, PreferencesModel, syncModels}

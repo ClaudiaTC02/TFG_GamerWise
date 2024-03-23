@@ -10,9 +10,12 @@ import express from 'express';
 import cors from 'cors'
 // conection db
 import db from './database/db.js'
-import { UserModel, ListModel, GameModel, PreferencesModel, ListGameModel } from './models/index.js';
+import { UserModel, ListModel, GameModel, PreferencesModel, ListGameModel, syncModels } from './models/index.js';
 // import router
 import userRoutes from './routes/UserRoutes.js'
+import listRoutes from './routes/ListRoutes.js';
+
+syncModels();
 
 const app = express()
 
@@ -20,6 +23,7 @@ app.use(cors())
 app.use(express.json())
 
 userRoutes(app) // userRoutes will execute in /user
+listRoutes(app) // listRoutes will execute in /list
 
 try {
     await db.authenticate()
