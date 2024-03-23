@@ -76,9 +76,29 @@ const searchGameByName = async (req, res) => {
   }
 };
 
+// Obtain details for database
+const getGameDetails = async (req, res) => {
+  try {
+    const name = req.query.name;
+    const response = await apicalypse(requestOptions)
+      .fields("name, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinecoopmax, multiplayer_modes.onlinemax")
+      .search(name)
+      .limit(1)
+      .request("/games");
+    const game = response.data[0]
+    if(!game){
+      return res.status(404).json({message: 'Game not found'});
+    }
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getGames,
   getLatestReleases,
   getUpcomingReleases,
   searchGameByName,
+  getGameDetails
 };
