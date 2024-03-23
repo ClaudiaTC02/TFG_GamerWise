@@ -10,16 +10,25 @@ import express from 'express';
 import cors from 'cors'
 // conection db
 import db from './database/db.js'
-import { UserModel, ListModel, GameModel, PreferencesModel, ListGameModel } from './models/index.js';
+import { UserModel, ListModel, GameModel, PreferencesModel, ListGameModel, syncModels } from './models/index.js';
 // import router
 import userRoutes from './routes/UserRoutes.js'
+import listRoutes from './routes/ListRoutes.js';
+import gameRoutes from './routes/GameRoutes.js';
+// import services
+import igdbRoutes from './routes/igdbRoutes.js';
+
+syncModels();
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
+gameRoutes(app) // gameRoutes will execute in /game
+igdbRoutes(app) // igdbRoutes will execute in /igdb
 userRoutes(app) // userRoutes will execute in /user
+listRoutes(app) // listRoutes will execute in /list
 
 try {
     await db.authenticate()
