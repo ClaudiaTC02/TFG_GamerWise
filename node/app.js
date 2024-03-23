@@ -14,6 +14,8 @@ import { UserModel, ListModel, GameModel, PreferencesModel, ListGameModel, syncM
 // import router
 import userRoutes from './routes/UserRoutes.js'
 import listRoutes from './routes/ListRoutes.js';
+// import services
+import igdbRoutes from './routes/igdbRoutes.js';
 
 syncModels();
 
@@ -22,6 +24,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+igdbRoutes(app) // igdbRoutes will execute in /igdb
 userRoutes(app) // userRoutes will execute in /user
 listRoutes(app) // listRoutes will execute in /list
 
