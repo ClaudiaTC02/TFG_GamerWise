@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'
 const token_secret = 'eriwekhfoiqw'
 
 export function authenticateToken(req, res, next) {
