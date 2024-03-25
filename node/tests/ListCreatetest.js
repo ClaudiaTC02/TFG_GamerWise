@@ -1,12 +1,10 @@
 import testServer from "../utils/testServer.js";
 import listRoutes from "../routes/ListRoutes.js";
-import { UserModel, ListModel, syncModels } from "../models/index.js";
 
 const request = testServer(listRoutes);
 
 describe("[ routes / list ]", () => {
   beforeAll(async () => {
-    await syncModels();
     await UserModel.destroy({ where: {} });
     await ListModel.destroy({ where: {} });
     await UserModel.create({

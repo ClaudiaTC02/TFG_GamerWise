@@ -13,7 +13,6 @@ export const addGameToList = (async (req, res) => {
         let {list_id, game_id} = req.body
         list_id = Number(list_id)
         game_id = Number(game_id)
-
         if(!list_id  || !game_id) {
             return res.status(400).json({message:'Required fields not provided'})
         }
@@ -75,7 +74,7 @@ export const getAllGames = (async (req, res) => {
         if(games.length === 0){
             return res.status(404).json({message: 'No games found for this list'})
         }
-        
+
         res.status(200).json({message: 'Games obtained successfully', games: games})
     } catch (error) {
         // Internal server error
