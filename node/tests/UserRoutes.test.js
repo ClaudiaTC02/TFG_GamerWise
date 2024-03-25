@@ -1,6 +1,6 @@
-import testServer from "../../utils/testServer.js";
-import userRoutes from "../../routes/UserRoutes.js";
-import { hashPassword } from "../../utils/userUtils.js";
+import testServer from "../utils/testServer.js";
+import userRoutes from "../routes/UserRoutes.js";
+import { hashPassword } from "../utils/userUtils.js";
 
 const request = testServer(userRoutes);
 

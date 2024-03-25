@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest --verbose tests/integrations",
-    "test:listgame" : "npm test tests/ListGame",
+    "test": "jest --verbose --runInBand",
     "start": "node app.js"
   },
   "author": "Claudia",

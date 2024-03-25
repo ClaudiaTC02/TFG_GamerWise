@@ -1,5 +1,5 @@
-import testServer from "../../utils/testServer.js";
-import listgameRoutes from "../../routes/ListGameRoutes.js";
+import testServer from "../utils/testServer.js";
+import listgameRoutes from "../routes/ListGameRoutes.js";
 
 const request = testServer(listgameRoutes);
 

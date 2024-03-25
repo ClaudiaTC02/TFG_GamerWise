@@ -1,6 +1,6 @@
 // igdbRoutes.test.js
-import igdbRoutes from "../../routes/igdbRoutes.js";
-import testServer from "../../utils/testServer.js";
+import igdbRoutes from "../routes/igdbRoutes.js";
+import testServer from "../utils/testServer.js";
 
 const request = testServer(igdbRoutes);
 

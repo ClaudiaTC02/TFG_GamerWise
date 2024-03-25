@@ -1,5 +1,5 @@
-import testServer from "../../utils/testServer.js";
-import listRoutes from "../../routes/ListRoutes.js";
+import testServer from "../utils/testServer.js";
+import listRoutes from "../routes/ListRoutes.js";
 
 const request = testServer(listRoutes);
 
