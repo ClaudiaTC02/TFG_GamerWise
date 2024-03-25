@@ -4,30 +4,28 @@ import listgameRoutes from "../routes/ListGameRoutes.js";
 const request = testServer(listgameRoutes);
 
 describe("ListGameRoutes", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await UserModel.destroy({ where: {} });
     await ListModel.destroy({ where: {} });
     await GameModel.destroy({ where: {} });
     await ListGameModel.destroy({ where: {} });
+    await UserModel.create({
+      name: "test",
+      email: "test@example.com",
+      password: "test",
+      id: 2,
+    });
+    await ListModel.create({ name: "test2", user_id: 2, id: 1 });
+    await GameModel.create({
+      name: "test",
+      company: "test company",
+      gender: "test gender",
+      platforms: "name, name",
+      max_players: 40,
+      id: 1,
+    });
   });
   describe("[ routes / listgame ]", () => {
-    beforeAll(async () => {
-      await UserModel.create({
-        name: "test",
-        email: "test@example.com",
-        password: "test",
-        id: 2,
-      });
-      await ListModel.create({ name: "test2", user_id: 2, id: 1 });
-      await GameModel.create({
-        name: "test",
-        company: "test company",
-        gender: "test gender",
-        platforms: "name, name",
-        max_players: 40,
-        id: 1,
-      });
-    });
     beforeEach(async () => {
       await ListGameModel.destroy({ where: {} });
     });
@@ -86,4 +84,107 @@ describe("ListGameRoutes", () => {
         await ListGameModel.destroy({ where: {} });
     });
   });
+  describe('[ routes / listgame / :list_id & :game_id ]', () => {
+    beforeEach(async () => {
+      await ListGameModel.destroy({ where: {} });
+      await ListGameModel.create({ 
+        list_id: 1,
+        game_id: 1
+      })
+    });
+
+    it('should delete a game from a list', async () => {
+      // Arrange
+
+      // Act
+      const {status, body} = await request.delete('/listgame/1&1')
+      // Assert
+      expect(status).toEqual(200)
+      expect(body.message).toEqual('Game deleted to list successfully')
+    });
+
+    it('should NOT delete a game from an inexistent list', async () => {
+      // Arrange
+
+      // Act
+      const {status, body} = await request.delete('/listgame/2&1')
+      // Assert
+      expect(status).toEqual(404)
+      expect(body.message).toEqual('List or Game not found')
+    });
+
+    it('should NOT delete an inexistent game from a list', async () => {
+      // Arrange
+
+      // Act
+      const {status, body} = await request.delete('/listgame/1&2')
+      // Assert
+      expect(status).toEqual(404)
+      expect(body.message).toEqual('List or Game not found')
+    });
+
+    it('should NOT delete a game from list with invalid data type', async () => {
+      // Arrange
+
+      // Act
+      const {status, body} = await request.delete('/listgame/1&uno')
+      // Assert
+      expect(status).toEqual(400)
+      expect(body.message).toEqual('Required fields not provided')
+    });
+    afterAll(async () => {
+      await ListGameModel.destroy({ where: {} });
+    });
+  })
+  describe('[ routes / listgame / :list_id]', () => {
+    beforeEach(async () => {
+      await ListGameModel.destroy({ where: {} });
+      await ListGameModel.create({ 
+        list_id: 1,
+        game_id: 1
+      })
+    });
+
+    it('should show all games from a list', async() => {
+      // Arrange
+
+      // Act
+      const {status, body} = await request.get('/listgame/1')
+      // Assert
+      expect(status).toEqual(200)
+      expect(body.message).toEqual('Games obtained successfully')
+      expect(body.games[0].name).toEqual('test')
+    });
+
+    it('should NOT show all games from an inexistent list', async() => {
+      // Arrange
+
+      // Act
+      const {status, body} = await request.get('/listgame/2')
+      // Assert
+      expect(status).toEqual(404)
+      expect(body.message).toEqual('List not found')
+    });
+
+    it('should NOT show games if list is empty', async() => {
+      // Arrange
+      await ListModel.create({ name: "test2", user_id: 2, id: 3 });
+      // Act
+      const {status, body} = await request.get('/listgame/3')
+      // Assert
+      expect(status).toEqual(404)
+      expect(body.message).toEqual('No games found for this list')
+    });
+
+    it('should NOT show games if list is in incorrect format', async() => {
+      // Arrange
+
+      // Act
+      const {status, body} = await request.get('/listgame/uno')
+      // Assert
+      expect(status).toEqual(400)
+      expect(body.message).toEqual('Required fields not provided')
+    });
+  });
+  
 });
