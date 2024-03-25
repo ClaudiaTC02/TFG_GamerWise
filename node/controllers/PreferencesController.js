@@ -12,8 +12,12 @@ export const addRating = async (req, res) => {
         let { user_id, game_id, rating } = req.body
         user_id = Number(user_id)
         game_id = Number(game_id)
-        if(!user_id || !rating || !game_id){
+        if(!user_id || (rating === null || rating === undefined) || !game_id){
             return res.status(400).json({ message: "Required fields not provided" });
+        }
+        rating = Number(rating)
+        if(!Number.isInteger(rating) || rating < 1 ||rating > 5){
+            return res.status(400).json({ message: "Rating has to be an integer between 1 and 5" });
         }
         // get user and game
         const user = await UserModel.findByPk(user_id)
@@ -83,7 +87,7 @@ export const deleteRating = async(req, res) =>{
     }
 }
 
-// obtain rating of a specific game
+// obtain rating of a especific game
 export const getRatingOfGame = async (req, res) => {
     try {
         let {game_id, user_id} = req.params
