@@ -16,6 +16,7 @@ import userRoutes from './routes/UserRoutes.js'
 import listRoutes from './routes/ListRoutes.js';
 import gameRoutes from './routes/GameRoutes.js';
 import listgameRoutes from './routes/ListGameRoutes.js';
+import preferencesRoutes from './routes/PreferencesRoutes.js';
 // import services
 import igdbRoutes from './routes/igdbRoutes.js';
 
@@ -26,6 +27,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+preferencesRoutes(app) // preferencesRoutes will execute in /preferences
 listgameRoutes(app) // listgameRoutes will execute in /listgame
 gameRoutes(app) // gameRoutes will execute in /game
 igdbRoutes(app) // igdbRoutes will execute in /igdb
