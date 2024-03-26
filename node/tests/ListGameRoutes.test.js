@@ -185,6 +185,41 @@ describe("ListGameRoutes", () => {
       expect(status).toEqual(400)
       expect(body.message).toEqual('Required fields not provided')
     });
+
+    it('should count games of a list', async() => {
+      // Arrange
+      
+      // Act
+      const {status, body} = await request.get('/listgame/1/count')
+      // Assert
+      expect(status).toEqual(200)
+      expect(body.message).toEqual('Game count obtained successfully')
+      expect(body.count).toEqual(1)
+    });
+
+    it('should NOT count games of an inexistent list', async() => {
+      // Arrange
+      
+      // Act
+      const {status, body} = await request.get('/listgame/5/count')
+      // Assert
+      expect(status).toEqual(404)
+      expect(body.message).toEqual('List not found')
+    });
+
+    it('should NOT count games of id with incorrect data type', async() => {
+      // Arrange
+      
+      // Act
+      const {status, body} = await request.get('/listgame/uno/count')
+      // Assert
+      expect(status).toEqual(400)
+      expect(body.message).toEqual('List ID is required in number format')
+    });
+
+    afterAll(async () => {
+      await ListGameModel.destroy({ where: {} });
+    });
   });
   
 });

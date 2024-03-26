@@ -213,4 +213,49 @@ describe("UserRoutes", () => {
       await UserModel.destroy({ where: {} });
     });
   });
+  describe('[ routes / user / : id]', () => {
+    beforeAll(async () => {
+      const hashedPassword = await hashPassword("Password123?");
+      await UserModel.create({
+        name: "Claudia",
+        password: hashedPassword,
+        email: "claudia@gmail.com",
+        id:1
+      });
+    })
+
+    it('should get data of an existing user', async () => {
+      // Arrage
+      
+      // Act
+      const { status, body } = await request.get("/user/1")
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("Information obtained successfully");
+      expect(body.info.name).toEqual("Claudia")
+    });
+
+    it('should NOT get data of an inexistent user', async () => {
+      // Arrage
+      
+      // Act
+      const { status, body } = await request.get("/user/2")
+      // Assert
+      expect(status).toEqual(404);
+      expect(body.message).toEqual("User not found");
+    });
+    
+    it('should NOT get data of a user with incorrect id datatype', async () => {
+      // Arrage
+      
+      // Act
+      const { status, body } = await request.get("/user/dos")
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Required id in number format");
+    });
+    afterAll(async () => {
+      await UserModel.destroy({ where: {} });
+    });
+  });
 });

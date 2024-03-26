@@ -1,6 +1,5 @@
 import testServer from "../utils/testServer.js";
 import preferencesRoutes from "../routes/PreferencesRoutes.js";
-import express from "express";
 
 const request = testServer(preferencesRoutes);
 
@@ -252,12 +251,53 @@ describe('ReferencesRoutes', () => {
             expect(status).toEqual(400)
             expect(body.message).toEqual('Ids are required and in number format')
         });
-        
+
         afterEach(async () =>{
             await PreferencesModel.destroy({ where: {} });
             await UserModel.destroy({ where: { id: 2} });
         })
     });
+    describe('[ routes / preferences / : user_id ]', () => {
+        beforeEach(async() =>{
+            await GameModel.create({
+                name: "test",
+                company: "test company",
+                gender: "test gender",
+                platforms: "name, name",
+                max_players: 40,
+                id: 2,
+            });
+            await PreferencesModel.create({ game_id:1, user_id:1, rating:2})
+            await PreferencesModel.create({ game_id:2, user_id:1, rating:4})
+        })
+        it('should get all ratings mapped',async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/1')
+            // Assert
+            expect(status).toEqual(200)
+            expect(body.message).toEqual('Ratings obatined successfully')
+            expect(body.ratings[4]).toEqual(1)
+            expect(body.ratings[2]).toEqual(1)
+        });
+        it('should NOT get all ratings of an inexistent user',async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/2')
+            // Assert
+            expect(status).toEqual(404)
+            expect(body.message).toEqual('User not found')
+        });
+        it('should NOT get all ratings of a user with id in a not number form',async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/dos')
+            // Assert
+            expect(status).toEqual(400)
+            expect(body.message).toEqual('Ids are required and in number format')
+        });
+    });
+    
     afterAll(async () =>{
         await UserModel.destroy({ where: {} });
         await GameModel.destroy({ where: {} });
