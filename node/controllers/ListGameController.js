@@ -2,6 +2,7 @@
 import ListGameModel from "../models/ListGameModel.js";
 import GameModel from "../models/GameModel.js";
 import ListModel from "../models/ListModel.js";
+import PreferencesModel from "../models/PreferencesModel.js";
 
 //----------------------------------------------------------------------
 // CRUD Methods
@@ -56,7 +57,7 @@ export const deleteGameFromList = async (req, res) => {
   }
 };
 
-// obain all games of a list
+// obain all games and rating of a list
 export const getAllGames = async (req, res) => {
   try {
     let { list_id } = req.params;
@@ -70,11 +71,29 @@ export const getAllGames = async (req, res) => {
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }
+    const user_id = list.user_id;
     const games = await GameModel.findAll({
-      include: {
-        model: ListModel,
-        where: { id: list_id }
-      }
+      attributes: [
+        "id",
+        "name",
+        "company",
+        "gender",
+        "platforms",
+        "max_players",
+      ],
+      include: [
+        {
+          model: ListModel,
+          where: { id: list_id },
+          through: { model: ListGameModel },
+        },
+        {
+          model: PreferencesModel,
+          attributes: ["rating"],
+          where: { user_id },
+          required: false,
+        },
+      ],
     });
     if (games.length === 0) {
       return res.status(404).json({ message: "No games found for this list" });
@@ -84,6 +103,33 @@ export const getAllGames = async (req, res) => {
       .json({ message: "Games obtained successfully", games: games });
   } catch (error) {
     // Internal server error
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// count games in list
+export const countGamesInList = async (req, res) => {
+  try {
+    let { list_id } = req.params;
+    list_id = Number(list_id);
+
+    if (!list_id) {
+      return res.status(400).json({ message: "List ID is required in number format" });
+    }
+    // get list
+    const list = await ListModel.findByPk(list_id);
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
+
+    const gameCount = await ListGameModel.count({
+      where: { list_id: list_id },
+    });
+    res
+      .status(200)
+      .json({ message: "Game count obtained successfully", count: gameCount });
+  } catch (error) {
+    // Error interno del servidor
     res.status(500).json({ message: error.message });
   }
 };

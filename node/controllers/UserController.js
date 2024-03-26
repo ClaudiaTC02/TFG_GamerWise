@@ -70,3 +70,22 @@ export const login = async (req, res) =>{
         res.status(500).json({ message: error.message });
     }
 }
+
+// get basic information by id
+export const getBasicInfo = async (req, res) => {
+    try {
+        let { id } = req.params;
+        id = Number(id);
+        if (!id) {
+            return res.status(400).json({ message: "Required id in number format" });
+        }
+        const user = await UserModel.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({ message: "Information obtained successfully", info: { name: user.name } });
+    } catch (error) {
+        // Internal server error
+        res.status(500).json({ message: error.message });
+    }
+};
