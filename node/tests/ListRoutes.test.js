@@ -28,7 +28,7 @@ describe("ListRoutes", () => {
       // Arrange
 
       // Act
-      const { status, body } = await request.get("/list/1");
+      const { status, body } = await request.get("/list/1").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.length).toEqual(3);
@@ -41,7 +41,7 @@ describe("ListRoutes", () => {
       // Arrange
 
       // Act
-      const { status, body } = await request.get("/list/2");
+      const { status, body } = await request.get("/list/2").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
@@ -51,7 +51,7 @@ describe("ListRoutes", () => {
       // Arrange
 
       // Act
-      const { status, body } = await request.get("/list/uno");
+      const { status, body } = await request.get("/list/uno").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("User is required");
@@ -76,7 +76,7 @@ describe("ListRoutes", () => {
       // Arrage
       let update = { description: "test description" };
       // Act
-      const { status, body } = await request.put("/list/1").send(update);
+      const { status, body } = await request.put("/list/1").send(update).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("List updated successfully");
@@ -89,7 +89,7 @@ describe("ListRoutes", () => {
       // Arrage
       let update = { name: "test2" };
       // Act
-      const { status, body } = await request.put("/list/1").send(update);
+      const { status, body } = await request.put("/list/1").send(update).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("List updated successfully");
@@ -101,7 +101,7 @@ describe("ListRoutes", () => {
       // Arrage
       let update = { name: "test3" };
       // Act
-      const { status, body } = await request.put("/list/2").send(update);
+      const { status, body } = await request.put("/list/2").send(update).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("List not found");
@@ -111,7 +111,7 @@ describe("ListRoutes", () => {
       // Arrage
       let update = { name: true };
       // Act
-      const { status, body } = await request.put("/list/1").send(update);
+      const { status, body } = await request.put("/list/1").send(update).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Invalid data type");
@@ -121,7 +121,7 @@ describe("ListRoutes", () => {
       // Arrage
       let update = { name: true };
       // Act
-      const { status, body } = await request.put("/list/uno").send(update);
+      const { status, body } = await request.put("/list/uno").send(update).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Id is required");
@@ -131,7 +131,7 @@ describe("ListRoutes", () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.delete("/list/1");
+      const { status, body } = await request.delete("/list/1").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("List deleted successfully");
@@ -140,7 +140,7 @@ describe("ListRoutes", () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.delete("/list/2");
+      const { status, body } = await request.delete("/list/2").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("List not found");
@@ -149,7 +149,7 @@ describe("ListRoutes", () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.delete("/list/dos");
+      const { status, body } = await request.delete("/list/dos").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Id is required");
@@ -176,7 +176,7 @@ describe("ListRoutes", () => {
         user_id: 1,
       };
       // Act
-      const { status, body } = await request.post("/list").send(list);
+      const { status, body } = await request.post("/list").send(list).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(201);
       expect(body.message).toEqual("List created successfully");
@@ -190,7 +190,8 @@ describe("ListRoutes", () => {
       // Act
       const { status, body } = await request
         .post("/list")
-        .send(noDescriptionList);
+        .send(noDescriptionList)
+        .set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(201);
       expect(body.message).toEqual("List created successfully");
@@ -202,7 +203,7 @@ describe("ListRoutes", () => {
       // Arrage
       const incompleteList = { description: "test description", user_id: 1 };
       // Act
-      const { status, body } = await request.post("/list").send(incompleteList);
+      const { status, body } = await request.post("/list").send(incompleteList).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Name and user_id are required");
@@ -218,7 +219,8 @@ describe("ListRoutes", () => {
       // Act
       const { status, body } = await request
         .post("/list")
-        .send(dataInvalidList);
+        .send(dataInvalidList)
+        .set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Invalid data type");
@@ -234,7 +236,8 @@ describe("ListRoutes", () => {
       // Act
       const { status, body } = await request
         .post("/list")
-        .send(dataInvalidList);
+        .send(dataInvalidList)
+        .set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Invalid data type");
@@ -250,7 +253,8 @@ describe("ListRoutes", () => {
       // Act
       const { status, body } = await request
         .post("/list")
-        .send(invalidUserList);
+        .send(invalidUserList)
+        .set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("The user does not exist");

@@ -33,7 +33,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       const listgame = { game_id: 1, list_id: 1 };
       // Act
-      const { status, body } = await request.post("/listgame").send(listgame);
+      const { status, body } = await request.post("/listgame").send(listgame).set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(201);
       expect(body.message).toEqual("Game added to list successfully");
@@ -42,7 +42,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       const listgame = { list_id: 1 };
       // Act
-      const { status, body } = await request.post("/listgame").send(listgame);
+      const { status, body } = await request.post("/listgame").send(listgame).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Required fields not provided");
@@ -51,7 +51,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       const listgame = { game_id: 2, list_id: 1 };
       // Act
-      const { status, body } = await request.post("/listgame").send(listgame);
+      const { status, body } = await request.post("/listgame").send(listgame).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("List or Game not found");
@@ -60,7 +60,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       const listgame = { game_id: 1, list_id: 4 };
       // Act
-      const { status, body } = await request.post("/listgame").send(listgame);
+      const { status, body } = await request.post("/listgame").send(listgame).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("List or Game not found");
@@ -69,7 +69,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       const listgame = { game_id: "uno", list_id: 2 };
       // Act
-      const { status, body } = await request.post("/listgame").send(listgame);
+      const { status, body } = await request.post("/listgame").send(listgame).set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Required fields not provided");
@@ -97,7 +97,7 @@ describe("ListGameRoutes", () => {
       // Arrange
 
       // Act
-      const {status, body} = await request.delete('/listgame/1&1')
+      const {status, body} = await request.delete('/listgame/1&1').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200)
       expect(body.message).toEqual('Game deleted to list successfully')
@@ -107,7 +107,7 @@ describe("ListGameRoutes", () => {
       // Arrange
 
       // Act
-      const {status, body} = await request.delete('/listgame/2&1')
+      const {status, body} = await request.delete('/listgame/2&1').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(404)
       expect(body.message).toEqual('List or Game not found')
@@ -117,7 +117,7 @@ describe("ListGameRoutes", () => {
       // Arrange
 
       // Act
-      const {status, body} = await request.delete('/listgame/1&2')
+      const {status, body} = await request.delete('/listgame/1&2').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(404)
       expect(body.message).toEqual('List or Game not found')
@@ -127,7 +127,7 @@ describe("ListGameRoutes", () => {
       // Arrange
 
       // Act
-      const {status, body} = await request.delete('/listgame/1&uno')
+      const {status, body} = await request.delete('/listgame/1&uno').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(400)
       expect(body.message).toEqual('Required fields not provided')
@@ -149,7 +149,7 @@ describe("ListGameRoutes", () => {
       // Arrange
 
       // Act
-      const {status, body} = await request.get('/listgame/1')
+      const {status, body} = await request.get('/listgame/1').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200)
       expect(body.message).toEqual('Games obtained successfully')
@@ -160,7 +160,7 @@ describe("ListGameRoutes", () => {
       // Arrange
 
       // Act
-      const {status, body} = await request.get('/listgame/2')
+      const {status, body} = await request.get('/listgame/2').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(404)
       expect(body.message).toEqual('List not found')
@@ -170,7 +170,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       await ListModel.create({ name: "test2", user_id: 2, id: 3 });
       // Act
-      const {status, body} = await request.get('/listgame/3')
+      const {status, body} = await request.get('/listgame/3').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(404)
       expect(body.message).toEqual('No games found for this list')
@@ -180,7 +180,7 @@ describe("ListGameRoutes", () => {
       // Arrange
 
       // Act
-      const {status, body} = await request.get('/listgame/uno')
+      const {status, body} = await request.get('/listgame/uno').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(400)
       expect(body.message).toEqual('Required fields not provided')
@@ -190,7 +190,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       
       // Act
-      const {status, body} = await request.get('/listgame/1/count')
+      const {status, body} = await request.get('/listgame/1/count').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200)
       expect(body.message).toEqual('Game count obtained successfully')
@@ -201,7 +201,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       
       // Act
-      const {status, body} = await request.get('/listgame/5/count')
+      const {status, body} = await request.get('/listgame/5/count').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(404)
       expect(body.message).toEqual('List not found')
@@ -211,7 +211,7 @@ describe("ListGameRoutes", () => {
       // Arrange
       
       // Act
-      const {status, body} = await request.get('/listgame/uno/count')
+      const {status, body} = await request.get('/listgame/uno/count').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(400)
       expect(body.message).toEqual('List ID is required in number format')

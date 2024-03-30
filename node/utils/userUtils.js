@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 const saltRounds = 10;
+import 'dotenv/config'
 //----------------------------------------------------------------------
 // Modular functions
 //----------------------------------------------------------------------
@@ -59,5 +60,5 @@ export const hashPassword = async (password) => {
 };
 
 export const generateAuthToken = (userId) => {
-    return jwt.sign({ userId }, 'eriwekhfoiqw', { expiresIn: '1h' });
+    return jwt.sign({ userId }, `${process.env.JWT_token_secret}`, { expiresIn: '1h' });
 };

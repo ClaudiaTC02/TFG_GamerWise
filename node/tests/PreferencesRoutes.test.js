@@ -28,7 +28,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:1, game_id:1, rating:3}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(201)
             expect(body.message).toEqual('Rating added successfully')
@@ -39,7 +39,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:1, game_id:2, rating:3}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found')
@@ -49,7 +49,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:2, game_id:1, rating:3}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found')
@@ -59,7 +59,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:1, game_id:1}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Required fields not provided')
@@ -69,7 +69,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:'uno', game_id:1, rating:3}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Required fields not provided')
@@ -79,7 +79,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:1, game_id:1, rating:3.2}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Rating has to be an integer between 1 and 5')
@@ -89,7 +89,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:1, game_id:1, rating:-2}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Rating has to be an integer between 1 and 5')
@@ -100,7 +100,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:1, game_id:1, rating:0}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Rating has to be an integer between 1 and 5')
@@ -110,7 +110,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const correctRating = {user_id:1, game_id:1, rating:6}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating)
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Rating has to be an integer between 1 and 5')
@@ -127,7 +127,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const newRating = {rating:3}
             // Act
-            const {status, body} = await request.put('/preferences/1&1').send(newRating)
+            const {status, body} = await request.put('/preferences/1&1').send(newRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(200)
             expect(body.message).toEqual('Rating updated successfully')
@@ -137,7 +137,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const newRating = {rating:3}
             // Act
-            const {status, body} = await request.put('/preferences/2&1').send(newRating)
+            const {status, body} = await request.put('/preferences/2&1').send(newRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found')
@@ -147,7 +147,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const newRating = {rating:3}
             // Act
-            const {status, body} = await request.put('/preferences/1&2').send(newRating)
+            const {status, body} = await request.put('/preferences/1&2').send(newRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found')
@@ -165,7 +165,7 @@ describe('ReferencesRoutes', () => {
                 id: 2,
             });
             // Act
-            const {status, body} = await request.put('/preferences/2&1').send(newRating)
+            const {status, body} = await request.put('/preferences/2&1').send(newRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found in model')
@@ -175,7 +175,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const newRating = {rating:3}
             // Act
-            const {status, body} = await request.put('/preferences/1&uno').send(newRating)
+            const {status, body} = await request.put('/preferences/1&uno').send(newRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Ids are required and in number format')
@@ -185,7 +185,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
             const newRating = {rating:'tres'}
             // Act
-            const {status, body} = await request.put('/preferences/1&1').send(newRating)
+            const {status, body} = await request.put('/preferences/1&1').send(newRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Invalid data type')
@@ -195,7 +195,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
 
             // Act
-            const {status, body} = await request.delete('/preferences/1&1')
+            const {status, body} = await request.delete('/preferences/1&1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(200)
             expect(body.message).toEqual('Rating deleted successfully')
@@ -205,7 +205,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
 
             // Act
-            const {status, body} = await request.delete('/preferences/2&1')
+            const {status, body} = await request.delete('/preferences/2&1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found in model')
@@ -215,7 +215,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
 
             // Act
-            const {status, body} = await request.delete('/preferences/uno&1')
+            const {status, body} = await request.delete('/preferences/uno&1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Ids are required and in number format')
@@ -225,7 +225,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
 
             // Act
-            const {status, body} = await request.get('/preferences/1&1')
+            const {status, body} = await request.get('/preferences/1&1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(200)
             expect(body.message).toEqual('Rating obatined successfully')
@@ -236,7 +236,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
 
             // Act
-            const {status, body} = await request.get('/preferences/2&1')
+            const {status, body} = await request.get('/preferences/2&1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found in model')
@@ -246,7 +246,7 @@ describe('ReferencesRoutes', () => {
             // Arrange
 
             // Act
-            const {status, body} = await request.get('/preferences/uno&1')
+            const {status, body} = await request.get('/preferences/uno&1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Ids are required and in number format')
@@ -273,7 +273,7 @@ describe('ReferencesRoutes', () => {
         it('should get all ratings mapped',async () => {
             // Arrange
             // Act
-            const {status, body} = await request.get('/preferences/1')
+            const {status, body} = await request.get('/preferences/1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(200)
             expect(body.message).toEqual('Ratings obatined successfully')
@@ -283,7 +283,7 @@ describe('ReferencesRoutes', () => {
         it('should NOT get all ratings of an inexistent user',async () => {
             // Arrange
             // Act
-            const {status, body} = await request.get('/preferences/2')
+            const {status, body} = await request.get('/preferences/2').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User not found')
@@ -291,7 +291,7 @@ describe('ReferencesRoutes', () => {
         it('should NOT get all ratings of a user with id in a not number form',async () => {
             // Arrange
             // Act
-            const {status, body} = await request.get('/preferences/dos')
+            const {status, body} = await request.get('/preferences/dos').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Ids are required and in number format')

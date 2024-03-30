@@ -6,6 +6,7 @@
  * DESCRIPCIÓN: En este fichero se encuentra la lógica verdadera encargada de recoger datos de la base de datos
  *
  */
+import 'dotenv/config'
 import express from 'express';
 import cors from 'cors'
 // conection db

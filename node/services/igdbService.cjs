@@ -1,12 +1,13 @@
 // igdbService.cjs
 const apicalypse = require("apicalypse").default;
+require('dotenv').config()
 
 const requestOptions = {
   method: "post",
   baseURL: "https://api.igdb.com/v4",
   headers: {
-    'Client-ID': "fxn4rmr2l1llkcbhttzlkmxsy08nhr",
-    'Authorization': "Bearer smr23q8lfu4n016hsja70b0i2az2y3",
+    'Client-ID': `${process.env.IGDB_client_id}`,
+    'Authorization': `Bearer ${process.env.IGBD_authorization}`,
     'Content-Type': "text/plain",
   },
   responseType: "json",

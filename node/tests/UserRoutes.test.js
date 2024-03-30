@@ -228,7 +228,7 @@ describe("UserRoutes", () => {
       // Arrage
       
       // Act
-      const { status, body } = await request.get("/user/1")
+      const { status, body } = await request.get("/user/1").set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("Information obtained successfully");
@@ -239,7 +239,7 @@ describe("UserRoutes", () => {
       // Arrage
       
       // Act
-      const { status, body } = await request.get("/user/2")
+      const { status, body } = await request.get("/user/2").set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
@@ -249,7 +249,7 @@ describe("UserRoutes", () => {
       // Arrage
       
       // Act
-      const { status, body } = await request.get("/user/dos")
+      const { status, body } = await request.get("/user/dos").set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Required id in number format");

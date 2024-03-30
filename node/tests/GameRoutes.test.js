@@ -11,7 +11,7 @@ describe('[ routes / game ]', () => {
         // Arrange
         const game = {name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: 40}
         // Act
-        const {status, body} = await request.post('/game').send(game)
+        const {status, body} = await request.post('/game').send(game).set('Authorization', `Bearer ${authToken}`);
         // Assert
         expect(status).toEqual(201)
         expect(body.message).toEqual("Game created successfully")
@@ -22,7 +22,7 @@ describe('[ routes / game ]', () => {
         // Arrange
         const game = {company: "test company", gender: "test gender", platforms: "name, name", max_players: 40}
         // Act
-        const {status, body} = await request.post('/game').send(game)
+        const {status, body} = await request.post('/game').send(game).set('Authorization', `Bearer ${authToken}`);
         // Assert
         expect(status).toEqual(400)
         expect(body.message).toEqual("Required fields are not provided")
@@ -32,7 +32,7 @@ describe('[ routes / game ]', () => {
         // Arrange
         const game = {name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: "40"}
         // Act
-        const {status, body} = await request.post('/game').send(game)
+        const {status, body} = await request.post('/game').send(game).set('Authorization', `Bearer ${authToken}`);
         // Assert
         expect(status).toEqual(400)
         expect(body.message).toEqual("Invalid data type")

@@ -1,13 +1,19 @@
 import jwt from 'jsonwebtoken'
-const token_secret = 'eriwekhfoiqw'
+import 'dotenv/config'
 
-export function authenticateToken(req, res, next) {
-    const token = req.headers['authorization'];
-    if (token == null) return res.sendStatus(401); // Unauthorized
-    
-    jwt.verify(token, token_secret, (err, user) => {
-        if (err) return res.sendStatus(403); // Forbidden
-        req.user = user;
-        next();
-    });
-}
+const token_secret = process.env.JWT_token_secret
+
+export function verifyToken(req, res, next) {
+    const header = req.header("Authorization") || "";
+    const token = header.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Token not provied" });
+    }
+    try {
+      const payload = jwt.verify(token, token_secret);
+      req.id = payload.id;
+      next();
+    } catch (error) {
+      return res.status(403).json({ message: "Token not valid" });
+    }
+  }
