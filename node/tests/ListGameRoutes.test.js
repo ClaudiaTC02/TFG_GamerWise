@@ -100,7 +100,7 @@ describe("ListGameRoutes", () => {
       const {status, body} = await request.delete('/listgame/1&1').set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200)
-      expect(body.message).toEqual('Game deleted to list successfully')
+      expect(body.message).toEqual('Game deleted from list successfully')
     });
 
     it('should NOT delete a game from an inexistent list', async () => {

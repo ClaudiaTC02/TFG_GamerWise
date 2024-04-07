@@ -1,42 +1,32 @@
-import PreferencesModel from "../models/PreferencesModel.js";
-import GameModel from "../models/GameModel.js";
-import UserModel from "../models/UserModel.js";
+// import Logic
+import {
+  addRatingLogic,
+  updateRatingLogic,
+  deleteRatingLogic,
+  getRatingOfGameLogic,
+  getAllRatingLogic
+} from '../logic/PreferencesLogic.js';
 
 //----------------------------------------------------------------------
-// CRUD Methods
+// HTTP Methods
 //----------------------------------------------------------------------
 
 // add rating to a game
 export const addRating = async (req, res) => {
   try {
-    let { user_id, game_id, rating } = req.body;
-    user_id = Number(user_id);
-    game_id = Number(game_id);
-    if (!user_id || rating === null || rating === undefined || !game_id) {
-      return res.status(400).json({ message: "Required fields not provided" });
+    const { user_id, game_id, rating } = req.body;
+    const result = await addRatingLogic(user_id, game_id, rating);
+
+    if (result.success) {
+      res.status(201).json({ message: "Rating added successfully", rating: result.rating });
+    } else {
+      let statusCode = 400;
+      if (result.error === "User or Game not found") {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ message: result.error });
     }
-    rating = Number(rating);
-    if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-      return res
-        .status(400)
-        .json({ message: "Rating has to be an integer between 1 and 5" });
-    }
-    // get user and game
-    const user = await UserModel.findByPk(user_id);
-    const game = await GameModel.findByPk(game_id);
-    if (!user || !game) {
-      return res.status(404).json({ message: "User or Game not found" });
-    }
-    const newRating = await PreferencesModel.create({
-      user_id: user_id,
-      game_id: game_id,
-      rating: rating,
-    });
-    res
-      .status(201)
-      .json({ message: "Rating added successfully", rating: newRating });
   } catch (error) {
-    // Internal server error
     res.status(500).json({ message: error.message });
   }
 };
@@ -44,66 +34,40 @@ export const addRating = async (req, res) => {
 // update preference
 export const updateRating = async (req, res) => {
   try {
-    let { rating } = req.body;
-    let { user_id, game_id } = req.params;
-    user_id = Number(user_id);
-    game_id = Number(game_id);
-    if (!user_id || !game_id) {
-      return res
-        .status(400)
-        .json({ message: "Ids are required and in number format" });
-    }
-    if (typeof rating !== "number") {
-      return res.status(400).json({ message: "Invalid data type" });
-    }
-    // find list
-    const user = await UserModel.findByPk(user_id);
-    const game = await GameModel.findByPk(game_id);
-    if (!user || !game) {
-      return res.status(404).json({ message: "User or Game not found" });
-    }
-    if (!(await validateIfExists(user.id, game.id))) {
-      return res
-        .status(404)
-        .json({ message: "User or Game not found in model" });
-    }
-    // update list
-    await PreferencesModel.update(
-      { rating },
-      {
-        where: { game_id: game_id, user_id: user_id },
+    const { rating } = req.body;
+    const { user_id, game_id } = req.params;
+    const result = await updateRatingLogic(user_id, game_id, rating);
+
+    if (result.success) {
+      res.status(200).json({ message: "Rating updated successfully" });
+    } else {
+      let statusCode = 400;
+      if (result.error === "User or Game not found" || result.error === "User or Game not found in model") {
+        statusCode = 404;
       }
-    );
-    res.status(200).json({ message: "Rating updated successfully" });
+      res.status(statusCode).json({ message: result.error });
+    }
   } catch (error) {
-    // Internal server error
     res.status(500).json({ message: error.message });
   }
 };
 
-// delete ratings
+// deleting ratings
 export const deleteRating = async (req, res) => {
   try {
-    let { game_id, user_id } = req.params;
-    game_id = Number(game_id);
-    user_id = Number(user_id);
-    if (!game_id || !user_id) {
-      return res
-        .status(400)
-        .json({ message: "Ids are required and in number format" });
-    }
-    if (!(await validateIfExists(user_id, game_id))) {
-      return res
-        .status(404)
-        .json({ message: "User or Game not found in model" });
-    }
+    const { game_id, user_id } = req.params;
+    const result = await deleteRatingLogic(user_id, game_id);
 
-    await PreferencesModel.destroy({
-      where: { user_id: user_id, game_id: game_id },
-    });
-    res.status(200).json({ message: "Rating deleted successfully" });
+    if (result.success) {
+      res.status(200).json({ message: "Rating deleted successfully" });
+    } else {
+      let statusCode = 400;
+      if (result.error === "User or Game not found in model") {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ message: result.error });
+    }
   } catch (error) {
-    // Internal server error
     res.status(500).json({ message: error.message });
   }
 };
@@ -111,28 +75,19 @@ export const deleteRating = async (req, res) => {
 // obtain rating of a especific game
 export const getRatingOfGame = async (req, res) => {
   try {
-    let { game_id, user_id } = req.params;
-    game_id = Number(game_id);
-    user_id = Number(user_id);
-    if (!game_id || !user_id) {
-      return res
-        .status(400)
-        .json({ message: "Ids are required and in number format" });
+    const { game_id, user_id } = req.params;
+    const result = await getRatingOfGameLogic(user_id, game_id);
+
+    if (result.success) {
+      res.status(200).json({ message: "Rating obtained successfully", rating: result.rating });
+    } else {
+      let statusCode = 400;
+      if (result.error === "User or Game not found in model") {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ message: result.error });
     }
-    if (!(await validateIfExists(user_id, game_id))) {
-      return res
-        .status(404)
-        .json({ message: "User or Game not found in model" });
-    }
-    const rating = await PreferencesModel.findOne({
-      attributes: ["rating"],
-      where: { user_id: user_id, game_id: game_id },
-    });
-    res
-      .status(200)
-      .json({ message: "Rating obatined successfully", rating: rating });
   } catch (error) {
-    // Internal server error
     res.status(500).json({ message: error.message });
   }
 };
@@ -140,53 +95,19 @@ export const getRatingOfGame = async (req, res) => {
 // obain all ratings of a user
 export const getAllRating = async (req, res) => {
   try {
-    let { user_id } = req.params;
-    user_id = Number(user_id);
-    if (!user_id) {
-      return res
-        .status(400)
-        .json({ message: "Ids are required and in number format" });
-    }
-    const user = await UserModel.findByPk(user_id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    const ratings = await PreferencesModel.findAll({
-        attributes: ["rating"],
-        where: { user_id: user_id },
-    });
-    // Map results
-    const ratingValues = ratings.map((rating) => rating.rating);
-    const ratingCounts = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    };
-    ratingValues.forEach((value) => {
-      if (ratingCounts.hasOwnProperty(value)) {
-        ratingCounts[value]++;
+    const { user_id } = req.params;
+    const result = await getAllRatingLogic(user_id);
+
+    if (result.success) {
+      res.status(200).json({ message: "Ratings obtained successfully", ratings: result.ratings });
+    } else {
+      let statusCode = 400;
+      if (result.error === "User not found") {
+        statusCode = 404;
       }
-    });
-    console.log(ratingValues)
-    res
-      .status(200)
-      .json({ message: "Ratings obatined successfully", ratings: ratingCounts });
+      res.status(statusCode).json({ message: result.error });
+    }
   } catch (error) {
-    // Internal server error
-    console.log(error.message)
     res.status(500).json({ message: error.message });
   }
-};
-
-//----------------------------------------------------------------------
-// Modular functions
-//----------------------------------------------------------------------
-
-const validateIfExists = async (user_id, game_id) => {
-  const preference = await PreferencesModel.findOne({
-    where: { user_id: user_id, game_id: game_id },
-  });
-  return !!preference;
 };

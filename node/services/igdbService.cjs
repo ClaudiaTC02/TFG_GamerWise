@@ -1,27 +1,25 @@
-// igdbService.cjs
-const apicalypse = require("apicalypse").default;
-require('dotenv').config()
+// import Logic
+const {
+  getGamesLogic,
+  getLatestReleasesLogic,
+  getUpcomingReleasesLogic,
+  searchGameByNameLogic,
+  getGameDetailsLogic,
+} = require("../logic/igdbServiceLogic.cjs");
 
-const requestOptions = {
-  method: "post",
-  baseURL: "https://api.igdb.com/v4",
-  headers: {
-    'Client-ID': `${process.env.IGDB_client_id}`,
-    'Authorization': `Bearer ${process.env.IGBD_authorization}`,
-    'Content-Type': "text/plain",
-  },
-  responseType: "json",
-  timeout: 10000,
-};
+//----------------------------------------------------------------------
+// HTTP Methods
+//----------------------------------------------------------------------
 
 // Obtain 10 games
 const getGames = async (req, res) => {
   try {
-    const response = await apicalypse(requestOptions)
-      .fields("name")
-      .limit(10)
-      .request("/games");
-    res.status(200).json(response.data);
+    const result = await getGamesLogic();
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(500).json({ message: result.error });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -30,67 +28,56 @@ const getGames = async (req, res) => {
 // Get latest games releases
 const getLatestReleases = async (req, res) => {
   try {
-    const currentTime = Math.floor(Date.now()/ 1000)
-    const response = await apicalypse(requestOptions)
-      .fields("game.name, date")
-      .where(`date < ${currentTime}`)
-      .limit(10)
-      .sort("date", "desc")
-      .request("/release_dates");
-
-    res.status(200).json(response.data);
+    const result = await getLatestReleasesLogic();
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(500).json({ message: result.error });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Comming soon games
+// Coming soon games
 const getUpcomingReleases = async (req, res) => {
   try {
-    const currentTime = Math.floor(Date.now()/ 1000)
-    const response = await apicalypse(requestOptions)
-      .fields("game.name, date")
-      .where(`date > ${currentTime}`)
-      .limit(10)
-      .sort("date", "asc")
-      .request("/release_dates");
-
-    res.status(200).json(response.data);
+    const result = await getUpcomingReleasesLogic();
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(500).json({ message: result.error });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// search a specific game
+// Search a specific game
 const searchGameByName = async (req, res) => {
   try {
-    const name = req.query.name;
-    const response = await apicalypse(requestOptions)
-      .fields("name, cover.url")
-      .search(name)
-      .limit(10)
-      .request("/games");
-
-    res.status(200).json(response.data);
+    const { name } = req.query;
+    const result = await searchGameByNameLogic(name);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(500).json({ message: result.error });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Obtain details for database
+// Obtain details for a specific game
 const getGameDetails = async (req, res) => {
   try {
-    const name = req.query.name;
-    const response = await apicalypse(requestOptions)
-      .fields("name, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinecoopmax, multiplayer_modes.onlinemax")
-      .search(name)
-      .limit(1)
-      .request("/games");
-    const game = response.data[0]
-    if(!game){
-      return res.status(404).json({message: 'Game not found'});
+    const { name } = req.query;
+    const result = await getGameDetailsLogic(name);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(404).json({ message: result.error });
     }
-    res.status(200).json(response.data);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -98,7 +85,7 @@ const getGameDetails = async (req, res) => {
 
 module.exports = {
   getGames,
-  getLatestReleases,
+  getLatestReleases,  
   getUpcomingReleases,
   searchGameByName,
   getGameDetails

@@ -2,7 +2,7 @@
 import { createListLogic, getAllListLogic,updateListLogic,deleteListLogic  } from '../logic/ListLogic.js';
 
 //----------------------------------------------------------------------
-// HTTP
+// HTTP Methods
 //----------------------------------------------------------------------
 
 // create a list

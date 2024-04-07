@@ -188,7 +188,7 @@ describe('ReferencesRoutes', () => {
             const {status, body} = await request.put('/preferences/1&1').send(newRating).set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(400)
-            expect(body.message).toEqual('Invalid data type')
+            expect(body.message).toEqual('Invalid rating data type')
         });
 
         it('should delete a rating', async () => {
@@ -228,7 +228,7 @@ describe('ReferencesRoutes', () => {
             const {status, body} = await request.get('/preferences/1&1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(200)
-            expect(body.message).toEqual('Rating obatined successfully')
+            expect(body.message).toEqual('Rating obtained successfully')
             expect(body.rating.rating).toEqual(2)
         });
 
@@ -276,7 +276,7 @@ describe('ReferencesRoutes', () => {
             const {status, body} = await request.get('/preferences/1').set('Authorization', `Bearer ${authToken}`);
             // Assert
             expect(status).toEqual(200)
-            expect(body.message).toEqual('Ratings obatined successfully')
+            expect(body.message).toEqual('Ratings obtained successfully')
             expect(body.ratings[4]).toEqual(1)
             expect(body.ratings[2]).toEqual(1)
         });
