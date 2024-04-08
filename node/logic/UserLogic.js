@@ -1,4 +1,7 @@
 import UserModel from "../models/UserModel.js";
+import ListModel from '../models/ListModel.js';
+import PreferencesModel from '../models/PreferencesModel.js';
+import ListGameModel from '../models/ListGameModel.js';
 import bcrypt from "bcrypt";
 import {
   validateRequiredFields,
@@ -135,6 +138,31 @@ export const updateUserLogic = async (id, userData) => {
     await user.update(userData);
 
     return { success: true, user: user };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// delete a user
+export const deleteUserLogic = async (id) => {
+  try {
+    id = Number(id);
+    if (!id) {
+      throw new Error("Required id in number format");
+    }
+
+    const user = await UserModel.findByPk(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // delete relations
+    await ListModel.destroy({ where: { user_id: id } });
+    await ListGameModel.destroy({ where: { list_id: null } });
+    await PreferencesModel.destroy({ where: { user_id: id } });
+
+    await user.destroy();
+    return {success: true,};
   } catch (error) {
     return { success: false, error: error.message };
   }
