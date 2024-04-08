@@ -8,7 +8,7 @@ describe("ListRoutes", () => {
     await UserModel.destroy({ where: {} });
     await ListModel.destroy({ where: {} });
   });
-  describe("[ routes / list / :user_id ]", () => {
+  describe("[ routes / list / user / :user_id ]", () => {
     beforeAll(async () => {
       await UserModel.create({
         name: "test",
@@ -28,7 +28,7 @@ describe("ListRoutes", () => {
       // Arrange
 
       // Act
-      const { status, body } = await request.get("/list/1").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/user/1").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.length).toEqual(3);
@@ -41,7 +41,7 @@ describe("ListRoutes", () => {
       // Arrange
 
       // Act
-      const { status, body } = await request.get("/list/2").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/user/2").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
@@ -51,7 +51,7 @@ describe("ListRoutes", () => {
       // Arrange
 
       // Act
-      const { status, body } = await request.get("/list/uno").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/user/uno").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("User is required");
@@ -70,6 +70,8 @@ describe("ListRoutes", () => {
         password: "test",
         id: 1,
       });
+    })
+    beforeEach(async () => {
       await ListModel.create({ name: "test", user_id: 1, id: 1 });
     });
     it("should update desctiption of an existing list", async () => {
@@ -154,10 +156,41 @@ describe("ListRoutes", () => {
       expect(status).toEqual(400);
       expect(body.message).toEqual("Id is required");
     });
-    afterAll(async () => {
-      await ListModel.destroy({ where: {} });
-      await UserModel.destroy({ where: { id: 1 } });
+    it("should get information about a list with correct id", async () => {
+      // Arrage
+
+      // Act
+      const { status, body } = await request.get("/list/1").set('Authorization', `Bearer ${authToken}`);;
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("List obtained successfully");
+      expect(body.list.name).toEqual('test')
+      expect(body.list.description).toEqual("null")
     });
+    it("should NOT get information about a list with inexistent id", async () => {
+      // Arrage
+
+      // Act
+      const { status, body } = await request.get("/list/5").set('Authorization', `Bearer ${authToken}`);;
+      // Assert
+      expect(status).toEqual(404);
+      expect(body.message).toEqual("List not found");
+    });
+    it("should NOT get information about a list with incorrect data type id", async () => {
+      // Arrage
+
+      // Act
+      const { status, body } = await request.get("/list/uno").set('Authorization', `Bearer ${authToken}`);;
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Id is required");
+    });
+    afterEach(async () => {
+      await ListModel.destroy({ where: {} });
+    });
+    afterAll(async () => {
+      await UserModel.destroy({ where: { id: 1 } });
+    })
   });
   describe("[ routes / list ]", () => {
     beforeAll(async () => {
