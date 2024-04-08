@@ -4,7 +4,8 @@ import {
   updateRatingLogic,
   deleteRatingLogic,
   getRatingOfGameLogic,
-  getAllRatingLogic
+  getAllRatingLogic,
+  getGamesWithSpecificRatingLogic
 } from '../logic/PreferencesLogic.js';
 
 //----------------------------------------------------------------------
@@ -111,3 +112,25 @@ export const getAllRating = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// get all the games with specific rating
+// /preferences/games/:user_id?rating=:rating
+export const getGamesWithSpecificRating = async (req, res) => {
+  try {
+    const {user_id} = req.params
+    const {rating} = req.query
+    const result = await getGamesWithSpecificRatingLogic(user_id, rating)
+
+    if(result.success) {
+      res.status(200).json({ message: "Games obtained successfully", games: result.games });
+    } else{
+      let statusCode = 400;
+      if(result.error === 'User not found') {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ message: result.error })
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

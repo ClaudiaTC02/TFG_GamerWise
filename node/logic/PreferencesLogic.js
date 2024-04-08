@@ -1,6 +1,7 @@
 import PreferencesModel from "../models/PreferencesModel.js";
 import GameModel from "../models/GameModel.js";
 import UserModel from "../models/UserModel.js";
+import { where } from "sequelize";
 
 //----------------------------------------------------------------------
 // CRUD Methods
@@ -167,6 +168,50 @@ export const getAllRatingLogic = async (user_id) => {
     });
 
     return { success: true, ratings: ratingCounts };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// get all the games with specific rating
+export const getGamesWithSpecificRatingLogic = async (user_id, rating) => {
+  try {
+    const newUserId = Number(user_id);
+    if (!newUserId || rating === null || rating === undefined) {
+      throw new Error("Required fields not provided");
+    }
+
+    const newRating = Number(rating);
+    if (!Number.isInteger(newRating) || newRating < 1 || newRating > 5) {
+      throw new Error("Rating has to be an integer between 1 and 5");
+    }
+
+    const user = await UserModel.findByPk(newUserId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const games = await GameModel.findAll({
+      attributes: [
+        "id",
+        "name",
+        "company",
+        "gender",
+        "platforms",
+        "max_players",
+      ],
+      include: [
+        {
+          model: PreferencesModel,
+          where: {
+            user_id: newUserId,
+            rating: newRating,
+          },
+          required: true,
+        },
+      ],
+    });
+    console.log(games);
+    return { success: true, games: games };
   } catch (error) {
     return { success: false, error: error.message };
   }
