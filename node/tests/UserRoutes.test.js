@@ -1,6 +1,10 @@
 import testServer from "../utils/testServer.js";
 import userRoutes from "../routes/UserRoutes.js";
 import { hashPassword } from "../utils/userUtils.js";
+import ListModel from "../models/ListModel.js";
+import GameModel from "../models/GameModel.js";
+import ListGameModel from "../models/ListGameModel.js";
+import PreferencesModel from "../models/PreferencesModel.js";
 
 const request = testServer(userRoutes);
 
@@ -213,7 +217,7 @@ describe("UserRoutes", () => {
     });
   });
   describe('[ routes / user / : id]', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       const hashedPassword = await hashPassword("Password123?");
       await UserModel.create({
         name: "Claudia",
@@ -327,8 +331,64 @@ describe("UserRoutes", () => {
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
     });
-    afterAll(async () => {
+    it('should delete a user', async () => {
+      // Arrage
+      // Act
+      const { status, body } = await request.delete("/user/1").set('Authorization', `Bearer ${authToken}`);
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("User deleted successfully");
+    });
+    it('should delete a user with relations', async () => {
+      // Arrage
+      await ListModel.create({name: "test", id: 1, user_id: 1});
+      await GameModel.create({
+        name: "test",
+        company: "test company",
+        gender: "test gender",
+        platforms: "name, name",
+        max_players: 40,
+        id: 1,
+      });
+      await ListGameModel.create({list_id: 1, game_id: 1});
+      await PreferencesModel.create({rating: 1, user_id: 1, game_id: 1});
+      // Act
+      const { status, body } = await request.delete("/user/1").set('Authorization', `Bearer ${authToken}`);
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("User deleted successfully");
+      // verify relations delete
+      const listGameCount = await ListGameModel.count({ where: { list_id: 1 } });
+      expect(listGameCount).toEqual(0);
+      const preferencesCount = await PreferencesModel.count({ where: { user_id: 1 } });
+      expect(preferencesCount).toEqual(0);
+      const listCount = await ListModel.count({ where: { user_id: 1 } });
+      expect(listCount).toEqual(0);
+    });
+    it('should NOT delete an inexistent user', async () => {
+      // Arrage
+      // Act
+      const { status, body } = await request.delete("/user/5").set('Authorization', `Bearer ${authToken}`);
+      // Assert
+      expect(status).toEqual(404);
+      expect(body.message).toEqual("User not found");
+    });
+    it('should NOT delete a user with incorrect data type', async () => {
+      // Arrage
+      // Act
+      const { status, body } = await request.delete("/user/uno").set('Authorization', `Bearer ${authToken}`);
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Required id in number format");
+    });
+    afterEach(async () => {
       await UserModel.destroy({ where: {} });
     });
+    afterAll(async () => {
+      await UserModel.destroy({ where: {} });
+      await ListModel.destroy({ where: {} });
+      await GameModel.destroy({ where: {} });
+      await ListGameModel.destroy({ where: {} });
+    })
   });
 });
