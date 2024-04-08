@@ -17,7 +17,6 @@ describe("UserRoutes", () => {
       const { status, body } = await request.post("/user").send(user);
       // Assert
       expect(status).toEqual(201);
-      console.log(body.message);
       expect(body.message).toEqual("User created successfully");
     });
 
@@ -253,6 +252,80 @@ describe("UserRoutes", () => {
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Required id in number format");
+    });
+    it('should update only the name of a user', async () => {
+      // Arrage
+      const updateName = {name: "Maria"}
+      // Act
+      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateName);
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("User updated successfully");
+      expect(body.user.name).toEqual("Maria");
+    });
+    it('should update only the email of a user', async () => {
+      // Arrage
+      const updateEmail = {email: "maria@gmail.com"}
+      // Act
+      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateEmail);
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("User updated successfully");
+      expect(body.user.email).toEqual("maria@gmail.com");
+    });
+    it('should update only the password of a user', async () => {
+      // Arrage
+      const updatePassword = {password: "Maria1234?"}
+      // Act
+      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updatePassword);
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("User updated successfully");
+    });
+    it('should update the full user', async () => {
+      // Arrage
+      const updateUser = {name: 'John', email: 'foo@gmail.com', password: 'John1*2354'}
+      // Act
+      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      // Assert
+      expect(status).toEqual(200);
+      expect(body.message).toEqual("User updated successfully");
+    });
+    it('should NOT update the the fields with invalid type', async () => {
+      // Arrage
+      const updateUser = {name: true, email: 'foo@gmail.com', password: 'John1*2354'}
+      // Act
+      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Invalid data types in user data");
+    });
+    it('should NOT update the the fields with invalid email format', async () => {
+      // Arrage
+      const updateUser = {email: '@gmail.com'}
+      // Act
+      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Invalid email format");
+    });
+    it('should NOT update the the fields with invalid password format', async () => {
+      // Arrage
+      const updateUser = {password: 'aaaaa'}
+      // Act
+      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length");
+    });
+    it('should NOT update the the data of an inexistent user', async () => {
+      // Arrage
+      const updateUser = {password: 'Prueba1234^'}
+      // Act
+      const { status, body } = await request.put("/user/5").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      // Assert
+      expect(status).toEqual(404);
+      expect(body.message).toEqual("User not found");
     });
     afterAll(async () => {
       await UserModel.destroy({ where: {} });
