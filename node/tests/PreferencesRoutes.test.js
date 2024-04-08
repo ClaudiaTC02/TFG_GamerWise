@@ -3,7 +3,7 @@ import preferencesRoutes from "../routes/PreferencesRoutes.js";
 
 const request = testServer(preferencesRoutes);
 
-describe('ReferencesRoutes', () => {
+describe('PreferencesRoutes', () => {
     beforeEach(async () => {
         await UserModel.destroy({ where: {} });
         await GameModel.destroy({ where: {} });
@@ -295,6 +295,80 @@ describe('ReferencesRoutes', () => {
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Ids are required and in number format')
+        });
+    });
+    describe('[ routes / preferences / games / : user_id ? rating = : rating]', () => {
+        beforeEach(async() =>{
+            await GameModel.create({
+                name: "test2",
+                company: "test company",
+                gender: "test gender",
+                platforms: "name, name",
+                max_players: 40,
+                id: 2,
+            });
+            await GameModel.create({
+                name: "test3",
+                company: "test company",
+                gender: "test gender",
+                platforms: "name, name",
+                max_players: 10,
+                id: 3,
+            });
+            await PreferencesModel.create({ game_id:1, user_id:1, rating:2})
+            await PreferencesModel.create({ game_id:2, user_id:1, rating:4})
+            await PreferencesModel.create({ game_id:3, user_id:1, rating:2})
+        })
+        it('should get all the games with specific rating', async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/games/1?rating=2').set('Authorization', `Bearer ${authToken}`);
+            // Assert
+            expect(status).toEqual(200)
+            expect(body.message).toEqual('Games obtained successfully')
+            expect(body.games.length).toEqual(2)
+            expect(body.games[0].name).toEqual('test')
+        });
+        it('should NOT get any game if rating is not set and get error', async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/games/1').set('Authorization', `Bearer ${authToken}`);
+            // Assert
+            expect(status).toEqual(400)
+            expect(body.message).toEqual('Required fields not provided')
+        });
+        it('should NOT get games if there is not game for that rating and NOT get error', async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/games/1?rating=1').set('Authorization', `Bearer ${authToken}`);
+            // Assert
+            expect(status).toEqual(200)
+            expect(body.message).toEqual('Games obtained successfully')
+            expect(body.games.length).toEqual(0)
+        });
+        it('should NOT get games if rating is in decimal format', async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/games/1?rating=1.2').set('Authorization', `Bearer ${authToken}`);
+            // Assert
+            expect(status).toEqual(400)
+            expect(body.message).toEqual('Rating has to be an integer between 1 and 5')
+        });
+        it('should NOT get games if rating is in another incorrect format', async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/games/1?rating=dos').set('Authorization', `Bearer ${authToken}`);
+            // Assert
+            expect(status).toEqual(400)
+            expect(body.message).toEqual('Rating has to be an integer between 1 and 5')
+        });
+        it('should NOT get games if user does not exists', async () => {
+            // Arrange
+            // Act
+            const {status, body} = await request.get('/preferences/games/3?rating=2').set('Authorization', `Bearer ${authToken}`);
+            // Assert
+            expect(status).toEqual(404)
+            expect(body.message).toEqual('User not found')
         });
     });
     
