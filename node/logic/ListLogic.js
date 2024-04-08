@@ -83,6 +83,24 @@ export async function deleteListLogic(id) {
     }
 }
 
+// obatin list
+export async function getListLogic(id){
+    try {
+        if(!id){
+            throw new Error("Id is required");
+        }
+        if(!validateDataTypes({id})){
+            throw new Error("Invalid data type");
+        }
+        const list = await foundList(id)
+        if(!list){
+            throw new Error("List not found")
+        }
+        return {success:true, list: list}
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
 //----------------------------------------------------------------------
 // Modular functions
 //----------------------------------------------------------------------
