@@ -2,20 +2,16 @@
 import db from '../database/db.js'
 import DataType from 'sequelize'
 
-const ListModel = db.define('list', {
+const PreferencesModel = db.define('preferences', {
     //Atributes
-    name:{
-        type: DataType.STRING,
+    rating:{
+        type: DataType.INTEGER,
         allowNull: false
-    },
-    description:{
-        type: DataType.STRING,
-        // allow null true
-        defaultValue: 'null'
     }
 },{
     //Other model options
     freezeTableName: true, // stip the auto-pluralization 
     timestamps: false  
 })
-export default ListModel
+PreferencesModel.removeAttribute('id')
+export default PreferencesModel
