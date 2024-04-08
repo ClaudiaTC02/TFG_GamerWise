@@ -1,6 +1,14 @@
 import UserModel from "../models/UserModel.js";
-import bcrypt from 'bcrypt';
-import { validateRequiredFields, validateEmail, validateDataTypes, validatePassword, hashPassword, generateAuthToken } from '../utils/userUtils.js';
+import bcrypt from "bcrypt";
+import {
+  validateRequiredFields,
+  validateEmail,
+  validateDataTypes,
+  validatePassword,
+  hashPassword,
+  generateAuthToken,
+  validateDataTypesUpdate,
+} from "../utils/userUtils.js";
 
 //----------------------------------------------------------------------
 // CRUD Methods
@@ -9,7 +17,13 @@ import { validateRequiredFields, validateEmail, validateDataTypes, validatePassw
 // Create user logic
 export const createUserLogic = async (email, name, password) => {
   try {
-    if (!validateRequiredFields({ email, name, password },['email', 'name', 'password'])) {
+    if (
+      !validateRequiredFields({ email, name, password }, [
+        "email",
+        "name",
+        "password",
+      ])
+    ) {
       throw new Error("Required fields");
     }
 
@@ -21,15 +35,17 @@ export const createUserLogic = async (email, name, password) => {
       throw new Error("Invalid email format");
     }
 
-    if(!validatePassword(password)) {
-      throw new Error("Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length");
+    if (!validatePassword(password)) {
+      throw new Error(
+        "Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length"
+      );
     }
 
     const hashedPassword = await hashPassword(password);
     await UserModel.create({ email, name, password: hashedPassword });
     return { success: true };
   } catch (error) {
-    if (error.name === 'SequelizeUniqueConstraintError') {
+    if (error.name === "SequelizeUniqueConstraintError") {
       return { success: false, error: "Email already exists" };
     }
     return { success: false, error: error.message };
@@ -39,7 +55,7 @@ export const createUserLogic = async (email, name, password) => {
 // Login logic
 export const loginLogic = async (email, password) => {
   try {
-    if (!validateRequiredFields({ email, password },['email', 'password'])) {
+    if (!validateRequiredFields({ email, password }, ["email", "password"])) {
       throw new Error("Required fields");
     }
 
@@ -52,7 +68,7 @@ export const loginLogic = async (email, password) => {
     }
 
     const user = await UserModel.findOne({
-      where: { email: email }
+      where: { email: email },
     });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -80,6 +96,45 @@ export const getBasicInfoLogic = async (id) => {
     }
 
     return { success: true, info: { name: user.name } };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// Update a user
+export const updateUserLogic = async (id, userData) => {
+  try {
+    id = Number(id);
+    if (!id) {
+      throw new Error("Required id in number format");
+    }
+    const user = await UserModel.findByPk(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (!validateDataTypesUpdate(userData)) {
+      throw new Error("Invalid data types in user data");
+    }
+    if (userData.email) {
+      if (!validateEmail(userData.email)) {
+        throw new Error("Invalid email format");
+      }
+    }
+
+    if (userData.password) {
+      if (!validatePassword(userData.password)) {
+        console.log("Invalid password");
+        throw new Error(
+          "Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length"
+        );
+      }
+      const hashedPassword = await hashPassword(userData.password);
+      userData.password = hashedPassword;
+    }
+    await user.update(userData);
+
+    return { success: true, user: user };
   } catch (error) {
     return { success: false, error: error.message };
   }

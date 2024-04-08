@@ -210,7 +210,6 @@ export const getGamesWithSpecificRatingLogic = async (user_id, rating) => {
         },
       ],
     });
-    console.log(games);
     return { success: true, games: games };
   } catch (error) {
     return { success: false, error: error.message };

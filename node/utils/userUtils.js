@@ -33,6 +33,20 @@ export const validateDataTypes = (fields) => {
     return true;
 };
 
+export const validateDataTypesUpdate = (fields) => {
+    const dataTypesUpdate = {
+        email: ["string", "undefined"],
+        name: ["string", "undefined"],
+        password: ["string", "undefined"]
+    };
+    for (let key in fields) {
+        if (!dataTypesUpdate[key] || (!dataTypesUpdate[key].includes(typeof fields[key]))) {
+            return false;
+        }
+    }
+    return true;
+};
+
 export const validatePassword = (password) => {
     // Verify length
     if (password.length < 8) {
