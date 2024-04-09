@@ -1,10 +1,8 @@
 .input-container + .input-container {
-    margin-top: 20px; 
+    margin-top: 2rem; 
 }
 
 .input-container {
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -26,6 +24,8 @@
   border-bottom-color: #ff3d00;
   padding-left: 15px;
   padding-right: 35px;
+  width: 100%;
+  padding: 0.3rem;
 }
 
 .visibility-icon {
@@ -33,4 +33,10 @@
   right: 10px; 
   bottom: 5px;
   cursor: pointer;
+}
+
+@media (min-width: 1025px){
+    .input-wrapper input{
+        padding: 0.2rem;
+    }
 }

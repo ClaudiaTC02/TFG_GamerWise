@@ -27,3 +27,7 @@ export function eyeIcon() {
 export function eyeSlashIcon(){
     return <i className="bi bi-eye-slash-fill"></i>
 }
+
+export function steamIcon(){
+    return <i className="bi bi-steam"></i>
+}

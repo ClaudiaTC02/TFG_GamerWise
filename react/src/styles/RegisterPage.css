@@ -1,0 +1,99 @@
+.register-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+}
+
+h1 {
+  margin-top: 2rem;
+  margin-left: 2rem;
+  font-weight: bold;
+}
+
+.highlited-text {
+  color: #ff3d00;
+}
+
+.subtitle {
+  margin-left: 2rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 1rem 2rem 1rem;
+}
+
+.button-form {
+  margin-top: 2rem;
+  padding: 0.5rem;
+}
+
+.steam-container{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+}
+
+.steam-paragraph {
+  margin: 0 auto;
+  margin-top: 1rem;
+  font-size: 15px;
+}
+
+.steam-register {
+  margin: 0.3rem;
+  background-color: transparent;
+  border: 1px solid #ff3d00;
+  font-size: 2rem;
+  color: black;
+  padding: 0.3rem;
+}
+
+.login-paragraph {
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
+@media (min-width: 1025px) {
+  .register-container {
+    width: 50%;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+  .steam-register{
+    font-size: 1.5rem;
+    padding: 0.2rem 3rem;
+  }
+  .steam-paragraph{
+    margin-top: 0.3rem;
+  }
+  .login-paragraph{
+    margin-top: 1.5rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+  }
+}
