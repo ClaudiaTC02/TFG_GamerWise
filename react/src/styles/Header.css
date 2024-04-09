@@ -50,6 +50,7 @@ header {
   color: black;
   font-size: 2rem;
   cursor: pointer;
+  padding: 0;
 }
 
 @media screen and (max-width: 550px) {

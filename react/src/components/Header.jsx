@@ -1,29 +1,63 @@
 import "../styles/Header.css";
 
 import logo from "../assets/logo_gamerwise.png";
+
 import { useState } from "react";
-export function Header() {
-    const [navClassName, setNavClassName] = useState("nav");
-    const handleOpenMenu = () => {
-        setNavClassName("nav visible")
+import { useNavigate } from "react-router-dom";
+
+export function Header({ isLanding }) {
+  const navigate = useNavigate();
+  const handleLogo = () => {
+    if (isLanding) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      navigate("/");
     }
-    const handleCloseMenu = () => {
-        setNavClassName('nav')
-    }
+  };
   return (
     <header>
-      <img className="logo" src={logo} alt="logo gamerwise buho" />
-      <div className="options-container">
-        <button className="register-button" href='/register'>Sign in</button>
-        <button className="open-menu" onClick={() => handleOpenMenu()}><i className="bi bi-list"></i></button>
-        <nav className={navClassName}>
-          <button className="close-menu" onClick={() => handleCloseMenu()}><i className="bi bi-x"></i></button>
-          <ul className="nav-list">
-            <li>Inicio</li>
-            <li>Posibilidades</li>
-          </ul>
-        </nav>
-      </div>
+      <a href="/" onClick={handleLogo}>
+        <img className="logo" src={logo} alt="logo gamerwise buho" />
+      </a>
+      {isLanding && <LandingHeader />}
     </header>
   );
 }
+
+const LandingHeader = () => {
+  const [navClassName, setNavClassName] = useState("nav");
+  const navigate = useNavigate();
+
+  const handleOpenMenu = () => {
+    setNavClassName("nav visible");
+  };
+  const handleCloseMenu = () => {
+    setNavClassName("nav");
+  };
+  const handleSignIn = () => {
+    navigate("/register");
+  };
+  return (
+    <div className="options-container">
+      <button className="register-button" onClick={handleSignIn}>
+        Sign in
+      </button>
+      <button className="open-menu" onClick={handleOpenMenu}>
+        <i className="bi bi-list"></i>
+      </button>
+      <nav className={navClassName}>
+        <button className="close-menu" onClick={handleCloseMenu}>
+          <i className="bi bi-x"></i>
+        </button>
+        <ul className="nav-list">
+          <li>
+            <a>Inicio</a>
+          </li>
+          <li>
+            <a>Posibilidades</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
