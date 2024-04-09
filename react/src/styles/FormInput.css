@@ -1,0 +1,36 @@
+.input-container + .input-container {
+    margin-top: 20px; 
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  max-width: 2rem;
+  margin-right: 0.5rem;
+}
+
+.input-wrapper input {
+  background-color: #f7f7f7;
+  border-style: none none solid none;
+  border-bottom-width: 1px;
+  border-bottom-color: #ff3d00;
+  padding-left: 15px;
+  padding-right: 35px;
+}
+
+.visibility-icon {
+  position: absolute;
+  right: 10px; 
+  bottom: 5px;
+  cursor: pointer;
+}

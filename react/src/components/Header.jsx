@@ -1,7 +1,6 @@
 import "../styles/Header.css";
 
-import logo from "../assets/logo_gamerwise.png";
-
+import { logoIcon } from "./Icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +16,7 @@ export function Header({ isLanding }) {
   return (
     <header>
       <a href="/" onClick={handleLogo}>
-        <img className="logo" src={logo} alt="logo gamerwise buho" />
+        <img className="logo" src={logoIcon()} alt="logo gamerwise buho" />
       </a>
       {isLanding && <LandingHeader />}
     </header>
