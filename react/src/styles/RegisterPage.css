@@ -73,6 +73,11 @@ form {
   margin-top: 3rem;
 }
 
+.error-message{
+  margin: 0 auto;
+  color: red;
+}
+
 @media (min-width: 1025px) {
   .register-container {
     width: 50%;

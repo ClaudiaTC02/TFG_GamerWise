@@ -1,6 +1,6 @@
 import "../styles/FormInput.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   userIcon,
   emailIcon,
@@ -11,6 +11,12 @@ import {
 
 export function FormInput({ children, type, name, register, errors, isSubmitted, passwordValue }) {
   const [visibility, setVisibility] = useState(false);
+  const [inputType, setInputType] = useState(type);
+
+  useEffect(() => {
+    setInputType(visibility ? "text" : "password");
+  }, [visibility]);
+
 
   const getIcon = () => {
     switch (type) {
@@ -64,7 +70,7 @@ export function FormInput({ children, type, name, register, errors, isSubmitted,
     <div className="input-container">
       <div className="input-wrapper">
         {icon && <img className="icon" src={icon} alt={`icon of ${icon}`} />}
-        <input placeholder={children} type={type} {...register(name, validationRules)} />
+        <input placeholder={children} type={type === "password" ? inputType : type} {...register(name, validationRules)} />
         {type === "password" && (
           <a onClick={handleShowHide}>
             <span className="visibility-icon">{visibility ? eyeSlashIcon() : eyeIcon()}</span>
