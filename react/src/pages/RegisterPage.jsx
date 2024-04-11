@@ -1,13 +1,12 @@
 import { FormInput } from "../components/FormInput";
 import { AuthSection } from "../components/AuthSection";
 
-import { texts } from "../constants/textRegister";
-
 import { useForm } from "react-hook-form";
 
 import { useAuth } from "../hooks/useAuth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterPage() {
   const {
@@ -18,6 +17,21 @@ export default function RegisterPage() {
   } = useForm();
   const { signUp, error, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation("register");
+
+  const texts = {
+    title: t("title"),
+    highlited: t("highlited"),
+    subtitle: t("subtitle"),
+    buttonText: t("buttonText"),
+    steamText: t("steamText"),
+    questionText: t("questionText"),
+    actionText: t("actionText"),
+    usernameInput: t("usernameInput"),
+    emailInput: t("emailInput"),
+    passwordInput: t("passwordInput"),
+    repeatPasswordInput: t("repeatPasswordInput")
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
