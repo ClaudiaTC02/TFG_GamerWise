@@ -6,10 +6,19 @@ import { steamIcon } from "../components/Icons";
 import { useForm } from "react-hook-form";
 
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
   const { register, handleSubmit,watch, formState: { errors, isSubmitted } } = useForm();
-  const {signUp, error} = useAuth()
+  const {signUp, error, isAuthenticated} = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate("/logged");
+    }
+  }, [isAuthenticated, navigate])
 
   const onSubmit = async (data) => {
       signUp(data);

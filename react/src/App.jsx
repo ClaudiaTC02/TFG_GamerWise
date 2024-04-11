@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import LandingPage from './pages/LandingPage.jsx'
+import LandingLogged from './pages/LandingLogged.jsx'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<LandingPage/>}/>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/register" element={<RegisterPage/>}/>
+          <Route path="/logged" element={<LandingLogged/>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
