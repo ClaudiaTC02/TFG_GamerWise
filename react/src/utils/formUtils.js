@@ -7,7 +7,7 @@ import {
 export function getValidationRules(name, passwordValue) {
     switch (name) {
       case "name":
-        return { required: "Username is required", minLength: { value: 6, message: "Username must be at least 6 characters" } };
+        return { required: "Username is required", minLength: { value: 4, message: "Username must be at least 4 characters" } };
       case "email":
         return { required: "Email is required", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } };
       case "password":
