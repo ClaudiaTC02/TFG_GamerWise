@@ -38,7 +38,7 @@ const LandingHeader = () => {
     setNavClassName("nav");
   };
   const handleSignIn = () => {
-    navigate("/register");
+    navigate("/login");
   };
   return (
     <div className="options-container">

@@ -44,7 +44,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <AuthSection texts={texts} onSubmit={handleSubmit(onSubmit)} error={error}>
+    <AuthSection texts={texts} onSubmit={handleSubmit(onSubmit)} error={error} actionRoute='/login'>
       <FormInput
         type="text"
         name="name"

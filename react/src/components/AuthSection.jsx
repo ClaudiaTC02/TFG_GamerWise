@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import "../styles/AuthSection.css";
 import { Header } from "./Header";
 import { steamIcon } from "./Icons";
 
-export function AuthSection({ texts, onSubmit, children, error }) {
+export function AuthSection({ texts, onSubmit, children, error, actionRoute }) {
   return (
     <section>
       <Header />
@@ -28,7 +29,7 @@ export function AuthSection({ texts, onSubmit, children, error }) {
         </div>
         <p className="final-paragraph">
           {texts.questionText}{" "}
-          <a className="highlited-text">{texts.actionText}</a>
+          <Link to={actionRoute} className="highlited-text">{texts.actionText}</Link>
         </p>
       </div>
     </section>
