@@ -58,7 +58,7 @@ describe("ListRoutes", () => {
     });
     afterAll(async () => {
       await ListModel.destroy({ where: {} });
-      await UserModel.destroy({ where: { id: 1 } });
+      await UserModel.destroy({ where: {} });
     });
   });
 
@@ -296,4 +296,7 @@ describe("ListRoutes", () => {
       await ListModel.destroy({ where: {} });
     });
   });
+  afterAll(async () => {
+    await UserModel.destroy({ where: {} });
+  })
 });
