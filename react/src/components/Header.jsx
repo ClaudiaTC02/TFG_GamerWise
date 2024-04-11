@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import "../styles/Header.css";
 
 import { logoIcon } from "./Icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LanguageSelector from "./LanguageSelector";
 
 export function Header({ isLanding }) {
   const navigate = useNavigate();
@@ -19,12 +21,14 @@ export function Header({ isLanding }) {
         <img className="logo" src={logoIcon()} alt="logo gamerwise buho" />
       </a>
       {isLanding && <LandingHeader />}
+      {!isLanding && <LanguageSelector />}
     </header>
   );
 }
 
 const LandingHeader = () => {
   const [navClassName, setNavClassName] = useState("nav");
+  const { t } = useTranslation("header");
   const navigate = useNavigate();
 
   const handleOpenMenu = () => {
@@ -39,7 +43,7 @@ const LandingHeader = () => {
   return (
     <div className="options-container">
       <button className="register-button" onClick={handleSignIn}>
-        Sign in
+        {t("button")}
       </button>
       <button className="open-menu" onClick={handleOpenMenu}>
         <i className="bi bi-list"></i>
@@ -50,10 +54,15 @@ const LandingHeader = () => {
         </button>
         <ul className="nav-list">
           <li>
-            <a>Inicio</a>
+            <a>{t("home")}</a>
           </li>
           <li>
-            <a>Posibilidades</a>
+            <a>{t("posibilities")}</a>
+          </li>
+          <li>
+            <a>
+              <LanguageSelector />
+            </a>
           </li>
         </ul>
       </nav>
