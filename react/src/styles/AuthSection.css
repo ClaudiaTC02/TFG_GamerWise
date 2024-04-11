@@ -1,4 +1,4 @@
-.register-container {
+.auth-container {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -68,7 +68,7 @@ form {
   padding: 0.3rem;
 }
 
-.login-paragraph {
+.final-paragraph {
   margin: 0 auto;
   margin-top: 3rem;
 }
@@ -79,10 +79,9 @@ form {
 }
 
 @media (min-width: 1025px) {
-  .register-container {
+  .auth-container {
     width: 50%;
   }
-
   h1 {
     font-size: 1.8rem;
   }
@@ -93,7 +92,7 @@ form {
   .steam-paragraph{
     margin-top: 0.3rem;
   }
-  .login-paragraph{
+  .final-paragraph{
     margin-top: 1.5rem;
   }
   form {
