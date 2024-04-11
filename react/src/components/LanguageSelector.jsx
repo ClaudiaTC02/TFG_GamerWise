@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../hooks/useLanguage";
 
 function LanguageSelector() {
-  const { i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem("language") || navigator.language.substring(0, 2)
-  );
-
-  useEffect(() => {
-    i18n.changeLanguage(selectedLanguage);
-  }, [i18n, selectedLanguage]);
+    const { language, setLanguage } = useLanguage()
 
   const handleChangeLanguage = (e) => {
     const newLanguage = e.target.value;
-    setSelectedLanguage(newLanguage);
-    localStorage.setItem("language", newLanguage);
+    setLanguage(newLanguage);
   };
 
   return (
-    <select value={selectedLanguage} onChange={handleChangeLanguage}>
+    <select className="form-select" style={{display: 'inline', width: 'fit-content', margin: '0 1rem 0 0'}} value={language} onChange={handleChangeLanguage}>
       <option value="en">English</option>
       <option value="es">Español</option>
     </select>
