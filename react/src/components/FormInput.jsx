@@ -2,12 +2,10 @@ import "../styles/FormInput.css";
 
 import { useState, useEffect } from "react";
 import {
-  userIcon,
-  emailIcon,
-  passwordIcon,
   eyeIcon,
   eyeSlashIcon,
 } from "./Icons.jsx";
+import { getIcon, getValidationRules } from "../utils/formUtils.js";
 
 export function FormInput({ children, type, name, register, errors, isSubmitted, passwordValue }) {
   const [visibility, setVisibility] = useState(false);
@@ -17,54 +15,12 @@ export function FormInput({ children, type, name, register, errors, isSubmitted,
     setInputType(visibility ? "text" : "password");
   }, [visibility]);
 
-
-  const getIcon = () => {
-    switch (type) {
-      case "text":
-        return userIcon();
-      case "email":
-        return emailIcon();
-      case "password":
-        return passwordIcon();
-      default:
-        return null;
-    }
-  };
-
-  let validationRules = {};
-  switch (name) {
-    case "name":
-      validationRules = { required: "Username is required", minLength: { value: 6, message: "Username must be at least 6 characters" } };
-      break;
-    case "email":
-      validationRules = { required: "Email is required", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } };
-      break;
-    case "password":
-      validationRules = { 
-        required: "Password is required", 
-        minLength: { value: 8, message: "Password must be at least 8 characters" },
-        validate: {
-          uppercase: value => /[A-Z]/.test(value) || "Password must contain at least one uppercase letter",
-          lowercase: value => /[a-z]/.test(value) || "Password must contain at least one lowercase letter",
-          symbol: value => /[!@#$%^&*(),.?":{}|<>]/.test(value) || "Password must contain at least one symbol"
-        }
-      };
-      break;
-    case "password-repeat":
-      validationRules = { 
-        required: "Please repeat your password",
-        validate: value => value === passwordValue || "Passwords do not match"
-      };
-      break;
-    default:
-      break;
-  }
-
   const handleShowHide = () => {
     setVisibility(!visibility);
   };
 
-  const icon = getIcon();
+  const validationRules = getValidationRules(name, passwordValue);
+  const icon = getIcon(type);
 
   return (
     <div className="input-container">
