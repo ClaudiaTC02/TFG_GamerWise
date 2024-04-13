@@ -11,11 +11,11 @@ export default function LoginPage() {
     formState: { errors, isSubmitted },
   } = useForm();
 
-  const {error} = useAuth();
+  const {error, signIn} = useAuth();
   const { t } = useTranslation("login");
 
   const onSubmit = async (data) => {
-    console.log(data);
+    signIn(data);
   };
 
   const texts = {

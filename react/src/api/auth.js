@@ -11,3 +11,13 @@ export const registerRequest = async (user) => {
         throw new Error(error.response.data.message); 
     }
 }
+
+export const loginRequest = async (user) => {
+    try {
+        const res = await axios.post(`${API}/user/login`, user);
+        return res.data
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.response.data.message); 
+    }
+}
