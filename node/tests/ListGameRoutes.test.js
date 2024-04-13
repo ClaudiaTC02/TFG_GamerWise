@@ -78,9 +78,9 @@ describe("ListGameRoutes", () => {
         await ListGameModel.destroy({ where: {} });
     });
     afterAll(async () => {
-        await UserModel.destroy({ where: { id: 2} });
-        await ListModel.destroy({ where: { id: 1} });
-        await GameModel.destroy({ where: { id: 1} });
+        await UserModel.destroy({ where: {} });
+        await ListModel.destroy({ where: {} });
+        await GameModel.destroy({ where: {} });
         await ListGameModel.destroy({ where: {} });
     });
   });
@@ -218,6 +218,7 @@ describe("ListGameRoutes", () => {
     });
 
     afterAll(async () => {
+      await UserModel.destroy({ where: {}});
       await ListGameModel.destroy({ where: {} });
     });
   });
