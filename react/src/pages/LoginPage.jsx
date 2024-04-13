@@ -3,20 +3,29 @@ import { AuthSection } from "../components/AuthSection";
 import { FormInput } from "../components/FormInput";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
   } = useForm();
 
-  const {error, signIn} = useAuth();
+  const {error, signIn, isAuthenticated} = useAuth();
   const { t } = useTranslation("login");
 
   const onSubmit = async (data) => {
     signIn(data);
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/logged");
+    }
+  }, [isAuthenticated, navigate]);
 
   const texts = {
     title: t("title"),

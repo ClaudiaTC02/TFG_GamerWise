@@ -35,7 +35,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/logged");
+      navigate("/login");
     }
   }, [isAuthenticated, navigate]);
 
