@@ -31,7 +31,7 @@ const getLatestReleasesLogic = async () => {
   try {
     const currentTime = Math.floor(Date.now()/ 1000);
     const response = await apicalypse(requestOptions)
-      .fields("game.name, date")
+      .fields("game.name, game.platforms.abbreviation, game.cover.url")
       .where(`date < ${currentTime}`)
       .limit(10)
       .sort("date", "desc")

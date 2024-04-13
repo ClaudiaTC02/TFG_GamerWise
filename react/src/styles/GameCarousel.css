@@ -1,0 +1,29 @@
+.game-container{
+    padding: 1rem;
+    width: 21vh;
+    border: 2px solid #EF4F23;
+}
+.info-game-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.game-img {
+    max-width: 7.5rem;
+}
+
+.game-name {
+    margin-top: 0.5rem;
+    font-size: 20px;
+}
+
+.game-platforms {
+    display: flex;
+    align-items: start;
+    justify-content: space-around;
+}
+
+.platform {
+    max-width: 2rem;
+}
+
