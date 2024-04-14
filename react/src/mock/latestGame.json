@@ -1,0 +1,196 @@
+[
+    {
+        "id": 576334,
+        "date": 1712966400,
+        "game": {
+            "id": 292923,
+            "cover": {
+                "id": 370879,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co7y67.jpg"
+            },
+            "first_release_date": 1712966400,
+            "name": "Overdelivery: Delivery Simulator",
+            "platforms": [
+                {
+                    "id": 130,
+                    "abbreviation": "Switch"
+                }
+            ]
+        }
+    },
+    {
+        "id": 584021,
+        "date": 1712880000,
+        "game": {
+            "id": 297456,
+            "cover": {
+                "id": 376966,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co82va.jpg"
+            },
+            "first_release_date": 1712880000,
+            "name": "Rubber Bandits: Animal Bandits",
+            "platforms": [
+                {
+                    "id": 49,
+                    "abbreviation": "XONE"
+                },
+                {
+                    "id": 169,
+                    "abbreviation": "Series X"
+                }
+            ]
+        }
+    },
+    {
+        "id": 584020,
+        "date": 1712880000,
+        "game": {
+            "id": 297456,
+            "cover": {
+                "id": 376966,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co82va.jpg"
+            },
+            "first_release_date": 1712880000,
+            "name": "Rubber Bandits: Animal Bandits",
+            "platforms": [
+                {
+                    "id": 49,
+                    "abbreviation": "XONE"
+                },
+                {
+                    "id": 169,
+                    "abbreviation": "Series X"
+                }
+            ]
+        }
+    },
+    {
+        "id": 584017,
+        "date": 1712880000,
+        "game": {
+            "id": 297455,
+            "cover": {
+                "id": 376963,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co82v7.jpg"
+            },
+            "first_release_date": 1712880000,
+            "name": "Gas Station Simulator, Airstrip DLC and Can Touch This DLC Bundle",
+            "platforms": [
+                {
+                    "id": 49,
+                    "abbreviation": "XONE"
+                }
+            ]
+        }
+    },
+    {
+        "id": 583597,
+        "date": 1712880000,
+        "game": {
+            "id": 291347,
+            "cover": {
+                "id": 376754,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co82pe.jpg"
+            },
+            "first_release_date": 1712880000,
+            "name": "Wacky Burgers",
+            "platforms": [
+                {
+                    "id": 6,
+                    "abbreviation": "PC"
+                }
+            ]
+        }
+    },
+    {
+        "id": 583360,
+        "date": 1712880000,
+        "game": {
+            "id": 297166,
+            "first_release_date": 1712880000,
+            "name": "Hamster Inn",
+            "platforms": [
+                {
+                    "id": 34,
+                    "abbreviation": "Android"
+                },
+                {
+                    "id": 39,
+                    "abbreviation": "iOS"
+                }
+            ]
+        }
+    },
+    {
+        "id": 583034,
+        "date": 1712880000,
+        "game": {
+            "id": 274567,
+            "cover": {
+                "id": 367982,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co7vxq.jpg"
+            },
+            "first_release_date": 1712880000,
+            "name": "Tinkerlands: A Shipwrecked Adventure",
+            "platforms": [
+                {
+                    "id": 6,
+                    "abbreviation": "PC"
+                }
+            ]
+        }
+    },
+    {
+        "id": 580992,
+        "date": 1712880000,
+        "game": {
+            "id": 295699,
+            "first_release_date": 1712880000,
+            "name": "Color Road: Sweet & Shiny",
+            "platforms": [
+                {
+                    "id": 130,
+                    "abbreviation": "Switch"
+                }
+            ]
+        }
+    },
+    {
+        "id": 580982,
+        "date": 1712880000,
+        "game": {
+            "id": 295690,
+            "cover": {
+                "id": 375620,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co81tw.jpg"
+            },
+            "first_release_date": 1712880000,
+            "name": "Farmyard Haven",
+            "platforms": [
+                {
+                    "id": 130,
+                    "abbreviation": "Switch"
+                }
+            ]
+        }
+    },
+    {
+        "id": 580981,
+        "date": 1712880000,
+        "game": {
+            "id": 295689,
+            "cover": {
+                "id": 374847,
+                "url": "//images.igdb.com/igdb/image/upload/t_thumb/co818f.jpg"
+            },
+            "first_release_date": 1712880000,
+            "name": "Exploration Adventures",
+            "platforms": [
+                {
+                    "id": 130,
+                    "abbreviation": "Switch"
+                }
+            ]
+        }
+    }
+]

@@ -6,6 +6,10 @@ import nintendo from "../assets/nintendo.png"
 import playstation from "../assets/playstation-logotype.png"
 import xbox from "../assets/xbox-logo.png"
 import pc from "../assets/computer.png"
+import defaultCover from"../assets/defaultCover.png";
+import android from"../assets/android.png";
+import ios from"../assets/apple.png";
+
 
 export function logoIcon() {
     return logo
@@ -49,4 +53,16 @@ export function xboxIcon(){
 
 export function pcIcon(){
     return pc
+}
+
+export function defaultCoverIcon(){
+    return defaultCover
+}
+
+export function androidIcon(){
+    return android
+}
+
+export function iosIcon(){
+    return ios
 }
