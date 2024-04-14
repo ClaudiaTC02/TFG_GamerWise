@@ -1,0 +1,26 @@
+.carousel-section {
+  margin-left: 2rem;
+}
+.carousel-title {
+  font-size: 30px;
+}
+.carousel-line {
+  margin-top: 0;
+  margin-left: 2rem;
+  height: 2px;
+  width: 100px;
+  border: 2px solid #ef4f23;
+  opacity: 1;
+}
+.carousel {
+  margin-left: 2rem;
+  margin-right: 3.5rem;
+}
+
+.slick-prev {
+    left: -35px !important;
+}
+
+.slick-prev:before, .slick-next:before{
+    color:black !important;
+}
