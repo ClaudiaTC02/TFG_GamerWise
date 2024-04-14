@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 export function CarouselSection({ gamesData }) {
   const uniqueGames = new Set();
-  // Configuración del carousel
+
   const settings = {
     dots: true,
     infinite: true,
@@ -27,7 +27,7 @@ export function CarouselSection({ gamesData }) {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
           initialSlide: 1,
         },

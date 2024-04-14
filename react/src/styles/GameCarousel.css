@@ -1,22 +1,22 @@
 .game-container {
-  padding: 1rem;
-  width: 21vh;
+    padding: 0.5rem;
+  margin: 0.3rem;
   border: 2px solid #ef4f23;
 }
 .info-game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 12.5rem;
+  height: 10rem;
 }
 .game-img {
-  max-width: 7rem;
-  height: 8.5rem;
+  max-width: 4.5rem;
+  height: 6.5rem;
 }
 
 .game-name {
   margin-top: 0.5rem;
-  font-size: 17px;
+  font-size: 13px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; 
@@ -31,12 +31,24 @@
 }
 
 .platform {
-  max-width: 2rem;
+  max-width: 1.3rem;
 }
-.game-container:first-child {
-    margin-right: 1rem; 
-  }
 
-.game-container + .game-container {
-  margin-right: 1rem;
-}
+@media (min-width: 1025px) {
+      .game-img {
+        max-width: 7rem;
+        height: 8.5rem;
+      }
+      .game-name {
+        font-size: 17px;
+      }
+      .info-game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 12.5rem;
+      }
+      .platform {
+        max-width: 2rem;
+      }
+  }

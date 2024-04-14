@@ -1,26 +1,43 @@
 .carousel-section {
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 .carousel-title {
-  font-size: 30px;
+  font-size: 25px;
 }
 .carousel-line {
   margin-top: 0;
   margin-left: 2rem;
   height: 2px;
-  width: 100px;
+  width: 80px;
   border: 2px solid #ef4f23;
   opacity: 1;
 }
 .carousel {
-  margin-left: 2rem;
-  margin-right: 3.5rem;
+  margin-left: 1.7rem;
+  margin-right: 3.7rem;
 }
 
 .slick-prev {
-    left: -35px !important;
+  left: -35px !important;
 }
 
-.slick-prev:before, .slick-next:before{
-    color:black !important;
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}
+
+@media (min-width: 1025px) {
+  .carousel-section {
+    margin-left: 2rem;
+  }
+  .carousel {
+    margin-left: 2rem;
+    margin-right: 3.5rem;
+  }
+  .carousel-title {
+    font-size: 30px;
+  }
+  .carousel-line {
+    width: 100px;
+  }
 }
