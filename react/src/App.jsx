@@ -8,6 +8,7 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import LandingLogged from "./pages/LandingLogged.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
+import { GameDetailPage } from "./pages/GameDetailPage.jsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/logged" element={<LandingLogged />} />
           </Route>
+          <Route path="/game/:id" element={<GameDetailPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

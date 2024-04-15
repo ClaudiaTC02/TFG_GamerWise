@@ -3,10 +3,11 @@
 }
 .carousel-title {
   font-size: 25px;
+  margin-left: 1rem;
 }
 .carousel-line {
   margin-top: 0;
-  margin-left: 2rem;
+  margin-left: 1rem;
   height: 2px;
   width: 80px;
   border: 2px solid #ef4f23;
