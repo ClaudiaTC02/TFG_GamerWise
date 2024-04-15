@@ -1,5 +1,5 @@
 .carousel-section {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 .carousel-title {
   font-size: 25px;
@@ -13,20 +13,32 @@
   opacity: 1;
 }
 .carousel {
-  margin-left: 1.7rem;
-  margin-right: 3.7rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
-.slick-prev {
-  left: -35px !important;
+.slick-prev ,
+.slick-next {
+  display: none !important;
 }
 
+.slick-dots{
+  position: relative !important;
+  bottom: 0 !important;
+}
 .slick-prev:before,
 .slick-next:before {
   color: black !important;
 }
 
 @media (min-width: 1025px) {
+  .slick-prev {
+    display: block !important;
+    left: -35px !important;
+  }
+  .slick-next{
+    display: block !important;
+  }
   .carousel-section {
     margin-left: 2rem;
   }
