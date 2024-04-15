@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { API } from '../utils/constants';
 
-export const registerRequest = async (user) => {
+export const getLatestGamesRequest = async () => {
     try {
-        const res = await axios.post(`${API}/user`, user);
+        const res = await axios.get(`${API}/igdb/latest`);
         return res.data;
     } catch (error) {
         console.log(error);
@@ -11,9 +11,9 @@ export const registerRequest = async (user) => {
     }
 }
 
-export const loginRequest = async (user) => {
+export const getUpcommingGamesRequest = async () => {
     try {
-        const res = await axios.post(`${API}/user/login`, user);
+        const res = await axios.get(`${API}/igdb/upcoming`);
         return res.data
     } catch (error) {
         console.log(error);
