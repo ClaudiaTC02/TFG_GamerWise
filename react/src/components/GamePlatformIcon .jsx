@@ -5,6 +5,7 @@ import {
   xboxIcon,
   androidIcon,
   iosIcon,
+  vrIcon,
 } from "./Icons";
 export function GamePlatformIcon({ platform }) {
   let iconSrc = "";
@@ -16,7 +17,7 @@ export function GamePlatformIcon({ platform }) {
     case "PC":
       iconSrc = pcIcon();
       break;
-    case "Playstation":
+    case "PlayStation":
       iconSrc = playstationIcon();
       break;
     case "Xbox":
@@ -27,6 +28,9 @@ export function GamePlatformIcon({ platform }) {
       break;
     case "iOS":
       iconSrc = iosIcon();
+      break;
+    case "VR":
+      iconSrc = vrIcon();
       break;
     default:
       break;

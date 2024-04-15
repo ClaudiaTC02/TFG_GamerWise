@@ -9,7 +9,7 @@ import pc from "../assets/computer.png"
 import defaultCover from"../assets/defaultCover.png";
 import android from"../assets/android.png";
 import ios from"../assets/apple.png";
-
+import vr from"../assets/vr.png";
 
 export function logoIcon() {
     return logo
@@ -65,4 +65,8 @@ export function androidIcon(){
 
 export function iosIcon(){
     return ios
+}
+
+export function vrIcon(){
+    return vr
 }

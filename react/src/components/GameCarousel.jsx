@@ -9,6 +9,10 @@ export function GameCarousel({ game }) {
     XONE: "Xbox",
     "Series X": "Xbox",
     Switch: "Nintendo",
+    Linux: 'PC',
+    Mac : 'PC',
+    "Meta Quest 2": 'VR',
+    PSVR2: 'VR'
   };
   const uniquePlatforms = new Set();
 

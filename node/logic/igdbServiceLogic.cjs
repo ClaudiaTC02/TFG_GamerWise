@@ -47,10 +47,11 @@ const getLatestReleasesLogic = async () => {
 const getUpcomingReleasesLogic = async () => {
   try {
     const currentTime = Math.floor(Date.now()/ 1000);
+    const oneWeekAfter = currentTime + (7 * 24 * 60 * 60);
     const response = await apicalypse(requestOptions)
-      .fields("game.name, date")
-      .where(`date > ${currentTime}`)
-      .limit(10)
+      .fields("game.name, game.platforms.abbreviation, game.cover.url, date, game.first_release_date")
+      .where(`game.first_release_date < ${oneWeekAfter} & game.first_release_date > ${currentTime} & date > ${currentTime}`)
+      .limit(30)
       .sort("date", "asc")
       .request("/release_dates");
     return { success: true, data: response.data };
