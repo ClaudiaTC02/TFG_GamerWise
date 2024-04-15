@@ -78,7 +78,7 @@ const searchGameByNameLogic = async (name) => {
 const getGameDetailsLogic = async (name) => {
   try {
     const response = await apicalypse(requestOptions)
-      .fields("name, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinecoopmax, multiplayer_modes.onlinemax")
+      .fields("name, summary, cover.url, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinecoopmax, multiplayer_modes.onlinemax")
       .search(name)
       .limit(1)
       .request("/games");

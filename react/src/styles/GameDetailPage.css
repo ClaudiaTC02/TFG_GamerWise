@@ -54,11 +54,11 @@ i{
 .detail-title{
     margin: 0;
     margin-top: 0.5rem;
-    font-size: 21px;
+    font-size: 20px;
 }
 .detail-subtitle{
     margin-top: 0.3rem;
-    font-size: 17px;
+    font-size: 12px;
     opacity: 0.5;
 }
 .detail-gender{
@@ -75,5 +75,5 @@ i{
     font-weight: bold;
 }
 .detail-text-description{
-    font-size: 16px;
+    font-size: 14px;
 }

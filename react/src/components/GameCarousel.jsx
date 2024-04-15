@@ -29,12 +29,12 @@ export function GameCarousel({ game }) {
   const date = moment.unix(game.game.first_release_date).format("DD/MM/YYYY");
 
   return (
-    <Link to={`/game/${game.game.id}`} className="game-link" style={{'textDecoration': 'none', 'color': 'inherit'}}>
+    <Link to={`/game/${game.game.name}`} className="game-link" style={{'textDecoration': 'none', 'color': 'inherit'}}>
       <div className="game-container">
         <div className="info-game-container">
           <img
             className="game-img"
-            src={game.game.cover ? game.game.cover.url : defaultCoverIcon()}
+            src={game.game.cover ? game.game.cover.url.replace("t_thumb", "t_cover_big") : defaultCoverIcon()}
             alt={game.game.name}
           />
           <div>

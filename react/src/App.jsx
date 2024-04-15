@@ -21,7 +21,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/logged" element={<LandingLogged />} />
           </Route>
-          <Route path="/game/:id" element={<GameDetailPage />} />
+          <Route path="/game/:name" element={<GameDetailPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
