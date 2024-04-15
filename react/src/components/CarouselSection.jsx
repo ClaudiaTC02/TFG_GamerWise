@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export function CarouselSection({ gamesData }) {
+export function CarouselSection({ gamesData, text }) {
   console.log(gamesData)
   if (!Array.isArray(gamesData) || gamesData.length === 0) {
     return <div>Loading...</div>;
@@ -41,7 +41,7 @@ export function CarouselSection({ gamesData }) {
   };
   return (
     <section className="carousel-section">
-      <h1 className="carousel-title">Últimos estrenos</h1>
+      <h1 className="carousel-title">{text}</h1>
       <hr className="carousel-line" />
       <Slider {...settings} className='carousel'>
         {gamesData.map((element) => {

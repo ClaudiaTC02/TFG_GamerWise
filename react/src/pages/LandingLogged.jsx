@@ -35,8 +35,8 @@ export default function LandingLogged() {
   return (
     <>
       <Header/>
-      <CarouselSection gamesData = {LatestgamesData}/>
-      <CarouselSection gamesData = {UpcomminggamesData}/>
+      <CarouselSection gamesData = {LatestgamesData} text='Últimos estrenos'/>
+      <CarouselSection gamesData = {UpcomminggamesData} text='Próximos lanzamientos'/>
     </>
   );
 }

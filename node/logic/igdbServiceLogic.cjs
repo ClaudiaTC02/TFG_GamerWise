@@ -34,7 +34,7 @@ const getLatestReleasesLogic = async () => {
     const response = await apicalypse(requestOptions)
       .fields("game.name, game.platforms.abbreviation, game.cover.url, date, game.first_release_date")
       .where(`game.first_release_date > ${oneWeekBefore} & game.first_release_date < ${currentTime} & date < ${currentTime} & game.version_title = null`)
-      .limit(10)
+      .limit(20)
       .sort("date", "desc")
       .request("/release_dates");
     return { success: true, data: response.data };
