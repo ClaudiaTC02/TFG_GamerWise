@@ -14,12 +14,18 @@ export default function LoginPage() {
     formState: { errors, isSubmitted },
   } = useForm();
 
-  const {error, signIn, isAuthenticated} = useAuth();
+  const {error, signIn, isAuthenticated, setError} = useAuth();
   const { t } = useTranslation("login");
 
   const onSubmit = async (data) => {
     signIn(data);
   };
+
+  useEffect(() => {
+    return () => {
+      setError(null); // Clean state
+    };
+  }, [setError]);
 
   useEffect(() => {
     if (isAuthenticated) {

@@ -13,7 +13,7 @@ export function AuthSection({ texts, onSubmit, children, error, actionRoute }) {
           {texts.title}
         </h1>
         <p className="subtitle">{texts.subtitle}</p>
-        <hr />
+        <hr className="hr-auth" />
         <form onSubmit={onSubmit}>
           {children}
           <button type="submit" className="button-form">

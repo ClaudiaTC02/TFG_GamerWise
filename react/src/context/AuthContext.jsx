@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }) => {
         password: user.password,
       };
       const res = await registerRequest(newUser);
-      setUser(res.data);
+      console.log(res.data)
+      setUser(true);
       setError(null);
     } catch (error) {
       setError(error.message);
@@ -66,6 +67,7 @@ export const AuthProvider = ({ children }) => {
         signOut,
         user,
         error,
+        setError,
         isAuthenticated,
         loading
       }}

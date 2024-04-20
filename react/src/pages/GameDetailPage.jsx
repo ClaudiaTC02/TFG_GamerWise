@@ -7,14 +7,14 @@ import "../styles/GameDetailPage.css";
 import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
 
-export function GameDetailPage() {
-  const { name } = useParams();
+export default function GameDetailPage() {
+  const { id } = useParams();
   const [gameDetails, setGameDetails] = useState([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const game = await getGameDetailsRequest(name);
+        const game = await getGameDetailsRequest(id);
         if (game.length > 0) {
           setGameDetails(game[0]);
         } else {
@@ -26,7 +26,7 @@ export function GameDetailPage() {
     };
 
     fetchDetails();
-  }, [name]);
+  }, [id]);
 
   if (gameDetails.length === 0) {
     return <div>Loading...</div>;
@@ -35,8 +35,8 @@ export function GameDetailPage() {
   return (
     <>
       <Header />
-      <section>
-        <div className="detail-section">
+      <section className="detail-section">
+        <div className="detail-container">
           <div className="detail-container-right">
             <img
               className="detail-cover"
