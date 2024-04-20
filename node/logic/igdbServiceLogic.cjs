@@ -75,11 +75,11 @@ const searchGameByNameLogic = async (name) => {
 };
 
 // Obtain details for a specific game
-const getGameDetailsLogic = async (name) => {
+const getGameDetailsLogic = async (id) => {
   try {
     const response = await apicalypse(requestOptions)
       .fields("name, summary, cover.url, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinecoopmax, multiplayer_modes.onlinemax")
-      .search(name)
+      .where(`id = ${id}`)
       .limit(1)
       .request("/games");
     const game = response.data[0];

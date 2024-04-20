@@ -21,9 +21,10 @@ export const getUpcommingGamesRequest = async () => {
     }
 }
 
-export const getGameDetailsRequest = async (name) => {
+export const getGameDetailsRequest = async (id) => {
     try {
-        const res = await axios.get(`${API}/igdb/gameDetails?name=${name}`);
+        const res = await axios.get(`${API}/igdb/gameDetails?id=${id}`);
+        console.log(id)
         return res.data
     } catch (error) {
         console.log(error);

@@ -9,12 +9,14 @@ export function GameCarousel({ game }) {
     PS4: "PlayStation",
     PS5: "PlayStation",
     XONE: "Xbox",
+    XBOX: 'Xbox',
     "Series X": "Xbox",
     Switch: "Nintendo",
     Linux: "PC",
     Mac: "PC",
     "Meta Quest 2": "VR",
     PSVR2: "VR",
+    PS1: 'PlayStation'
   };
   const uniquePlatforms = new Set();
 
@@ -29,7 +31,7 @@ export function GameCarousel({ game }) {
   const date = moment.unix(game.game.first_release_date).format("DD/MM/YYYY");
 
   return (
-    <Link to={`/game/${game.game.name}`} className="game-link" style={{'textDecoration': 'none', 'color': 'inherit'}}>
+    <Link to={`/game/${game.game.id}`} className="game-link" style={{'textDecoration': 'none', 'color': 'inherit'}}>
       <div className="game-container">
         <div className="info-game-container">
           <img
