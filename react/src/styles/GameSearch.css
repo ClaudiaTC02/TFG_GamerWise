@@ -5,3 +5,6 @@ ul.games-search li{
     width: auto;
     float: left;
 }
+.no-found-games{
+    margin-left: 4rem;
+}

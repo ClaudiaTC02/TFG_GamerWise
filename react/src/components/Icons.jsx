@@ -70,3 +70,11 @@ export function iosIcon(){
 export function vrIcon(){
     return vr
 }
+
+export function searchIcon(){
+    return <i className="bi bi-search"></i>
+}
+
+export function filterIcon(){
+    return <i className="bi bi-funnel-fill"></i>
+}

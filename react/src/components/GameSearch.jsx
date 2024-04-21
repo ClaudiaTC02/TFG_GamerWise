@@ -12,7 +12,6 @@ export function GameSearch({ games }) {
 }
 
 function ListOfGames({ games }) {
-  console.log(games);
   return (
     <ul className="games-search">
       {games.map((games) => {
@@ -50,5 +49,5 @@ function ListOfGames({ games }) {
 }
 
 function NoGameResults() {
-  return <p>No se encontraron juegos</p>;
+  return <p className="no-found-games">No se encontraron juegos</p>;
 }
