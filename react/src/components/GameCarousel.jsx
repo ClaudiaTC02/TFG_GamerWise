@@ -2,18 +2,21 @@ import "../styles/GameCarousel.css";
 import { GamePlatformIcon } from "./GamePlatformIcon ";
 import { defaultCoverIcon } from "./Icons";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export function GameCarousel({ game }) {
   const platformMap = {
     PS4: "PlayStation",
     PS5: "PlayStation",
     XONE: "Xbox",
+    XBOX: 'Xbox',
     "Series X": "Xbox",
     Switch: "Nintendo",
     Linux: "PC",
     Mac: "PC",
     "Meta Quest 2": "VR",
     PSVR2: "VR",
+    PS1: 'PlayStation'
   };
   const uniquePlatforms = new Set();
 
@@ -28,23 +31,25 @@ export function GameCarousel({ game }) {
   const date = moment.unix(game.game.first_release_date).format("DD/MM/YYYY");
 
   return (
-    <div className="game-container">
-      <div className="info-game-container">
-        <img
-          className="game-img"
-          src={game.game.cover ? game.game.cover.url : defaultCoverIcon()}
-          alt={game.game.name}
-        />
-        <div>
-          <h4 className="game-name">{game.game.name}</h4>
+    <Link to={`/game/${game.game.id}`} className="game-link" style={{'textDecoration': 'none', 'color': 'inherit'}}>
+      <div className="game-container">
+        <div className="info-game-container">
+          <img
+            className="game-img"
+            src={game.game.cover ? game.game.cover.url.replace("t_thumb", "t_cover_big") : defaultCoverIcon()}
+            alt={game.game.name}
+          />
+          <div>
+            <h4 className="game-name">{game.game.name}</h4>
+          </div>
+          <p className="game-date">{date}</p>
         </div>
-        <p className="game-date">{date}</p>
+        <div className="game-platforms">
+          {[...uniquePlatforms].map((platform) => (
+            <GamePlatformIcon key={platform} platform={platform} />
+          ))}
+        </div>
       </div>
-      <div className="game-platforms">
-        {[...uniquePlatforms].map((platform) => (
-          <GamePlatformIcon key={platform} platform={platform} />
-        ))}
-      </div>
-    </div>
+    </Link>
   );
 }

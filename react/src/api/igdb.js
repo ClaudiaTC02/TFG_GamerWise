@@ -20,3 +20,14 @@ export const getUpcommingGamesRequest = async () => {
         throw new Error(error.response.data.message); 
     }
 }
+
+export const getGameDetailsRequest = async (id) => {
+    try {
+        const res = await axios.get(`${API}/igdb/gameDetails?id=${id}`);
+        console.log(id)
+        return res.data
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.response.data.message); 
+    }
+}

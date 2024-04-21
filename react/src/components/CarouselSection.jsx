@@ -6,7 +6,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export function CarouselSection({ gamesData, text }) {
-  console.log(gamesData)
   if (!Array.isArray(gamesData) || gamesData.length === 0) {
     return <div>Loading...</div>;
   }

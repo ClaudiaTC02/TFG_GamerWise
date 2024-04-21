@@ -71,8 +71,8 @@ const searchGameByName = async (req, res) => {
 // Obtain details for a specific game
 const getGameDetails = async (req, res) => {
   try {
-    const { name } = req.query;
-    const result = await getGameDetailsLogic(name);
+    const { id } = req.query;
+    const result = await getGameDetailsLogic(id);
     if (result.success) {
       res.status(200).json(result.data);
     } else {

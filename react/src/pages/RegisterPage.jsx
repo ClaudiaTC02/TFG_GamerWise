@@ -15,7 +15,7 @@ export default function RegisterPage() {
     watch,
     formState: { errors, isSubmitted },
   } = useForm();
-  const { signUp, error, isAuthenticated } = useAuth();
+  const { signUp, error, user, setError } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation("register");
 
@@ -34,10 +34,16 @@ export default function RegisterPage() {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user) {
       navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [user, navigate]);
+
+  useEffect(() => {
+    return () => {
+      setError(null); // Clean state
+    };
+  }, [setError]);
 
   const onSubmit = async (data) => {
     signUp(data);
