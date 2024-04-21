@@ -46,7 +46,7 @@ export default function LandingLogged() {
   const debounceGetMovies = useCallback(
     debounce((query) => {
       getGames({ query });
-    }, 400),
+    }, 500),
     [getGames]
   );
 

@@ -39,7 +39,7 @@ export const searchGame = async (name) => {
             id: game.id,
             name: game.name,
             year: game.first_release_date,
-            cover: game.cover.url
+            cover: game.cover
           }))
         return mappedGames
     } catch (error) {

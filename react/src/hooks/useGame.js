@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useRef, useState, useMemo, useCallback } from "react";
 import { searchGame } from "../api/igdb.js";
-import games_r from '../mock/searchGames.json'
 
 export function useGames({ query, sort }) {
   const [games, setGames] = useState([]);
@@ -16,7 +15,7 @@ export function useGames({ query, sort }) {
       prevSearch.current = query;
       setLoading(true);
       setError(null);
-      const data = games_r;
+      const data = await searchGame(query);
       setGames(data);
     } catch (error) {
       setError(error.message);

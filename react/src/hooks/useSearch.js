@@ -15,15 +15,6 @@ export function useSearch() {
       setError("No se puede buscar un juego vacio");
       return;
     }
-    if (query.match(/^\d+$/)) {
-      setError("No se puede buscar un juego sólo con un número");
-      return;
-    }
-
-    if (query.length < 3) {
-      setError("No se puede buscar un juego con menos de 3 carácteres");
-      return;
-    }
     setError(null);
   }, [query]);
   return { query, setQuery, error };

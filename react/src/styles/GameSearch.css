@@ -1,0 +1,7 @@
+.games-search{
+    margin: 2rem;
+}
+ul.games-search li{
+    width: auto;
+    float: left;
+}
