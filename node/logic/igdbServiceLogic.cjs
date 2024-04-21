@@ -64,7 +64,7 @@ const getUpcomingReleasesLogic = async () => {
 const searchGameByNameLogic = async (name) => {
   try {
     const response = await apicalypse(requestOptions)
-      .fields("*")
+      .fields("*, cover.url")
       .search(name)
       .limit(10)
       .request("/games");

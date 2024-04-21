@@ -24,8 +24,24 @@ export const getUpcommingGamesRequest = async () => {
 export const getGameDetailsRequest = async (id) => {
     try {
         const res = await axios.get(`${API}/igdb/gameDetails?id=${id}`);
-        console.log(id)
         return res.data
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.response.data.message); 
+    }
+}
+
+export const searchGame = async (name) => {
+    try {
+        const res = await axios.get(`${API}/igdb/game/?name=${name}`);
+        const games = res.data
+        const mappedGames = games?.map(game => ({
+            id: game.id,
+            name: game.name,
+            year: game.first_release_date,
+            cover: game.cover.url
+          }))
+        return mappedGames
     } catch (error) {
         console.log(error);
         throw new Error(error.response.data.message); 
