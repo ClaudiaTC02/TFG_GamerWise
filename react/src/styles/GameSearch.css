@@ -1,10 +1,22 @@
 .games-search{
-    margin: 2rem;
-}
-ul.games-search li{
-    width: auto;
-    float: left;
-}
-.no-found-games{
-    margin-left: 4rem;
-}
+    list-style: none;
+    margin: 1rem 4rem;
+    padding: 0;
+  
+    display:grid;
+    width:90%;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 5px;
+  }
+  .game-li{
+    text-align: center;
+  }
+
+
+  @media screen and (max-width: 550px) {
+    .games-search{
+        margin: 0 auto;
+        margin-top: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+  }

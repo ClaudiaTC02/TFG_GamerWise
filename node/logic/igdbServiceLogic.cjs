@@ -66,7 +66,7 @@ const searchGameByNameLogic = async (name) => {
     const response = await apicalypse(requestOptions)
       .fields("*, cover.url")
       .search(name)
-      .limit(10)
+      .limit(40)
       .request("/games");
     return { success: true, data: response.data };
   } catch (error) {
