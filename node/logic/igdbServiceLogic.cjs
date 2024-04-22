@@ -74,6 +74,30 @@ const searchGameByNameLogic = async (name) => {
   }
 };
 
+// search a game with filter
+const searchGameWithFiltersLogic = async ({ name, category, platform, rating, ...otherFilters }) => {
+  try {
+    let apicalypseQuery = apicalypse(requestOptions)
+      .fields("*, cover.url");
+
+    if (name) {
+      apicalypseQuery = apicalypseQuery.search(name);
+    }
+    if (category) {
+      apicalypseQuery = apicalypseQuery.where(`genres.name = "${category}"`);
+    }
+    if (platform) {
+      apicalypseQuery = apicalypseQuery.where(`platforms.name = "${platform}"`);
+    }
+    const response = await apicalypseQuery.limit(40).request("/games");
+
+    return { success: true, data: response.data };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+
 // Obtain details for a specific game
 const getGameDetailsLogic = async (id) => {
   try {
@@ -97,6 +121,7 @@ module.exports = {
   getLatestReleasesLogic,  
   getUpcomingReleasesLogic,
   searchGameByNameLogic,
-  getGameDetailsLogic
+  getGameDetailsLogic,
+  searchGameWithFiltersLogic
 };
 

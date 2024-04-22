@@ -5,6 +5,7 @@ const {
   getUpcomingReleasesLogic,
   searchGameByNameLogic,
   getGameDetailsLogic,
+  searchGameWithFiltersLogic
 } = require("../logic/igdbServiceLogic.cjs");
 
 //----------------------------------------------------------------------
@@ -83,10 +84,26 @@ const getGameDetails = async (req, res) => {
   }
 };
 
+const searchGameWithFilters = async (req, res) => {
+  try {
+    const { name, category, platform } = req.query;
+    console.log(name, category, platform)
+    const result = await searchGameWithFiltersLogic({name, category, platform});
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(404).json({ message: result.error });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
   getGames,
   getLatestReleases,  
   getUpcomingReleases,
   searchGameByName,
-  getGameDetails
+  getGameDetails,
+  searchGameWithFilters
 };

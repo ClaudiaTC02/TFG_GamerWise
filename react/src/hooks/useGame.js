@@ -2,20 +2,22 @@
 import { useRef, useState, useMemo, useCallback } from "react";
 import { searchGame } from "../api/igdb.js";
 
-export function useGames({ query, sort }) {
+export function useGames({ query, sort, category }) {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const prevSearch = useRef();
+  const prevCategory = useRef();
 
-  const getGames = useCallback(async ({ query }) => {
+  const getGames = useCallback(async ({ query, category }) => {
     //inyectado para que solo se ejecute 1 vez
-    if (query === prevSearch.current) return;
+    if (query === prevSearch.current & category === prevCategory.current) return;
     try {
       prevSearch.current = query;
+      prevCategory.current = category;
       setLoading(true);
       setError(null);
-      const data = await searchGame(query);
+      const data = await searchGame(query, category);
       setGames(data);
     } catch (error) {
       setError(error.message);
@@ -25,11 +27,5 @@ export function useGames({ query, sort }) {
     }
   }, []);
 
-  const sortedGames = useMemo(() => {
-    return sort
-      ? [...games].sort((a, b) => a.title.localeCompare(b.title))
-      : games;
-  }, [sort, games]);
-
-  return { games: sortedGames, getGames, loading };
+  return { games, getGames, loading };
 }
