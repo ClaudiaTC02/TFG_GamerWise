@@ -10,6 +10,7 @@ import defaultCover from"../assets/defaultCover.png";
 import android from"../assets/android.png";
 import ios from"../assets/apple.png";
 import vr from"../assets/vr.png";
+import pixels from "../assets/pixels.png"
 
 export function logoIcon() {
     return logo
@@ -69,4 +70,16 @@ export function iosIcon(){
 
 export function vrIcon(){
     return vr
+}
+
+export function searchIcon(){
+    return <i className="bi bi-search"></i>
+}
+
+export function filterIcon(){
+    return <i className="bi bi-funnel-fill"></i>
+}
+
+export function pixelsIcon(){
+    return pixels
 }
