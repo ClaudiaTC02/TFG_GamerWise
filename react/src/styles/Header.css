@@ -33,9 +33,15 @@ header {
 }
 
 .nav-list li a {
+  font-size: 17px;
   line-height: 50px;
   text-decoration: none;
   color: #000000;
+}
+
+.nav-list li:hover a:hover {
+  cursor: pointer;
+  color: #EF4F23;
 }
 
 .register-button {

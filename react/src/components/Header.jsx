@@ -5,6 +5,7 @@ import { logoIcon, userIcon } from "./Icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LanguageSelector from "./LanguageSelector";
+import { useAuth } from "../hooks/useAuth";
 
 export function Header({ isLanding, isLogged }) {
   const navigate = useNavigate();
@@ -73,12 +74,18 @@ const LandingHeader = () => {
 
 const LoggedHeader = () => {
   const [navClassName, setNavClassName] = useState("nav");
+  const {signOut} = useAuth();
   const handleOpenMenu = () => {
     setNavClassName("nav visible");
   };
   const handleCloseMenu = () => {
     setNavClassName("nav");
   };
+  function handleLogout() {
+    signOut()
+    console.log('Sesión cerrada');
+  }
+  
   return (
     <div className="options-container">
       <button className="open-menu" onClick={handleOpenMenu}>
@@ -99,7 +106,7 @@ const LoggedHeader = () => {
             <a>Ajustes</a>
           </li>
           <li>
-            <a>Cerrar sesión</a>
+            <a onClick={handleLogout}>Cerrar sesión</a>
           </li>
           <li>
             <a>
