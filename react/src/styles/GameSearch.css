@@ -13,6 +13,7 @@
   }
 .no-found-games{
   margin: 1rem 4.5rem;
+  margin-bottom: 3rem;
 }
 
   @media screen and (max-width: 550px) {
@@ -22,7 +23,7 @@
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
     .no-found-games{
-      margin: 0.5rem 0;
+      margin: 1rem 0;
       text-align: center
     }
   }

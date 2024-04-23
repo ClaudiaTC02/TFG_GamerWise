@@ -80,9 +80,7 @@ export function SearchBar() {
             >
               <option value="">All</option>
               <option value="Shooter">Shooter</option>
-              <option value="Action">Action</option>
               <option value="Adventure">Adventure</option>
-              <option value="Terror">Terror</option>
               <option value="Indie">Indie</option>
               <option value="MOBA">MOBA</option>
               <option value="Point-and-click">Point-and-click</option>

@@ -10,6 +10,7 @@
   border: 2px solid #ef4f23;
   border-radius: 10px;
   flex-grow: 1;
+  background-color: white;
 }
 .icon_search {
   margin-left: 10px;
@@ -19,6 +20,7 @@
   padding: 0.5rem;
   border-radius: 10px;
   width: 90%;
+  background: transparent;
 }
 .input-search:focus {
   border-color: transparent;
