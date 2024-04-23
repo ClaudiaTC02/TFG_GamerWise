@@ -8,16 +8,19 @@ export function useGames({ query, sort, category }) {
   const [error, setError] = useState(null);
   const prevSearch = useRef();
   const prevCategory = useRef();
+  const prevPlatform = useRef();
 
-  const getGames = useCallback(async ({ query, category }) => {
+
+  const getGames = useCallback(async ({ query, category, platform }) => {
     //inyectado para que solo se ejecute 1 vez
-    if (query === prevSearch.current & category === prevCategory.current) return;
+    if (query === prevSearch.current & category === prevCategory.current & platform === prevPlatform.current) return;
     try {
       prevSearch.current = query;
       prevCategory.current = category;
+      prevPlatform.current = platform;
       setLoading(true);
       setError(null);
-      const data = await searchGame(query, category);
+      const data = await searchGame(query, category, platform);
       setGames(data);
     } catch (error) {
       setError(error.message);

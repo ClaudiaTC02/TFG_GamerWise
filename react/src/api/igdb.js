@@ -31,7 +31,7 @@ export const getGameDetailsRequest = async (id) => {
   }
 };
 
-export const searchGame = async (name, category, platform, ) => {
+export const searchGame = async (name, category, platform ) => {
   try {
     let url = `${API}/igdb/filter?`;
     const params = [];
@@ -47,6 +47,7 @@ export const searchGame = async (name, category, platform, ) => {
     if (params.length > 0) {
       url += params.join("&");
     }
+    console.log(url)
     const res = await axios.get(url);
     const games = res.data;
     const mappedGames = games?.map((game) => ({

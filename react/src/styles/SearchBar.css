@@ -36,11 +36,42 @@
   color: red;
 }
 
+.container-select-filters{
+  margin: 0 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(204, 204, 204, 0.363);
+  border-radius: 10px;
+}
+
+.container-select{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.3rem 2rem;
+}
+
+.container-select p{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.form-select{
+  width: 80%;
+}
+
 @media screen and (max-width: 550px) {
   .input-search {
     width: auto;
   }
   .container-search {
     width: 100%;
+  }
+  .form-search{
+    margin: 0 1.5rem;
+  }
+  .container-select-filters{
+    margin: 0.3rem 1rem;
   }
 }
