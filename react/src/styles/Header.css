@@ -9,7 +9,9 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background-color: #e7e7e7
+  background-color: #e7e7e7;
+  position: relative;
+  z-index: 2;
 }
 .options-container {
   display: flex;
@@ -65,7 +67,7 @@ header {
     flex-direction: column;
     align-items: end;
     gap: 1rem;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
@@ -80,5 +82,16 @@ header {
   .nav-list {
     flex-direction: column;
     align-items: end;
+  }
+  .header-user-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .header-user-container i{
+    font-size: 1.5rem;
+  }
+  .user-image{
+    width: 2rem;
   }
 }

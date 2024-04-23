@@ -39,7 +39,7 @@ export default function LandingLogged() {
 
   return (
     <>
-      <Header />
+      <Header isLogged={true}/>
       <section className="logged-container-section">
         <div className="logged-section">
           <div className="logged-pixels-container">

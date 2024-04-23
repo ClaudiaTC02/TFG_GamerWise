@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next";
 import "../styles/Header.css";
 
-import { logoIcon } from "./Icons";
+import { logoIcon, userIcon } from "./Icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LanguageSelector from "./LanguageSelector";
 
-export function Header({ isLanding }) {
+export function Header({ isLanding, isLogged }) {
   const navigate = useNavigate();
   const handleLogo = () => {
     if (isLanding) {
@@ -21,7 +21,8 @@ export function Header({ isLanding }) {
         <img className="logo" src={logoIcon()} alt="logo gamerwise buho" />
       </a>
       {isLanding && <LandingHeader />}
-      {!isLanding && <LanguageSelector />}
+      {isLogged && <LoggedHeader />}
+      {!isLanding && !isLogged && <LanguageSelector />}
     </header>
   );
 }
@@ -69,3 +70,44 @@ const LandingHeader = () => {
     </div>
   );
 };
+
+const LoggedHeader = () => {
+  const [navClassName, setNavClassName] = useState("nav");
+  const handleOpenMenu = () => {
+    setNavClassName("nav visible");
+  };
+  const handleCloseMenu = () => {
+    setNavClassName("nav");
+  };
+  return (
+    <div className="options-container">
+      <button className="open-menu" onClick={handleOpenMenu}>
+        <div className="header-user-container">
+          <img className="user-image" src={userIcon()} alt='user'/>
+          <i className="bi bi-chevron-down"></i>
+        </div>
+      </button>
+      <nav className={navClassName}>
+        <button className="close-menu" onClick={handleCloseMenu}>
+          <i className="bi bi-x"></i>
+        </button>
+        <ul className="nav-list">
+          <li>
+            <a>Mi perfil</a>
+          </li>
+          <li>
+            <a>Ajustes</a>
+          </li>
+          <li>
+            <a>Cerrar sesión</a>
+          </li>
+          <li>
+            <a>
+              <LanguageSelector />
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+}
