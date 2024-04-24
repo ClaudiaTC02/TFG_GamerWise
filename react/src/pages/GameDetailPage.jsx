@@ -10,6 +10,7 @@ import { getGameDetailsRequest } from "../api/igdb";
 export default function GameDetailPage() {
   const { id } = useParams();
   const [gameDetails, setGameDetails] = useState([]);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -27,6 +28,30 @@ export default function GameDetailPage() {
 
     fetchDetails();
   }, [id]);
+
+  const handleRatingChange = (value) => {
+    if (value === rating) {
+      setRating(0);
+    } else {
+      setRating(value);
+    }
+    console.log(value);
+  };
+
+  const renderStars = () => {
+    const stars = [];
+    const maxRating = 5;
+    for (let i = 1; i <= maxRating; i++) {
+      stars.push(
+        <span
+          key={i}
+          onClick={() => handleRatingChange(i)}
+          className={i <= rating ? "bi bi-star-fill" : "bi bi-star"}
+        />
+      );
+    }
+    return stars;
+  };
 
   if (gameDetails.length === 0) {
     return <div>Loading...</div>;
@@ -48,13 +73,7 @@ export default function GameDetailPage() {
               alt={gameDetails.name}
             />
             <p className="detail-rating">Puntúalo</p>
-            <div className="detail-star-container">
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-            </div>
+            <div className="detail-star-container">{renderStars()}</div>
             <button className="detail-addList-button">Añadir a lista</button>
           </div>
           <div className="detail-container-left">
