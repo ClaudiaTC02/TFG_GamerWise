@@ -23,10 +23,10 @@ export const createGame = async (req, res) => {
 // get game
 export const getGame = async (req, res) => {
     try {
-        const { igdb_id } = req.body;
-        const { success, game, error } = await getGameLogic(igdb_id);
+        const { igdb_id } = req.params;
+        const { success, game, error } = await getGameLogic(Number(igdb_id));
         if (success) {
-            res.status(201).json({ message: "Game got successfully", game: game });
+            res.status(200).json({ message: "Game got successfully", game: game });
         } else if (error.message === "Game not found"){
             res.status(404).json({ message: error });
         } else{

@@ -27,18 +27,19 @@ export async function createGameLogic(name, company, platforms, max_players, gen
 export async function getGameLogic(igdb_id) {
     try {
         // Validar campos requeridos
-        if (!validateRequiredFields({igdb_id})) {
+        if (!igdb_id) {
             throw new Error("Required fields are not provided");
         }
         // Validar tipos de datos
-        if (!validateDataTypes({igdb_id})) {
+        if (typeof igdb_id !== "number") {
             throw new Error("Invalid data type");
         }
         // Get game
         const game = await GameModel.findAll({ where: { igdb_id: igdb_id } });
-        if(!game){
+        if(game.length <= 0){
             throw new Error("Game not found");
         }
+        console.log(game)
         return { success: true, game };
     } catch (error) {
         return { success: false, error: error.message };
