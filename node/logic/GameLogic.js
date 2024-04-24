@@ -39,7 +39,6 @@ export async function getGameLogic(igdb_id) {
         if(game.length <= 0){
             throw new Error("Game not found");
         }
-        console.log(game)
         return { success: true, game };
     } catch (error) {
         return { success: false, error: error.message };

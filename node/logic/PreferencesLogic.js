@@ -10,9 +10,9 @@ import { where } from "sequelize";
 // add rating to a game
 export const addRatingLogic = async (user_id, game_id, rating) => {
   try {
+    console.log(user_id, game_id, rating)
     user_id = Number(user_id);
     game_id = Number(game_id);
-
     if (!user_id || rating === null || rating === undefined || !game_id) {
       throw new Error("Required fields not provided");
     }

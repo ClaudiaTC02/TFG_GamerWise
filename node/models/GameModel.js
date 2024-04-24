@@ -26,7 +26,8 @@ const GameModel = db.define('game', {
     },
     igdb_id: {
         type: DataType.INTEGER,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 },{
     //Other model options

@@ -8,10 +8,11 @@ import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
 import { postNewRatingRequest } from "../api/rating";
 import { useAuth } from "../hooks/useAuth";
+import { getGameRequest, postNewGameRequest } from "../api/game";
 
 export default function GameDetailPage() {
   const { id } = useParams();
-  const {token} = useAuth();
+  const { token } = useAuth();
   const [gameDetails, setGameDetails] = useState([]);
   const [rating, setRating] = useState(0);
 
@@ -34,18 +35,41 @@ export default function GameDetailPage() {
 
   const handleRatingChange = async (value) => {
     try {
-      const gameId = id; 
       if (value === rating) {
         setRating(0);
         // TO DO: eliminar la calificación
       } else {
         setRating(value);
-        const res = await postNewRatingRequest(gameId, value, token);
-        console.log(res);
+        try {
+          const game = await getGameRequest(id, token);
+          console.log(game.game[0].id);
+          await postNewRatingRequest(game.game[0].id, value, token);
+        } catch (error) {
+          const company =
+            gameDetails.involved_companies
+              ?.map((company) => company.company.name)
+              .join(", ") || "anonymus";
+          const platforms =
+            gameDetails.platforms
+              ?.map((platforms) => platforms.abbreviation)
+              .join(", ");
+          const genres =
+            gameDetails.genres?.map((genre) => genre.name).join(", ");
+          const multiplayer = gameDetails?.multiplayer_modes?.onlinemax || 1;
+          const newGame = await postNewGameRequest(
+            gameDetails.name,
+            company,
+            platforms,
+            multiplayer,
+            genres,
+            id,
+            token
+          );
+          await postNewRatingRequest(newGame.game.id, value, token);
+        }
       }
-      console.log(value);
     } catch (error) {
-      console.error('Error al manejar el cambio de calificación:', error);
+      console.error("Error al manejar el cambio de calificación:", error);
     }
   };
 
@@ -92,27 +116,33 @@ export default function GameDetailPage() {
               <div className="detail-container-title">
                 <h1 className="detail-title">{gameDetails.name}</h1>
                 <h3 className="detail-subtitle">
-                  {gameDetails.involved_companies && gameDetails.involved_companies
-                    .map((company) => company.company.name)
-                    .join(", ")}
+                  {gameDetails.involved_companies &&
+                    gameDetails.involved_companies
+                      .map((company) => company.company.name)
+                      .join(", ")}
                 </h3>
               </div>
               <i className="bi bi-heart"></i>
             </div>
             <p className="detail-gender">
-              Género: {gameDetails.genres && gameDetails.genres.map((genre) => genre.name).join(", ")}
+              Género:{" "}
+              {gameDetails.genres &&
+                gameDetails.genres.map((genre) => genre.name).join(", ")}
             </p>
             <p className="detail-platforms">
               Plataformas:{" "}
-              {gameDetails.platforms && gameDetails.platforms
-                .map((platforms) => platforms.abbreviation)
-                .join(", ")}
+              {gameDetails.platforms &&
+                gameDetails.platforms
+                  .map((platforms) => platforms.abbreviation)
+                  .join(", ")}
             </p>
           </div>
         </div>
         <div className="detail-container-description">
           <h5 className="detail-title-description">Desripción</h5>
-          <p className="detail-text-description">{gameDetails.summary && gameDetails.summary}</p>
+          <p className="detail-text-description">
+            {gameDetails.summary && gameDetails.summary}
+          </p>
         </div>
       </section>
       <CarouselSection gamesData={datamock} text="También puede gustarte" />

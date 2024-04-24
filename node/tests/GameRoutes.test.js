@@ -45,7 +45,7 @@ describe('GameRoutes', () => {
             // Act
             const {status, body} = await request.get('/game/1').set('Authorization', `Bearer ${authToken}`);
             // Assert
-            //expect(status).toEqual(200)
+            expect(status).toEqual(200)
             expect(body.message).toEqual("Game got successfully")
         });
         it('should NOT get an inexisting game', async () => {
@@ -54,7 +54,7 @@ describe('GameRoutes', () => {
             // Act
             const {status, body} = await request.get('/game/40').set('Authorization', `Bearer ${authToken}`);
             // Assert
-            //expect(status).toEqual(404)
+            expect(status).toEqual(404)
             expect(body.message).toEqual("Game not found")
         });
         it('should NOT get a game with incorrect format', async () => {
