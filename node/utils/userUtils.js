@@ -74,5 +74,5 @@ export const hashPassword = async (password) => {
 };
 
 export const generateAuthToken = (userId) => {
-    return jwt.sign({ userId }, `${process.env.JWT_token_secret}`, { expiresIn: '1h' });
+    return jwt.sign({ userId }, `${process.env.JWT_token_secret}`, { expiresIn: '24h' });
 };

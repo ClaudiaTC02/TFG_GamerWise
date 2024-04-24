@@ -298,5 +298,6 @@ describe("ListRoutes", () => {
   });
   afterAll(async () => {
     await UserModel.destroy({ where: {} });
+    await GameModel.destroy({ where: {} });
   })
 });

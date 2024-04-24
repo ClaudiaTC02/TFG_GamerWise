@@ -1,5 +1,6 @@
 import testServer from "../utils/testServer.js";
 import preferencesRoutes from "../routes/PreferencesRoutes.js";
+import { generateAuthToken } from "../utils/userUtils.js";
 
 const request = testServer(preferencesRoutes);
 
@@ -21,6 +22,7 @@ describe('PreferencesRoutes', () => {
             platforms: "name, name",
             max_players: 40,
             id: 1,
+            igdb_id: 1
         });
     })
     describe('[ routes / preferences ]', () => {
@@ -47,9 +49,10 @@ describe('PreferencesRoutes', () => {
 
         it('should NOT add a rating to an inexistent user', async () => {
             // Arrange
+            const inexistentUserToken = generateAuthToken(2)
             const correctRating = {user_id:2, game_id:1, rating:3}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${inexistentUserToken}`);
             // Assert
             expect(status).toEqual(404)
             expect(body.message).toEqual('User or Game not found')
@@ -67,9 +70,10 @@ describe('PreferencesRoutes', () => {
 
         it('should NOT add a rating with incorrect data type', async () => {
             // Arrange
+            const inexistentUserToken = generateAuthToken("uno")
             const correctRating = {user_id:'uno', game_id:1, rating:3}
             // Act
-            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${authToken}`);
+            const {status, body} = await request.post('/preferences').send(correctRating).set('Authorization', `Bearer ${inexistentUserToken}`);
             // Assert
             expect(status).toEqual(400)
             expect(body.message).toEqual('Required fields not provided')
@@ -163,6 +167,7 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 40,
                 id: 2,
+                igdb_id: 1
             });
             // Act
             const {status, body} = await request.put('/preferences/2&1').send(newRating).set('Authorization', `Bearer ${authToken}`);
@@ -266,6 +271,7 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 40,
                 id: 2,
+                igdb_id: 1
             });
             await PreferencesModel.create({ game_id:1, user_id:1, rating:2})
             await PreferencesModel.create({ game_id:2, user_id:1, rating:4})
@@ -306,6 +312,7 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 40,
                 id: 2,
+                igdb_id: 1
             });
             await GameModel.create({
                 name: "test3",
@@ -314,6 +321,7 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 10,
                 id: 3,
+                igdb_id: 1
             });
             await PreferencesModel.create({ game_id:1, user_id:1, rating:2})
             await PreferencesModel.create({ game_id:2, user_id:1, rating:4})

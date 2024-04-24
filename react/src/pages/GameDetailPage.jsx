@@ -6,9 +6,12 @@ import { defaultCoverIcon } from "../components/Icons";
 import "../styles/GameDetailPage.css";
 import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
+import { postNewRatingRequest } from "../api/rating";
+import { useAuth } from "../hooks/useAuth";
 
 export default function GameDetailPage() {
   const { id } = useParams();
+  const {token} = useAuth();
   const [gameDetails, setGameDetails] = useState([]);
   const [rating, setRating] = useState(0);
 
@@ -29,13 +32,21 @@ export default function GameDetailPage() {
     fetchDetails();
   }, [id]);
 
-  const handleRatingChange = (value) => {
-    if (value === rating) {
-      setRating(0);
-    } else {
-      setRating(value);
+  const handleRatingChange = async (value) => {
+    try {
+      const gameId = id; 
+      if (value === rating) {
+        setRating(0);
+        // TO DO: eliminar la calificación
+      } else {
+        setRating(value);
+        const res = await postNewRatingRequest(gameId, value, token);
+        console.log(res);
+      }
+      console.log(value);
+    } catch (error) {
+      console.error('Error al manejar el cambio de calificación:', error);
     }
-    console.log(value);
   };
 
   const renderStars = () => {

@@ -7,6 +7,7 @@ import {
   getAllRatingLogic,
   getGamesWithSpecificRatingLogic
 } from '../logic/PreferencesLogic.js';
+import { getUserIdFromToken } from '../utils/auth.js';
 
 //----------------------------------------------------------------------
 // HTTP Methods
@@ -15,7 +16,10 @@ import {
 // add rating to a game
 export const addRating = async (req, res) => {
   try {
-    const { user_id, game_id, rating } = req.body;
+    const { game_id, rating } = req.body;
+
+    const user_id = getUserIdFromToken(req);
+    
     const result = await addRatingLogic(user_id, game_id, rating);
 
     if (result.success) {

@@ -23,6 +23,7 @@ describe("ListGameRoutes", () => {
       platforms: "name, name",
       max_players: 40,
       id: 1,
+      igdb_id: 1,
     });
   });
   describe("[ routes / listgame ]", () => {
@@ -220,6 +221,7 @@ describe("ListGameRoutes", () => {
     afterAll(async () => {
       await UserModel.destroy({ where: {}});
       await ListGameModel.destroy({ where: {} });
+      await GameModel.destroy({ where: {} });
     });
   });
   
