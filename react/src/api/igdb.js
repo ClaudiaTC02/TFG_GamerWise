@@ -6,7 +6,6 @@ export const getLatestGamesRequest = async () => {
     const res = await axios.get(`${API}/igdb/latest`);
     return res.data;
   } catch (error) {
-    console.log(error);
     throw new Error(error.response.data.message);
   }
 };
@@ -16,7 +15,6 @@ export const getUpcommingGamesRequest = async () => {
     const res = await axios.get(`${API}/igdb/upcoming`);
     return res.data;
   } catch (error) {
-    console.log(error);
     throw new Error(error.response.data.message);
   }
 };
@@ -26,7 +24,6 @@ export const getGameDetailsRequest = async (id) => {
     const res = await axios.get(`${API}/igdb/gameDetails?id=${id}`);
     return res.data;
   } catch (error) {
-    console.log(error);
     throw new Error(error.response.data.message);
   }
 };
@@ -47,7 +44,6 @@ export const searchGame = async (name, category, platform ) => {
     if (params.length > 0) {
       url += params.join("&");
     }
-    console.log(url)
     const res = await axios.get(url);
     const games = res.data;
     const mappedGames = games?.map((game) => ({
@@ -58,7 +54,6 @@ export const searchGame = async (name, category, platform ) => {
     }));
     return mappedGames;
   } catch (error) {
-    console.log(error);
     throw new Error(error.response.data.message);
   }
 };

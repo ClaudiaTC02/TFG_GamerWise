@@ -32,7 +32,6 @@ export const updateRatingLogic = async (id, newRating, token) => {
   try {
     const game = await getGameRequest(id, token);
     if(game){
-      console.log(game.game[0].id);
       await updateRatingRequest(game.game[0].id, newRating, token)
     }
   } catch (error) {
