@@ -7,7 +7,7 @@ import "../styles/GameDetailPage.css";
 import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
 import { useAuth } from "../hooks/useAuth";
-import { deleteRatingLogic, newRatingLogic } from "../logic/ratingLogic";
+import { deleteRatingLogic, newRatingLogic, updateRatingLogic } from "../logic/ratingLogic";
 import { getRatingRequest } from "../api/rating";
 import { getGameRequest } from "../api/game";
 
@@ -56,7 +56,7 @@ export default function GameDetailPage() {
       } else {
         setRating(value);
         if(rated){
-          console.log('Actualizo')
+          await updateRatingLogic(id, value, token)
         } else{
           await newRatingLogic(id, token, gameDetails, value)
         }
@@ -88,7 +88,7 @@ export default function GameDetailPage() {
 
   return (
     <>
-      <Header />
+      <Header isLogged={true}/>
       <section className="detail-section">
         <div className="detail-container">
           <div className="detail-container-right">
