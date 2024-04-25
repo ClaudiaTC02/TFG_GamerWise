@@ -6,9 +6,8 @@ import { defaultCoverIcon } from "../components/Icons";
 import "../styles/GameDetailPage.css";
 import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
-import { postNewRatingRequest } from "../api/rating";
 import { useAuth } from "../hooks/useAuth";
-import { getGameRequest, postNewGameRequest } from "../api/game";
+import { newRatingLogic } from "../logic/ratingLogic";
 
 export default function GameDetailPage() {
   const { id } = useParams();
@@ -40,38 +39,13 @@ export default function GameDetailPage() {
         // TO DO: eliminar la calificación
       } else {
         setRating(value);
-        try {
-          const game = await getGameRequest(id, token);
-          console.log(game.game[0].id);
-          await postNewRatingRequest(game.game[0].id, value, token);
-        } catch (error) {
-          const company =
-            gameDetails.involved_companies
-              ?.map((company) => company.company.name)
-              .join(", ") || "anonymus";
-          const platforms =
-            gameDetails.platforms
-              ?.map((platforms) => platforms.abbreviation)
-              .join(", ");
-          const genres =
-            gameDetails.genres?.map((genre) => genre.name).join(", ");
-          const multiplayer = gameDetails?.multiplayer_modes?.onlinemax || 1;
-          const newGame = await postNewGameRequest(
-            gameDetails.name,
-            company,
-            platforms,
-            multiplayer,
-            genres,
-            id,
-            token
-          );
-          await postNewRatingRequest(newGame.game.id, value, token);
-        }
+        await newRatingLogic(id, token, gameDetails, value)
       }
     } catch (error) {
       console.error("Error al manejar el cambio de calificación:", error);
     }
   };
+  
 
   const renderStars = () => {
     const stars = [];

@@ -33,9 +33,13 @@ export const getGameRequest = async (igdb_id, token) => {
       },
     };
     const res = await axios.get(`${API}/game/${igdb_id}`, config);
-    console.log(res.data)
     return res.data;
   } catch (error) {
-    throw new Error(error.response.data.message);
+    if (error.response.status === 404) {
+      // Game not found
+      return null;
+    } else {
+      throw new Error(error.response.data.message);
+    }
   }
 };

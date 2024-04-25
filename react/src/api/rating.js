@@ -19,3 +19,4 @@ export const postNewRatingRequest = async (game_id, rating, token) => {
     throw new Error(error.response.data.message);
   }
 };
+
