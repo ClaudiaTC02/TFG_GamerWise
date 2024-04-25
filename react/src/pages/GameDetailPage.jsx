@@ -7,7 +7,7 @@ import "../styles/GameDetailPage.css";
 import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
 import { useAuth } from "../hooks/useAuth";
-import { newRatingLogic } from "../logic/ratingLogic";
+import { deleteRatingLogic, newRatingLogic } from "../logic/ratingLogic";
 import { getRatingRequest } from "../api/rating";
 import { getGameRequest } from "../api/game";
 
@@ -52,7 +52,8 @@ export default function GameDetailPage() {
     try {
       if (value === rating) {
         setRating(0);
-        // TO DO: eliminar la calificación
+        await deleteRatingLogic(id, token)
+        setRated(false)
       } else {
         setRating(value);
         if(rated){

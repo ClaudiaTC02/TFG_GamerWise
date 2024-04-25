@@ -1,5 +1,5 @@
 import { getGameRequest, postNewGameRequest } from "../api/game";
-import { postNewRatingRequest } from "../api/rating";
+import { deleteRatingRequest, postNewRatingRequest } from "../api/rating";
 
 export const newRatingLogic = async (id, token, gameDetails, value) => {
     try {
@@ -37,4 +37,15 @@ export const newRatingLogic = async (id, token, gameDetails, value) => {
       } catch (error) {
         console.error("Error al manejar el cambio de calificación:", error);
       }
+}
+
+export const deleteRatingLogic = async (id, token) => {
+  try {
+    const game = await getGameRequest(id, token);
+    if(game){
+      await deleteRatingRequest(game.game[0].id, token)
+    }
+  } catch (error) {
+    console.error("Error al manejar el cambio de calificación:", error);
+  }
 }

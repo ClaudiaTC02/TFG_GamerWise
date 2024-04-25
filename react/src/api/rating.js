@@ -34,3 +34,18 @@ export const getRatingRequest = async (game_id, token) => {
     throw new Error(error.response.data.message);
   }
 };
+
+export const deleteRatingRequest = async (game_id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.delete(`${API}/preferences/${game_id}`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
