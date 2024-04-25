@@ -38,7 +38,6 @@ export default function GameDetailPage() {
           const rating = await getRatingRequest(game.game[0].id, token)
           setRating(rating)
           setRated(true)
-          console.log(rating);
         }
       } catch (error) {
         console.log(error);

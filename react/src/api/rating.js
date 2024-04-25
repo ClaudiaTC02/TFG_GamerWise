@@ -49,3 +49,21 @@ export const deleteRatingRequest = async (game_id, token) => {
     throw new Error(error.response.data.message);
   }
 };
+
+export const updateRatingRequest = async (game_id, newRating, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      rating: newRating,
+    };
+    const res = await axios.put(`${API}/preferences/${game_id}`, data, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
