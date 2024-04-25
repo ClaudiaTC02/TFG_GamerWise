@@ -7,6 +7,7 @@ import {
   getAllRatingLogic,
   getGamesWithSpecificRatingLogic
 } from '../logic/PreferencesLogic.js';
+import { getUserIdFromToken } from '../utils/auth.js';
 
 //----------------------------------------------------------------------
 // HTTP Methods
@@ -15,7 +16,10 @@ import {
 // add rating to a game
 export const addRating = async (req, res) => {
   try {
-    const { user_id, game_id, rating } = req.body;
+    const { game_id, rating } = req.body;
+
+    const user_id = getUserIdFromToken(req);
+    
     const result = await addRatingLogic(user_id, game_id, rating);
 
     if (result.success) {
@@ -36,7 +40,10 @@ export const addRating = async (req, res) => {
 export const updateRating = async (req, res) => {
   try {
     const { rating } = req.body;
-    const { user_id, game_id } = req.params;
+    const { game_id } = req.params;
+
+    const user_id = getUserIdFromToken(req);
+
     const result = await updateRatingLogic(user_id, game_id, rating);
 
     if (result.success) {
@@ -56,7 +63,10 @@ export const updateRating = async (req, res) => {
 // deleting ratings
 export const deleteRating = async (req, res) => {
   try {
-    const { game_id, user_id } = req.params;
+    const { game_id } = req.params;
+
+    const user_id = getUserIdFromToken(req);
+
     const result = await deleteRatingLogic(user_id, game_id);
 
     if (result.success) {
@@ -76,7 +86,10 @@ export const deleteRating = async (req, res) => {
 // obtain rating of a especific game
 export const getRatingOfGame = async (req, res) => {
   try {
-    const { game_id, user_id } = req.params;
+    const { game_id } = req.params;
+
+    const user_id = getUserIdFromToken(req);
+
     const result = await getRatingOfGameLogic(user_id, game_id);
 
     if (result.success) {
@@ -96,7 +109,8 @@ export const getRatingOfGame = async (req, res) => {
 // obain all ratings of a user
 export const getAllRating = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const user_id = getUserIdFromToken(req);
+
     const result = await getAllRatingLogic(user_id);
 
     if (result.success) {
@@ -117,8 +131,10 @@ export const getAllRating = async (req, res) => {
 // /preferences/games/:user_id?rating=:rating
 export const getGamesWithSpecificRating = async (req, res) => {
   try {
-    const {user_id} = req.params
     const {rating} = req.query
+
+    const user_id = getUserIdFromToken(req);
+    
     const result = await getGamesWithSpecificRatingLogic(user_id, rating)
 
     if(result.success) {

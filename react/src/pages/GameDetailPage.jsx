@@ -6,10 +6,17 @@ import { defaultCoverIcon } from "../components/Icons";
 import "../styles/GameDetailPage.css";
 import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
+import { useAuth } from "../hooks/useAuth";
+import { deleteRatingLogic, newRatingLogic, updateRatingLogic } from "../logic/ratingLogic";
+import { getRatingRequest } from "../api/rating";
+import { getGameRequest } from "../api/game";
 
 export default function GameDetailPage() {
   const { id } = useParams();
+  const { token } = useAuth();
   const [gameDetails, setGameDetails] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [rated, setRated] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -24,9 +31,56 @@ export default function GameDetailPage() {
         console.log(error);
       }
     };
-
+    const fetchRating = async () => {
+      try {
+        const game = await getGameRequest(id, token)
+        if(game){
+          const rating = await getRatingRequest(game.game[0].id, token)
+          setRating(rating)
+          setRated(true)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     fetchDetails();
-  }, [id]);
+    fetchRating()
+  }, [id, token]);
+
+  const handleRatingChange = async (value) => {
+    try {
+      if (value === rating) {
+        setRating(0);
+        await deleteRatingLogic(id, token)
+        setRated(false)
+      } else {
+        setRating(value);
+        if(rated){
+          await updateRatingLogic(id, value, token)
+        } else{
+          await newRatingLogic(id, token, gameDetails, value)
+        }
+      }
+    } catch (error) {
+      console.error("Error al manejar el cambio de calificación:", error);
+    }
+  };
+  
+
+  const renderStars = () => {
+    const stars = [];
+    const maxRating = 5;
+    for (let i = 1; i <= maxRating; i++) {
+      stars.push(
+        <span
+          key={i}
+          onClick={() => handleRatingChange(i)}
+          className={rated ? (i <= rating ? "bi bi-star-fill rated" : "bi bi-star rated") : (i <= rating ? "bi bi-star-fill" : "bi bi-star")}
+        />
+      );
+    }
+    return stars;
+  };
 
   if (gameDetails.length === 0) {
     return <div>Loading...</div>;
@@ -34,7 +88,7 @@ export default function GameDetailPage() {
 
   return (
     <>
-      <Header />
+      <Header isLogged={true}/>
       <section className="detail-section">
         <div className="detail-container">
           <div className="detail-container-right">
@@ -48,13 +102,7 @@ export default function GameDetailPage() {
               alt={gameDetails.name}
             />
             <p className="detail-rating">Puntúalo</p>
-            <div className="detail-star-container">
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-              <i className="bi bi-star"></i>
-            </div>
+            <div className="detail-star-container">{renderStars()}</div>
             <button className="detail-addList-button">Añadir a lista</button>
           </div>
           <div className="detail-container-left">
@@ -62,27 +110,33 @@ export default function GameDetailPage() {
               <div className="detail-container-title">
                 <h1 className="detail-title">{gameDetails.name}</h1>
                 <h3 className="detail-subtitle">
-                  {gameDetails.involved_companies && gameDetails.involved_companies
-                    .map((company) => company.company.name)
-                    .join(", ")}
+                  {gameDetails.involved_companies &&
+                    gameDetails.involved_companies
+                      .map((company) => company.company.name)
+                      .join(", ")}
                 </h3>
               </div>
               <i className="bi bi-heart"></i>
             </div>
             <p className="detail-gender">
-              Género: {gameDetails.genres && gameDetails.genres.map((genre) => genre.name).join(", ")}
+              Género:{" "}
+              {gameDetails.genres &&
+                gameDetails.genres.map((genre) => genre.name).join(", ")}
             </p>
             <p className="detail-platforms">
               Plataformas:{" "}
-              {gameDetails.platforms && gameDetails.platforms
-                .map((platforms) => platforms.abbreviation)
-                .join(", ")}
+              {gameDetails.platforms &&
+                gameDetails.platforms
+                  .map((platforms) => platforms.abbreviation)
+                  .join(", ")}
             </p>
           </div>
         </div>
         <div className="detail-container-description">
           <h5 className="detail-title-description">Desripción</h5>
-          <p className="detail-text-description">{gameDetails.summary && gameDetails.summary}</p>
+          <p className="detail-text-description">
+            {gameDetails.summary && gameDetails.summary}
+          </p>
         </div>
       </section>
       <CarouselSection gamesData={datamock} text="También puede gustarte" />

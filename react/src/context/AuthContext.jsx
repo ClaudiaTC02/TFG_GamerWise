@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true)
+  const [token, setToken] = useState(null)
 
   const signUp = async (user) => {
     try {
@@ -37,10 +38,12 @@ export const AuthProvider = ({ children }) => {
       setUser(res.user);
       setError(null);
       setIsAuthenticated(true);
+      setToken(res.token)
       Cookies.set('token', res.token, { expires: 1 });
     } catch (error) {
       setError(error.message);
       setUser(null);
+      setToken(null)
       setIsAuthenticated(false);
     }
   };
@@ -48,6 +51,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = Cookies.get('token');
     if(token){
+        setToken(token)
         setIsAuthenticated(true);
     }
     setLoading(false)
@@ -55,6 +59,7 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = () => {
     setUser(null);
+    setToken(null)
     Cookies.remove('token');
     setIsAuthenticated(false);
   };
@@ -69,7 +74,8 @@ export const AuthProvider = ({ children }) => {
         error,
         setError,
         isAuthenticated,
-        loading
+        loading,
+        token
       }}
     >
       {children}
