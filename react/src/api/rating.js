@@ -29,7 +29,7 @@ export const getRatingRequest = async (game_id, token) => {
       },
     };
     const res = await axios.get(`${API}/preferences/rating/${game_id}`, config);
-    return res.data;
+    return res.data.rating.rating;
   } catch (error) {
     throw new Error(error.response.data.message);
   }

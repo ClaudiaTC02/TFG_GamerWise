@@ -8,12 +8,15 @@ import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
 import { useAuth } from "../hooks/useAuth";
 import { newRatingLogic } from "../logic/ratingLogic";
+import { getRatingRequest } from "../api/rating";
+import { getGameRequest } from "../api/game";
 
 export default function GameDetailPage() {
   const { id } = useParams();
   const { token } = useAuth();
   const [gameDetails, setGameDetails] = useState([]);
   const [rating, setRating] = useState(0);
+  const [rated, setRated] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -28,9 +31,22 @@ export default function GameDetailPage() {
         console.log(error);
       }
     };
-
+    const fetchRating = async () => {
+      try {
+        const game = await getGameRequest(id, token)
+        if(game){
+          const rating = await getRatingRequest(game.game[0].id, token)
+          setRating(rating)
+          setRated(true)
+          console.log(rating);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     fetchDetails();
-  }, [id]);
+    fetchRating()
+  }, [id, token]);
 
   const handleRatingChange = async (value) => {
     try {
@@ -39,7 +55,11 @@ export default function GameDetailPage() {
         // TO DO: eliminar la calificación
       } else {
         setRating(value);
-        await newRatingLogic(id, token, gameDetails, value)
+        if(rated){
+          console.log('Actualizo')
+        } else{
+          await newRatingLogic(id, token, gameDetails, value)
+        }
       }
     } catch (error) {
       console.error("Error al manejar el cambio de calificación:", error);
@@ -55,7 +75,7 @@ export default function GameDetailPage() {
         <span
           key={i}
           onClick={() => handleRatingChange(i)}
-          className={i <= rating ? "bi bi-star-fill" : "bi bi-star"}
+          className={rated ? (i <= rating ? "bi bi-star-fill rated" : "bi bi-star rated") : (i <= rating ? "bi bi-star-fill" : "bi bi-star")}
         />
       );
     }
