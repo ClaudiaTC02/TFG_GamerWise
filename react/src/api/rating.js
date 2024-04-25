@@ -20,3 +20,17 @@ export const postNewRatingRequest = async (game_id, rating, token) => {
   }
 };
 
+export const getRatingRequest = async (game_id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.get(`${API}/preferences/rating/${game_id}`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};

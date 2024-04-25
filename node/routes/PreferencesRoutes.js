@@ -4,10 +4,10 @@ import { addRating, updateRating, deleteRating, getRatingOfGame, getAllRating, g
 const router = express.Router();
 
 router.post('/',verifyToken, addRating)
-router.put('/:game_id&:user_id',verifyToken, updateRating)
-router.delete('/:game_id&:user_id', verifyToken,deleteRating)
-router.get('/:game_id&:user_id',verifyToken, getRatingOfGame)
-router.get('/:user_id',verifyToken, getAllRating)
-router.get('/games/:user_id',verifyToken, getGamesWithSpecificRating)
+router.put('/:game_id',verifyToken, updateRating)
+router.delete('/:game_id', verifyToken,deleteRating)
+router.get('/rating/:game_id',verifyToken, getRatingOfGame)
+router.get('/',verifyToken, getAllRating)
+router.get('/games',verifyToken, getGamesWithSpecificRating)
 
 export default (app) => {app.use("/preferences", router)}
