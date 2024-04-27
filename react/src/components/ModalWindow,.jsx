@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { Modal } from "bootstrap";
 import "../styles/ModalWindow.css";
 import { useAuth } from "../hooks/useAuth";
-import { addGameToListLogic, getListAndCountedGamesLogic } from "../logic/listLogic";
+import {
+  addGameToListLogic,
+  getListAndCountedGamesLogic,
+} from "../logic/listLogic";
 
 export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
   const modalRef = useRef(null);
@@ -56,6 +59,12 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
         console.log(`Juego añadido a la lista con ID ${listId}`);
       }
       setSelectedItems([]);
+      const checkboxes = document.querySelectorAll(
+        'input[type="checkbox"]:checked'
+      );
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     } catch (error) {
       console.error("Error al añadir el juego a la lista:", error);
     }
@@ -146,8 +155,14 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
             {renderList()}
           </div>
           <div className="modal-footer">
-            <p className="selected-list-modular">{selectedItems.length} listas seleccionadas</p>
-            <button type="button" className="modal-add-button" onClick={handleAddToList}>
+            <p className="selected-list-modular">
+              {selectedItems.length} listas seleccionadas
+            </p>
+            <button
+              type="button"
+              className="modal-add-button"
+              onClick={handleAddToList}
+            >
               Añadir
             </button>
           </div>
