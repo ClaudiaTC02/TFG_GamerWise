@@ -4,7 +4,6 @@ import "../styles/ModalWindow.css";
 import { useAuth } from "../hooks/useAuth";
 import {
   addGameToListLogic,
-  checkIfGameExistsInListLogic,
   getListAndCountedGamesLogic,
 } from "../logic/listLogic";
 
@@ -49,6 +48,10 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
     }
   };
 
+  const handleListSelect = (listId) => {
+    console.log("Seleccionaste la lista con ID:", listId);
+  };
+
   const handleAddToList = async () => {
     try {
       for (const listId of selectedItems) {
@@ -81,6 +84,7 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
             <li
               className="list-group-item"
               key={list.id}
+              onClick={() => handleListSelect(list.id)}
             >
               <div className="form-check">
                 <input
@@ -89,7 +93,6 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
                   onChange={() => handleCheckboxChange(list.id)}
                   value=""
                   id={`listCheckbox${list.id}`}
-                  disabled={checkIfGameExistsInListLogic(list.id, token, igdb_id)}
                 />
                 <div className="labels-container">
                   <label
