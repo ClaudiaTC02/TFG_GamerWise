@@ -49,3 +49,18 @@ export const addGameToListRequest = async (list_id, game_id, token) => {
     throw new Error(error.response.data.message);
   }
 };
+
+export const getAllGamesOfListRequest = async (list_id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.get(`${API}/listgame/${list_id}`, config);
+    return res.data.games;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
