@@ -18,6 +18,9 @@
 .modal-newList{
     margin: 0;
 }
+.no-list-found-modular, .selected-list-modular{
+    margin: 0.5rem;
+}
 .modal-search{
     text-align: right;
     border-radius: 5px;

@@ -25,7 +25,6 @@ export const countGamesInListRequest = async (list_id, token) => {
       },
     };
     const res = await axios.get(`${API}/listgame/${list_id}/count`, config);
-    console.log(res.data);
     return res.data.count;
   } catch (error) {
     throw new Error(error.response.data.message);

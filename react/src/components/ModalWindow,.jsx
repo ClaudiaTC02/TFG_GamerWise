@@ -8,6 +8,7 @@ export function ModalWindow({ onClose, gameName }) {
   const modalRef = useRef(null);
   const [lists, setLists] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const { token } = useAuth();
 
   useEffect(() => {
@@ -48,13 +49,17 @@ export function ModalWindow({ onClose, gameName }) {
     console.log("Seleccionaste la lista con ID:", listId);
   };
 
+  const filteredLists = lists.filter((list) =>
+    list.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const renderList = () => {
-    if (lists.length === 0) {
-      return <p>No hay listas...</p>;
+    if (filteredLists.length === 0) {
+      return <p className="no-list-found-modular">No hay listas...</p>;
     } else {
       return (
         <ul className="list-group">
-          {lists.map((list) => (
+          {filteredLists.map((list) => (
             <li
               className="list-group-item"
               key={list.id}
@@ -123,12 +128,13 @@ export function ModalWindow({ onClose, gameName }) {
                 type="text"
                 placeholder="Type to search..."
                 className="modal-search"
+                onChange={(e) => setSearchText(e.target.value)}
               />
             </div>
             {renderList()}
           </div>
           <div className="modal-footer">
-            <p>{selectedItems.length} listas seleccionadas</p>
+            <p className="selected-list-modular">{selectedItems.length} listas seleccionadas</p>
             <button type="button" className="modal-add-button">
               Añadir
             </button>
