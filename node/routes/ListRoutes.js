@@ -4,7 +4,7 @@ import { createList, getAllList,updateList,deleteList, getList  } from "../contr
 const router = express.Router();
 
 router.post('/', verifyToken, createList)
-router.get('/user/:user_id',verifyToken, getAllList)
+router.get('/user',verifyToken, getAllList)
 router.put('/:id',verifyToken, updateList)
 router.delete('/:id',verifyToken, deleteList)
 router.get('/:id', verifyToken, getList)

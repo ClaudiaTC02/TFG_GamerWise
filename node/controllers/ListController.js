@@ -6,6 +6,7 @@ import {
   deleteListLogic,
   getListLogic,
 } from "../logic/ListLogic.js";
+import { getUserIdFromToken } from '../utils/auth.js';
 
 //----------------------------------------------------------------------
 // HTTP Methods
@@ -14,8 +15,11 @@ import {
 // create a list
 export const createList = async (req, res) => {
   try {
-    const { name, description, user_id } = req.body;
-    const result = await createListLogic(name, description, user_id);
+    const { name, description } = req.body;
+    
+    const user_id = getUserIdFromToken(req);
+    
+    const result = await createListLogic(name, description, Number(user_id));
     if (result.success) {
       res
         .status(201)
@@ -35,7 +39,8 @@ export const createList = async (req, res) => {
 // obtain all list from a user
 export const getAllList = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const user_id = getUserIdFromToken(req);
+
     const result = await getAllListLogic(Number(user_id));
     if (result.success) {
       res.status(200).json(result.allLists);
