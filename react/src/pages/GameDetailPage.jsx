@@ -123,7 +123,7 @@ export default function GameDetailPage() {
             <button className="detail-addList-button" onClick={handleAddList}>
               Añadir a lista
             </button>
-            {showModal && <ModalWindow onClose={() => setShowModal(false)} />}
+            {showModal && <ModalWindow onClose={() => setShowModal(false)} gameName={gameDetails.name}/>}
           </div>
           <div className="detail-container-left">
             <div className="detail-container-info">

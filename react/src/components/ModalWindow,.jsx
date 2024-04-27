@@ -1,14 +1,13 @@
 import { useEffect, useRef } from "react";
 import { Modal } from "bootstrap";
+import "../styles/ModalWindow.css";
 
-export function ModalWindow({ onClose }) {
+export function ModalWindow({ onClose, gameName }) {
   const modalRef = useRef(null);
 
   useEffect(() => {
     const modal = new Modal(modalRef.current);
     modal.show();
-
-    // Manejar la eliminación de la modal al desmontar el componente
     return () => {
       modal.dispose();
     };
@@ -28,8 +27,8 @@ export function ModalWindow({ onClose }) {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="staticBackdropLabel">
-              Modal title
+            <h1 className="modal-title" id="staticBackdropLabel">
+              Añade {gameName} a tu lista...
             </h1>
             <button
               type="button"
@@ -39,19 +38,15 @@ export function ModalWindow({ onClose }) {
               onClick={onClose}
             ></button>
           </div>
-          <div className="modal-body">...</div>
+          <hr className="modal-hr" />
+          <div className="modal-body">
+            <div className="modal-search-container">
+              <p className="modal-newList">+ New List...</p>
+              <input type="text" placeholder="Type to search" />
+            </div>
+          </div>
           <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-              onClick={onClose}
-            >
-              Close
-            </button>
-            <button type="button" className="btn btn-primary">
-              Understood
-            </button>
+            <button type="button" className="modal-add-button">Añadir</button>
           </div>
         </div>
       </div>
