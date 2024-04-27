@@ -7,6 +7,7 @@ import { getListAndCountedGamesLogic } from "../logic/listLogic";
 export function ModalWindow({ onClose, gameName }) {
   const modalRef = useRef(null);
   const [lists, setLists] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const { token } = useAuth();
 
   useEffect(() => {
@@ -35,6 +36,14 @@ export function ModalWindow({ onClose, gameName }) {
     fetchLists();
   }, [token]);
 
+  const handleCheckboxChange = (listId) => {
+    if (selectedItems.includes(listId)) {
+      setSelectedItems(selectedItems.filter((id) => id !== listId));
+    } else {
+      setSelectedItems([...selectedItems, listId]);
+    }
+  };
+
   const handleListSelect = (listId) => {
     console.log("Seleccionaste la lista con ID:", listId);
   };
@@ -55,6 +64,7 @@ export function ModalWindow({ onClose, gameName }) {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  onChange={() => handleCheckboxChange(list.id)}
                   value=""
                   id={`listCheckbox${list.id}`}
                 />
@@ -118,6 +128,7 @@ export function ModalWindow({ onClose, gameName }) {
             {renderList()}
           </div>
           <div className="modal-footer">
+            <p>{selectedItems.length} listas seleccionadas</p>
             <button type="button" className="modal-add-button">
               Añadir
             </button>

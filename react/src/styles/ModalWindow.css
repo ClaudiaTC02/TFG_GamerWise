@@ -35,6 +35,7 @@
 }
 .modal-footer{
     background-color: #D3D3D3;
+    justify-content: space-between;
 }
 .modal-add-button{
   border-radius: 15px;
