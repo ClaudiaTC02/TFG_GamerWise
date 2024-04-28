@@ -3,6 +3,7 @@ import {
   getAllListOfUserRequest,
   countGamesInListRequest,
   addGameToListRequest,
+  getAllGamesOfListRequest,
 } from "../api/list.js";
 import { createGameLogic } from "./gameLogic.js";
 
@@ -37,6 +38,17 @@ export const addGameToListLogic = async (list_id, gameDetails, id, token) => {
       await addGameToListRequest(list_id, game.game[0].id, token);
     }
   } catch (error) {
-    console.error("Error al manejar el cambio de calificación:", error);
+    throw new Error(error.response.data.message);
   }
+};
+
+export const checkIfGameExistsInListLogic = async (list_id, token, id) => {
+    try {
+      const game = await getGameRequest(id, token);
+      if(!game) return false;
+      const games = await getAllGamesOfListRequest(list_id, token);
+      return games.some(listGame => listGame.id === game.game[0].id);
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
 };
