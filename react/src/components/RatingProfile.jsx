@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { getAllRatingsOfUserRequest } from "../api/rating";
+import {
+  getAllRatingsOfUserRequest,
+  getGamesWithSpecificRatingRequest,
+} from "../api/rating";
 import BarChart from "./BarChart";
-import { CarouselSection } from "./CarouselSection";
+import { GameSearch } from "./GameSearch";
 
 export function RatingProfile() {
   const [ratings, setRatings] = useState();
@@ -23,23 +26,26 @@ export function RatingProfile() {
     fetchData();
   }, [token]);
 
-  const getGamesRated = async () => {
-    
-  }
+  const getGamesRated = async (value) => {
+    const ratedGames = await getGamesWithSpecificRatingRequest(token, value);
+    console.log(ratedGames);
+    setGames(ratedGames);
+  };
 
   // Función para manejar el clic en la barra
-  const handleBarClick = (label, value) => {
+  const handleBarClick = async (label, value) => {
     console.log(`Se ha hecho clic en la barra ${label} con valor ${value}`);
-    setValue(value);
+    setValue(label);
+    await getGamesRated(label);
   };
   return (
     <>
       {ratings && <BarChart scores={ratings} onBarClick={handleBarClick} />}
       {value && games && (
-        <CarouselSection
-          gamesData={games}
-          text={`Juegos Puntuados con ${value} estrella`}
-        />
+        <>
+          <h2 className="rating-title-clicked">{`Juegos Puntuados con ${value} estrella`}</h2>
+          <GameSearch games={games} />
+        </>
       )}
     </>
   );

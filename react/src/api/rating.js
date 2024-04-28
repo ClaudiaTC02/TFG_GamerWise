@@ -82,3 +82,18 @@ export const getAllRatingsOfUserRequest = async (token) => {
     throw new Error(error.response.data.message);
   }
 }
+
+export const getGamesWithSpecificRatingRequest = async (token, value) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.get(`${API}/preferences/games?rating=${value}`, config);
+    return res.data.games;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}

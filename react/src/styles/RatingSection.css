@@ -4,8 +4,14 @@
     width: 800px;
 }
 
+.rating-title-clicked{
+    margin: 1rem;
+    margin-left: 1.5rem;
+    font-size: 1.3rem;
+}
 @media screen and (max-width: 550px) {
     .bar-chart-container{
         width: auto;
+        margin: 1rem;
     }
   }
