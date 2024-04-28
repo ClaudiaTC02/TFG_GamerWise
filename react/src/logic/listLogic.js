@@ -4,6 +4,7 @@ import {
   countGamesInListRequest,
   addGameToListRequest,
   getAllGamesOfListRequest,
+  getListOfAUserRequest,
 } from "../api/list.js";
 import { createGameLogic } from "./gameLogic.js";
 
@@ -28,6 +29,21 @@ export const getListAndCountedGamesLogic = async (token, igdb_id) => {
     throw new Error(error.response.data.message);
   }
 };
+
+export const getCountOfGamesProfileLogic = async (token) =>{
+  try {
+    const list_playing = await getListOfAUserRequest('Playing', token)
+    const list_completed = await getListOfAUserRequest('Completed', token)
+    const counted_playing = await countGamesInListRequest(list_playing.id, token)
+    const counted_completed = await countGamesInListRequest(list_completed.id, token)
+    return {
+      counted_playing: counted_playing,
+      counted_completed: counted_completed
+    }
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
 
 export const addGameToListLogic = async (list_id, gameDetails, id, token) => {
   try {

@@ -64,3 +64,18 @@ export const getAllGamesOfListRequest = async (list_id, token) => {
     throw new Error(error.response.data.message);
   }
 }
+
+export const getListOfAUserRequest = async (name, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.get(`${API}/list/${name}`, config);
+    return res.data.list;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}

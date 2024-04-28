@@ -28,6 +28,7 @@
 }
 .profile-title {
   margin: 2rem;
+  font-size: 1.5rem;
 }
 .profile-nav {
   background-color: white;
@@ -54,7 +55,7 @@
   color: black;
   padding: 10px;
 }
-.profile-nav li:hover a:hover {
+.profile-nav li:hover a:hover, .profile-nav a.active {
   cursor: pointer;
   color: #ef4f23;
   font-weight: bold;
