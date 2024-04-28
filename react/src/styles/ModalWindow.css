@@ -1,3 +1,9 @@
+body.modal-open{
+    padding: 0;
+}
+.modal {
+    overflow-y:scroll;
+}
 .modal-title{
     margin: 1rem;
     margin-bottom: 0;

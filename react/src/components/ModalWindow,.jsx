@@ -1,37 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-import { Modal } from "bootstrap";
+import { useEffect, useState } from "react";
+
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+
 import "../styles/ModalWindow.css";
 import { useAuth } from "../hooks/useAuth";
 import {
   addGameToListLogic,
-  checkIfGameExistsInListLogic,
   getListAndCountedGamesLogic,
 } from "../logic/listLogic";
 
-export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
-  const modalRef = useRef(null);
+export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }) {
   const [lists, setLists] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [searchText, setSearchText] = useState("");
   const { token } = useAuth();
-
-  useEffect(() => {
-    const modalElement = modalRef.current;
-    if (!modalElement) return;
-
-    const modal = new Modal(modalElement);
-    modal.show();
-
-    return () => {
-      modal.hide();
-      modal.dispose();
-    };
-  }, [modalRef]);
+  const [add, setAdd] = useState(false)
 
   useEffect(() => {
     const fetchLists = async () => {
       try {
-        const listsData = await getListAndCountedGamesLogic(token);
+        const listsData = await getListAndCountedGamesLogic(token, igdb_id);
         setLists(listsData);
       } catch (error) {
         console.error("Error fetching lists:", error);
@@ -39,7 +28,7 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
     };
 
     fetchLists();
-  }, [token, selectedItems]);
+  }, [token, igdb_id, add]);
 
   const handleCheckboxChange = (listId) => {
     if (selectedItems.includes(listId)) {
@@ -55,13 +44,12 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
         await addGameToListLogic(listId, gameDetails, igdb_id, token);
         console.log(`Juego añadido a la lista con ID ${listId}`);
       }
-      setSelectedItems([]);
-      const checkboxes = document.querySelectorAll(
-        'input[type="checkbox"]:checked'
-      );
+      const checkboxes = document.querySelectorAll('.form-check-input');
       checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
-      });
+      })
+      setSelectedItems([]);
+      setAdd(!add)
     } catch (error) {
       console.error("Error al añadir el juego a la lista:", error);
     }
@@ -78,10 +66,7 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
       return (
         <ul className="list-group">
           {filteredLists.map((list) => (
-            <li
-              className="list-group-item"
-              key={list.id}
-            >
+            <li className="list-group-item" key={list.id}>
               <div className="form-check">
                 <input
                   className="form-check-input"
@@ -89,7 +74,7 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
                   onChange={() => handleCheckboxChange(list.id)}
                   value=""
                   id={`listCheckbox${list.id}`}
-                  disabled={checkIfGameExistsInListLogic(list.id, token, igdb_id)}
+                  disabled={list.exists}
                 />
                 <div className="labels-container">
                   <label
@@ -114,57 +99,32 @@ export function ModalWindow({ onClose, gameName, igdb_id, gameDetails }) {
   };
 
   return (
-    <div
-      className="modal fade"
-      id="staticBackdrop"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabIndex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-      ref={modalRef}
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h1 className="modal-title" id="staticBackdropLabel">
-              Añade {gameName} a tu lista...
-            </h1>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              onClick={onClose}
-            ></button>
-          </div>
-          <hr className="modal-hr" />
-          <div className="modal-body">
-            <div className="modal-container">
-              <p className="modal-newList">+ New List...</p>
-              <input
-                type="text"
-                placeholder="Type to search..."
-                className="modal-search"
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
-            {renderList()}
-          </div>
-          <div className="modal-footer">
-            <p className="selected-list-modular">
-              {selectedItems.length} listas seleccionadas
-            </p>
-            <button
-              type="button"
-              className="modal-add-button"
-              onClick={handleAddToList}
-            >
-              Añadir
-            </button>
-          </div>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Añade {gameName} a tu lista...</Modal.Title>
+      </Modal.Header>
+      <hr className="modal-hr" />
+      <Modal.Body>
+        <div className="modal-container">
+          <p className="modal-newList">+ New List...</p>
+          <input
+            type="text"
+            placeholder="Type to search..."
+            className="modal-search"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
         </div>
-      </div>
-    </div>
+        {renderList()}
+      </Modal.Body>
+      <Modal.Footer>
+        <p className="selected-list-modular">
+          {selectedItems.length} listas seleccionadas
+        </p>
+        <Button className="modal-add-button" onClick={handleAddToList}>
+          Añadir
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }

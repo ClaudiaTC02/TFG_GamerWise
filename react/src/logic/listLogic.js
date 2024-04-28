@@ -7,17 +7,19 @@ import {
 } from "../api/list.js";
 import { createGameLogic } from "./gameLogic.js";
 
-export const getListAndCountedGamesLogic = async (token) => {
+export const getListAndCountedGamesLogic = async (token, igdb_id) => {
   try {
     const lists = await getAllListOfUserRequest(token);
     if (lists.length === 0) return lists;
     const listWithCount = await Promise.all(
       lists.map(async (list) => {
         const games = await countGamesInListRequest(list.id, token);
+        const existsInList = await checkIfGameExistsInListLogic(games, list.id, token, igdb_id)
         return {
           id: list.id,
           name: list.name,
           count: games,
+          exists: existsInList
         };
       })
     );
@@ -42,12 +44,22 @@ export const addGameToListLogic = async (list_id, gameDetails, id, token) => {
   }
 };
 
-export const checkIfGameExistsInListLogic = async (list_id, token, id) => {
+export const checkIfGameExistsInListLogic = async (count, list_id, token, id) => {
     try {
+      if(count === 0) return false
       const game = await getGameRequest(id, token);
       if(!game) return false;
       const games = await getAllGamesOfListRequest(list_id, token);
-      return games.some(listGame => listGame.id === game.game[0].id);
+      for (const key in games) {
+        if (Object.hasOwnProperty.call(games, key) && games[key].lists) {
+          for (const listItem of games[key].lists) {
+            if (listItem.list_game.game_id === game.game[0].id) {
+              return true; 
+            }
+          }
+        }
+      }
+      return false;
     } catch (error) {
       throw new Error(error.response.data.message);
     }

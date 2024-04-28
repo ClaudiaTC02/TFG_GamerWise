@@ -22,7 +22,10 @@ export default function GameDetailPage() {
   const [gameDetails, setGameDetails] = useState([]);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  // Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -73,7 +76,7 @@ export default function GameDetailPage() {
   };
 
   const handleAddList = () => {
-    setShowModal(true);
+    handleShow()
   };
 
   const renderStars = () => {
@@ -123,7 +126,7 @@ export default function GameDetailPage() {
             <button className="detail-addList-button" onClick={handleAddList}>
               Añadir a lista
             </button>
-            {showModal && <ModalWindow onClose={() => setShowModal(false)} gameName={gameDetails.name} igdb_id={id} gameDetails={gameDetails}/>}
+            <ModalWindow show={show} handleClose={handleClose} gameName={gameDetails.name} igdb_id={id} gameDetails={gameDetails}/>
           </div>
           <div className="detail-container-left">
             <div className="detail-container-info">
