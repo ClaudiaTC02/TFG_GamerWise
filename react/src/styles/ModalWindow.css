@@ -1,0 +1,56 @@
+body.modal-open{
+    padding: 0;
+}
+.modal {
+    overflow-y:scroll;
+}
+.modal-title{
+    margin: 1rem;
+    margin-bottom: 0;
+    font-size: 1.3rem;
+}
+.modal-hr{
+    margin: 0 1rem;
+    height: 1px;
+    border: 1px solid #ef4f23;
+    opacity: 1;
+}
+.modal-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 0.5rem;
+}
+.modal-newList{
+    margin: 0;
+}
+.no-list-found-modular, .selected-list-modular{
+    margin: 0.5rem;
+}
+.modal-search{
+    text-align: right;
+    border-radius: 5px;
+    border: 0;
+    padding: 0.3rem;
+    background-color: #f7f7f7;
+    width: 50%;
+}
+.modal-content{
+    background-color: #ECECEC;
+}
+.list-group-item{
+    margin-top: 1rem;
+    background-color: #f7f7f7;
+}
+.modal-footer{
+    background-color: #D3D3D3;
+    justify-content: space-between;
+}
+.modal-add-button{
+  border-radius: 15px;
+}
+.labels-container{
+    display: flex;
+    width: -webkit-fill-available;
+    justify-content: space-between;
+}

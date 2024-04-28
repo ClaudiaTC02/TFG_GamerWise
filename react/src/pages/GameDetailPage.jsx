@@ -7,9 +7,14 @@ import "../styles/GameDetailPage.css";
 import { useEffect, useState } from "react";
 import { getGameDetailsRequest } from "../api/igdb";
 import { useAuth } from "../hooks/useAuth";
-import { deleteRatingLogic, newRatingLogic, updateRatingLogic } from "../logic/ratingLogic";
+import {
+  deleteRatingLogic,
+  newRatingLogic,
+  updateRatingLogic,
+} from "../logic/ratingLogic";
 import { getRatingRequest } from "../api/rating";
 import { getGameRequest } from "../api/game";
+import {ModalWindow} from "../components/ModalWindow,";
 
 export default function GameDetailPage() {
   const { id } = useParams();
@@ -17,6 +22,10 @@ export default function GameDetailPage() {
   const [gameDetails, setGameDetails] = useState([]);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
+  // Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -33,39 +42,42 @@ export default function GameDetailPage() {
     };
     const fetchRating = async () => {
       try {
-        const game = await getGameRequest(id, token)
-        if(game){
-          const rating = await getRatingRequest(game.game[0].id, token)
-          setRating(rating)
-          setRated(true)
+        const game = await getGameRequest(id, token);
+        if (game) {
+          const rating = await getRatingRequest(game.game[0].id, token);
+          setRating(rating);
+          setRated(true);
         }
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     fetchDetails();
-    fetchRating()
+    fetchRating();
   }, [id, token]);
 
   const handleRatingChange = async (value) => {
     try {
       if (value === rating) {
         setRating(0);
-        await deleteRatingLogic(id, token)
-        setRated(false)
+        await deleteRatingLogic(id, token);
+        setRated(false);
       } else {
         setRating(value);
-        if(rated){
-          await updateRatingLogic(id, value, token)
-        } else{
-          await newRatingLogic(id, token, gameDetails, value)
+        if (rated) {
+          await updateRatingLogic(id, value, token);
+        } else {
+          await newRatingLogic(id, token, gameDetails, value);
         }
       }
     } catch (error) {
       console.error("Error al manejar el cambio de calificación:", error);
     }
   };
-  
+
+  const handleAddList = () => {
+    handleShow()
+  };
 
   const renderStars = () => {
     const stars = [];
@@ -75,7 +87,15 @@ export default function GameDetailPage() {
         <span
           key={i}
           onClick={() => handleRatingChange(i)}
-          className={rated ? (i <= rating ? "bi bi-star-fill rated" : "bi bi-star rated") : (i <= rating ? "bi bi-star-fill" : "bi bi-star")}
+          className={
+            rated
+              ? i <= rating
+                ? "bi bi-star-fill rated"
+                : "bi bi-star rated"
+              : i <= rating
+              ? "bi bi-star-fill"
+              : "bi bi-star"
+          }
         />
       );
     }
@@ -88,7 +108,7 @@ export default function GameDetailPage() {
 
   return (
     <>
-      <Header isLogged={true}/>
+      <Header isLogged={true} />
       <section className="detail-section">
         <div className="detail-container">
           <div className="detail-container-right">
@@ -103,7 +123,10 @@ export default function GameDetailPage() {
             />
             <p className="detail-rating">Puntúalo</p>
             <div className="detail-star-container">{renderStars()}</div>
-            <button className="detail-addList-button">Añadir a lista</button>
+            <button className="detail-addList-button" onClick={handleAddList}>
+              Añadir a lista
+            </button>
+            <ModalWindow show={show} handleClose={handleClose} gameName={gameDetails.name} igdb_id={id} gameDetails={gameDetails}/>
           </div>
           <div className="detail-container-left">
             <div className="detail-container-info">
