@@ -18,6 +18,13 @@ export function ProfilePage() {
           <p className="profile-subtitle">0 Completed</p>
         </div>
       </section>
+      <nav className="profile-nav">
+          <ul>
+            <li><a href="#">Listas</a></li>
+            <li><a href="#">Puntuaciones</a></li>
+            <li><a href="#">Opciones</a></li>
+          </ul>
+        </nav>
     </>
   );
 }

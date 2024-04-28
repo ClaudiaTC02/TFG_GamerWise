@@ -29,3 +29,33 @@
 .profile-title {
   margin: 2rem;
 }
+.profile-nav {
+  background-color: white;
+  border: 1px solid black;
+  margin: 0 auto;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+.profile-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0.3rem;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.profile-nav li {
+  flex: 1;
+}
+.profile-nav a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+}
+.profile-nav li:hover a:hover {
+  cursor: pointer;
+  color: #ef4f23;
+  font-weight: bold;
+}
