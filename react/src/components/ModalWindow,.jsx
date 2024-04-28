@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 import "../styles/ModalWindow.css";
@@ -121,9 +120,9 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }
         <p className="selected-list-modular">
           {selectedItems.length} listas seleccionadas
         </p>
-        <Button className="modal-add-button" onClick={handleAddToList}>
+        <button className="modal-add-button" onClick={handleAddToList}>
           Añadir
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   );
