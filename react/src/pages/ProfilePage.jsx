@@ -6,6 +6,7 @@ import { ListsProfile } from "../components/ListsProfile";
 import { useAuth } from "../hooks/useAuth";
 import { getBasicInfoRequest } from "../api/user";
 import { getCountOfGamesProfileLogic } from "../logic/listLogic";
+import { RatingProfile } from "../components/RatingProfile";
 
 export function ProfilePage() {
     const {token} = useAuth()
@@ -77,6 +78,8 @@ export function ProfilePage() {
       </nav>
 
       {activeComponent === "lists" && <ListsProfile />}
+      {activeComponent === "ratings" && <RatingProfile />}
+
     </>
   );
 }

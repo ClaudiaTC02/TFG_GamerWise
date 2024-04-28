@@ -1,0 +1,11 @@
+.bar-chart-container{
+    margin: 0 auto;
+    text-align: center;
+    width: 800px;
+}
+
+@media screen and (max-width: 550px) {
+    .bar-chart-container{
+        width: auto;
+    }
+  }
