@@ -75,6 +75,8 @@ const LandingHeader = () => {
 const LoggedHeader = () => {
   const [navClassName, setNavClassName] = useState("nav");
   const {signOut} = useAuth();
+  const navigate = useNavigate();
+
   const handleOpenMenu = () => {
     setNavClassName("nav visible");
   };
@@ -85,7 +87,9 @@ const LoggedHeader = () => {
     signOut()
     console.log('Sesión cerrada');
   }
-  
+  function handleProfile() {
+    navigate('/profile');
+  }
   return (
     <div className="options-container">
       <button className="open-menu" onClick={handleOpenMenu}>
@@ -100,7 +104,7 @@ const LoggedHeader = () => {
         </button>
         <ul className="nav-list">
           <li>
-            <a>Mi perfil</a>
+            <a onClick={handleProfile}>Mi perfil</a>
           </li>
           <li>
             <a>Ajustes</a>

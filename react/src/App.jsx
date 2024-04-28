@@ -11,6 +11,7 @@ import GameDetailPage from "./pages/GameDetailPage.jsx";
 
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./hooks/useAuth.js";
+import { ProfilePage } from "./pages/ProfilePage.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" element={<RegisterPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/logged" element={<LandingLogged />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
           <Route path="/game/:id" element={<GameDetailPage />} />
         </Routes>
