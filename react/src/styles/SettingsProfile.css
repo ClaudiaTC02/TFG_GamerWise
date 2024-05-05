@@ -20,6 +20,12 @@
     padding: 2px; 
 }
 
+.settings-li{
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
 .settings-container-list{
     margin-bottom: 1rem;
 }
@@ -38,14 +44,15 @@
 }
 
 .settings-change-name{
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: bold;
 }
 
 .settings-name-button{
+    font-size: 0.9rem;
     background-color: transparent;
     border: 1px solid #EF4F23;
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
     border-radius: 13px;
     color: black;
 }
@@ -59,6 +66,15 @@
 }
 
 .form-select{
+    font-size: 0.9rem;
     margin-bottom: 1rem;
+    width: 100%;
     background-color:#fdfdfd
+}
+
+@media (min-width: 1025px) {
+    .settings-section{
+        width: 80%;
+        margin: 0 auto;
+    }
 }

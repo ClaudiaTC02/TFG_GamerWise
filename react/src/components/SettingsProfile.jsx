@@ -149,7 +149,7 @@ export function SettingsProfile({ updateUser }) {
         </div>
         <div className="settings-container-right">
           <div className="settings-container-list">
-            <p>Eliminar Listas</p>
+            <p className="settings-change-name">Eliminar Listas</p>
             <select
               className="form-select"
               value={selectedList}
