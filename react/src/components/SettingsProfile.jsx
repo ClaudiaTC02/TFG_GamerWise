@@ -5,7 +5,7 @@ import { updateNameRequest } from "../api/user";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { deleteListRequest, getAllListOfUserRequest } from "../api/list";
-import { ModalEmail, ModalPassowrd } from "./ModalSettings";
+import { ModalDeleteAccount, ModalEmail, ModalPassowrd } from "./ModalSettings";
 
 export function SettingsProfile({ updateUser }) {
   const {
@@ -37,11 +37,14 @@ export function SettingsProfile({ updateUser }) {
   // Modal
   const [showEmail, setShowEmail] = useState(false);
   const [showPasword, setShowPassword] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const handleCloseEmail = () => setShowEmail(false);
   const handleShowEmail = () => setShowEmail(true);
   const handleClosePassword = () => setShowPassword(false);
   const handleShowPassword = () => setShowPassword(true);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
 
   const onSubmit = async (data) => {
     try {
@@ -87,6 +90,10 @@ export function SettingsProfile({ updateUser }) {
     handleShowPassword()
   };
 
+  const handleOpenModalDelete = () => {
+    handleShowDelete()
+  };
+
 
   return (
     <section className="settings-section">
@@ -130,7 +137,7 @@ export function SettingsProfile({ updateUser }) {
             <li className="settings-li"  onClick={handleOpenModalEmail}>
               <a className="settings-link">Cambiar E-mail</a>
             </li>
-            <li className="settings-li">
+            <li className="settings-li" onClick={handleOpenModalDelete}>
               <a className="settings-link">Eliminar Perfil y Datos</a>
             </li>
           </ul>
@@ -167,6 +174,7 @@ export function SettingsProfile({ updateUser }) {
       </div>
       <ModalEmail show={showEmail} handleClose={handleCloseEmail} token={token}/>
       <ModalPassowrd show={showPasword} handleClose={handleClosePassword} token={token}/>
+      <ModalDeleteAccount show={showDelete} handleClose={handleCloseDelete} token={token}/>
     </section>
   );
 }

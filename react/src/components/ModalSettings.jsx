@@ -3,8 +3,13 @@ import Modal from "react-bootstrap/Modal";
 import "../styles/ModalWindow.css";
 import { FormInput } from "./FormInput";
 import { useForm } from "react-hook-form";
-import { updateEmailRequest, updatePasswordRequest } from "../api/user";
+import {
+  deleteAccountRequest,
+  updateEmailRequest,
+  updatePasswordRequest,
+} from "../api/user";
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 export function ModalEmail({ show, handleClose, token }) {
   const {
@@ -13,17 +18,17 @@ export function ModalEmail({ show, handleClose, token }) {
     formState: { errors, isSubmitted },
   } = useForm();
 
-  const [incorrectChange, setIcorrectChange] = useState(null)
+  const [incorrectChange, setIcorrectChange] = useState(null);
   const [correctChange, setCorrectChange] = useState(null);
 
   const handleChangeEmail = async (data) => {
     try {
       await updateEmailRequest(data.email, token);
-      setIcorrectChange(null)
+      setIcorrectChange(null);
       setCorrectChange("Cambiado con éxito");
     } catch (error) {
-        setIcorrectChange(error.message);
-        setCorrectChange(null)
+      setIcorrectChange(error.message);
+      setCorrectChange(null);
     }
   };
 
@@ -67,17 +72,17 @@ export function ModalPassowrd({ show, handleClose, token }) {
     formState: { errors, isSubmitted },
   } = useForm();
 
-  const [incorrectChange, setIcorrectChange] = useState(null)
+  const [incorrectChange, setIcorrectChange] = useState(null);
   const [correctChange, setCorrectChange] = useState(null);
 
   const handleChangePassword = async (data) => {
     try {
       await updatePasswordRequest(data.password, data.password_actual, token);
-      setIcorrectChange(null)
+      setIcorrectChange(null);
       setCorrectChange("Se ha cambiado la contraseña correctamente");
     } catch (error) {
-        setCorrectChange(null)
-        setIcorrectChange(error.message)
+      setCorrectChange(null);
+      setIcorrectChange(error.message);
     }
   };
 
@@ -120,6 +125,53 @@ export function ModalPassowrd({ show, handleClose, token }) {
         {correctChange && <p>{correctChange}</p>}
         {incorrectChange && <p>{incorrectChange}</p>}
       </Modal.Footer>
+    </Modal>
+  );
+}
+
+export function ModalDeleteAccount({ show, handleClose, token }) {
+  const [incorrectChange, setIcorrectChange] = useState(null);
+  const { signOut } = useAuth();
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccountRequest(token);
+      signOut();
+    } catch (error) {
+      setIcorrectChange(error.message);
+    }
+  };
+
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <div>
+          <Modal.Title>Zona de Peligro</Modal.Title>
+          <p className="modal-delete-paragraph">
+            No habrá marcha atrás si continuas
+          </p>
+        </div>
+      </Modal.Header>
+      <hr className="modal-hr" />
+      <Modal.Body>
+        <div className="modal-delete-buttons">
+          <button
+            type="submit"
+            className="btn btn-danger"
+            onClick={handleDeleteAccount}
+          >
+            Eliminar
+          </button>
+          <button
+            type="submit"
+            className="btn btn-secondary"
+            onClick={handleClose}
+          >
+            Cancelar
+          </button>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>{incorrectChange && <p>{incorrectChange}</p>}</Modal.Footer>
     </Modal>
   );
 }

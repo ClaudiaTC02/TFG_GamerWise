@@ -72,4 +72,19 @@ export const updatePasswordRequest = async (password, anterior, token) => {
   }
 };
 
+export const deleteAccountRequest = async (token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.delete(`${API}/user`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
 
