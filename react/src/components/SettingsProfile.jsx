@@ -5,6 +5,7 @@ import { updateNameRequest } from "../api/user";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { deleteListRequest, getAllListOfUserRequest } from "../api/list";
+import { ModalEmail } from "./ModalSettings";
 
 export function SettingsProfile({ updateUser }) {
   const {
@@ -32,6 +33,11 @@ export function SettingsProfile({ updateUser }) {
     };
     fetchData();
   }, [token, lists]);
+
+  // Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const onSubmit = async (data) => {
     try {
@@ -67,6 +73,10 @@ export function SettingsProfile({ updateUser }) {
         "Por favor, escribe 'ELIMINAR' para confirmar la eliminación."
       );
     }
+  };
+
+  const handleOpenModal = () => {
+    handleShow()
   };
 
   return (
@@ -108,7 +118,7 @@ export function SettingsProfile({ updateUser }) {
             <li className="settings-li">
               <a className="settings-link">Cambiar contraseña</a>
             </li>
-            <li className="settings-li">
+            <li className="settings-li"  onClick={handleOpenModal}>
               <a className="settings-link">Cambiar E-mail</a>
             </li>
             <li className="settings-li">
@@ -146,6 +156,7 @@ export function SettingsProfile({ updateUser }) {
           </div>
         </div>
       </div>
+      <ModalEmail show={show} handleClose={handleClose} token={token}/>
     </section>
   );
 }
