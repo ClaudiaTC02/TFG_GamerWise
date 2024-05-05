@@ -7,7 +7,7 @@ import {
 } from "./Icons.jsx";
 import { getIcon, getValidationRules } from "../utils/formUtils.js";
 
-export function FormInput({ children, type, name, register, errors, isSubmitted, passwordValue }) {
+export function FormInput({ children, type, name, register, errors, isSubmitted, passwordValue, noIcon }) {
   const [visibility, setVisibility] = useState(false);
   const [inputType, setInputType] = useState(type);
 
@@ -20,7 +20,10 @@ export function FormInput({ children, type, name, register, errors, isSubmitted,
   };
 
   const validationRules = getValidationRules(name, passwordValue);
-  const icon = getIcon(type);
+  let icon = getIcon(type);
+  if(noIcon){
+    icon=null
+  }
 
   return (
     <div className="input-container">

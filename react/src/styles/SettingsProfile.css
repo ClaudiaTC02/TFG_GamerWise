@@ -1,0 +1,64 @@
+.settings-section{
+    padding: 1rem;
+}
+.settings-main-container{
+    margin: 1rem 1.5rem;
+    border: 1px solid #797979;
+    border-radius: 20px;
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.settings-container-left{
+    flex: 1;
+    text-align: center;
+    width: auto;
+    height: 100%;
+    background-color: white;
+    padding: 2px; 
+}
+
+.settings-container-list{
+    margin-bottom: 1rem;
+}
+.settings-title{
+    font-size: 1.2rem;
+}
+.error-paragraph{
+    margin-left: 0;
+    margin-bottom: 0.2rem;
+}
+
+.settings-container-right{
+    flex: 2;
+    background-color: #EAEAEA;
+    border-radius: 0 20px 20px 0;
+}
+
+.settings-change-name{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.settings-name-button{
+    background-color: transparent;
+    border: 1px solid #EF4F23;
+    margin-top: 0.5rem;
+    border-radius: 13px;
+    color: black;
+}
+
+.settings-ul, .settings-container-list{
+    margin: 1rem 1rem 2rem 1rem;
+}
+
+.settings-link{
+    color: #EF4F23;
+}
+
+.form-select{
+    margin-bottom: 1rem;
+    background-color:#fdfdfd
+}
