@@ -6,6 +6,7 @@ import {
 } from "../api/rating";
 import BarChart from "./BarChart";
 import { GameSearch } from "./GameSearch";
+import { getGameDetailsRequest } from "../api/igdb";
 
 export function RatingProfile() {
   const [ratings, setRatings] = useState();
@@ -28,8 +29,22 @@ export function RatingProfile() {
 
   const getGamesRated = async (value) => {
     const ratedGames = await getGamesWithSpecificRatingRequest(token, value);
+    
     console.log(ratedGames);
-    setGames(ratedGames);
+    const ratedDetailedGames = await Promise.all(
+      ratedGames.map(async (game) => {
+        const game_details = await getGameDetailsRequest(game.igdb_id);
+        const details = {
+          id: game_details[0].id,
+          name: game_details[0].name,
+          year: game_details[0].first_release_date,
+          cover: game_details[0].cover,
+        }
+        return details; 
+      })
+    );
+    console.log(ratedDetailedGames)
+    setGames(ratedDetailedGames);
   };
 
   // Función para manejar el clic en la barra

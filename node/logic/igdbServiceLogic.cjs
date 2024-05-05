@@ -122,7 +122,7 @@ const getGameDetailsLogic = async (id) => {
   try {
     const response = await apicalypse(requestOptions)
       .fields(
-        "name, summary, cover.url, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinecoopmax, multiplayer_modes.onlinemax"
+        "name, summary, cover.url, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinecoopmax, multiplayer_modes.onlinemax, first_release_date"
       )
       .where(`id = ${id}`)
       .limit(1)
