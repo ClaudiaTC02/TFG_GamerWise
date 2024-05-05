@@ -15,3 +15,21 @@ export const getBasicInfoRequest = async (token) => {
     throw new Error(error.response.data.message);
   }
 };
+
+export const updateNameRequest = async (name, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      name: name
+    }
+    const res = await axios.put(`${API}/user`, data, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};

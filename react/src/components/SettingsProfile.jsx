@@ -1,16 +1,25 @@
 import { useForm } from "react-hook-form";
 import { FormInput } from "./FormInput";
 import "../styles/SettingsProfile.css";
+import { updateNameRequest } from "../api/user";
+import { useAuth } from "../hooks/useAuth";
 
-export function SettingsProfile() {
+export function SettingsProfile({updateUser}) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
   } = useForm();
 
+  const { token } = useAuth();
+
   const onSubmit = async (data) => {
-    console.log("cambiar nombre", data);
+    try {
+      await updateNameRequest(data.name, token);
+      updateUser(data.name);
+    } catch (error) {
+        console.log(error.message);
+    }
   };
   return (
     <section className="settings-section">

@@ -10,26 +10,35 @@ import { RatingProfile } from "../components/RatingProfile";
 import { SettingsProfile } from "../components/SettingsProfile";
 
 export function ProfilePage() {
-    const {token} = useAuth()
-    const [user, setUser] = useState(null)
-    const [gamesCount, setGamesCount] = useState(0)
+  const { token } = useAuth();
+  const [user, setUser] = useState(null);
+  const [gamesCount, setGamesCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-          const userData = await getBasicInfoRequest(token);
-          setUser(userData.info)
-          const counted = await getCountOfGamesProfileLogic(token)
-          setGamesCount(counted)
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData()
+      try {
+        const userData = await getBasicInfoRequest(token);
+        setUser(userData.info);
+        const counted = await getCountOfGamesProfileLogic(token);
+        setGamesCount(counted);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, [token]);
   const [activeComponent, setActiveComponent] = useState("lists");
   const handleClick = (componente) => {
     setActiveComponent(componente);
+  };
+
+  // Función para actualizar el nombre del usuario
+  const updateUser = async (newName) => {
+    try {
+      setUser({ ...user, name: newName });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -41,9 +50,13 @@ export function ProfilePage() {
           </div>
         </div>
         <div className="profile-texts-container">
-          <p className="profile-subtitle">{gamesCount && gamesCount.counted_playing} Playing</p>
+          <p className="profile-subtitle">
+            {gamesCount && gamesCount.counted_playing} Playing
+          </p>
           <h1 className="profile-title">{user && user.name}</h1>
-          <p className="profile-subtitle">{gamesCount && gamesCount.counted_completed} Completed</p>
+          <p className="profile-subtitle">
+            {gamesCount && gamesCount.counted_completed} Completed
+          </p>
         </div>
       </section>
       <nav className="profile-nav">
@@ -80,8 +93,9 @@ export function ProfilePage() {
 
       {activeComponent === "lists" && <ListsProfile />}
       {activeComponent === "ratings" && <RatingProfile />}
-      {activeComponent === "options" && <SettingsProfile />}
-
+      {activeComponent === "options" && (
+        <SettingsProfile updateUser={updateUser} />
+      )}
     </>
   );
 }
