@@ -79,3 +79,18 @@ export const getListOfAUserRequest = async (name, token) => {
     throw new Error(error.response.data.message);
   }
 }
+
+export const deleteListRequest = async (id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.delete(`${API}/list/${id}`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
