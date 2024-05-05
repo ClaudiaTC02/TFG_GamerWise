@@ -32,10 +32,6 @@
 .settings-title{
     font-size: 1.2rem;
 }
-.error-paragraph{
-    margin-left: 0;
-    margin-bottom: 0.2rem;
-}
 
 .settings-container-right{
     flex: 2;

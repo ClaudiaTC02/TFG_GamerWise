@@ -8,7 +8,7 @@ import {
   updateEmailRequest,
   updatePasswordRequest,
 } from "../api/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 export function ModalEmail({ show, handleClose, token }) {
@@ -16,7 +16,18 @@ export function ModalEmail({ show, handleClose, token }) {
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
+    reset,
+    setValue
   } = useForm();
+
+  useEffect(() => {
+    if (!show) {
+      reset(); 
+      setIcorrectChange(null); 
+      setCorrectChange(null);
+      setValue("email", "");
+    }
+  }, [show, reset, setValue]);
 
   const [incorrectChange, setIcorrectChange] = useState(null);
   const [correctChange, setCorrectChange] = useState(null);
@@ -69,8 +80,23 @@ export function ModalPassowrd({ show, handleClose, token }) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitted },
+    reset,
+    setValue
   } = useForm();
+
+  useEffect(() => {
+    if (!show) {
+      reset(); 
+      setIcorrectChange(null); 
+      setCorrectChange(null);
+      setValue("password", "");
+      setValue("password_actual", "");
+      setValue("password-repeat", "");
+    }
+  }, [show, reset, setValue]);
+  
 
   const [incorrectChange, setIcorrectChange] = useState(null);
   const [correctChange, setCorrectChange] = useState(null);
@@ -102,6 +128,17 @@ export function ModalPassowrd({ show, handleClose, token }) {
           noIcon={true}
         >
           Nueva contraseña
+        </FormInput>
+        <FormInput
+          type="password"
+          name="password-repeat"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+          noIcon={true}
+          passwordValue={watch("password")}
+        >
+          Repite la nueva contraseña
         </FormInput>
         <FormInput
           type="password"

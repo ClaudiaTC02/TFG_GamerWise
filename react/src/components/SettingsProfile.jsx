@@ -112,6 +112,7 @@ export function SettingsProfile({ updateUser }) {
                 errors={errors}
                 isSubmitted={isSubmitted}
                 noIcon={true}
+                style_error={{ "margin-left": '20px', "margin-bottom":"0.2rem" }}
               >
                 Noa
               </FormInput>

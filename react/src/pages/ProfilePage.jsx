@@ -27,6 +27,25 @@ export function ProfilePage() {
     };
     fetchData();
   }, [token]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash === "lists" || hash === "ratings" || hash === "options") {
+        setActiveComponent(hash);
+      } else {
+        setActiveComponent("lists");
+      }
+    };
+  
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange();
+  
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
+
   const [activeComponent, setActiveComponent] = useState("lists");
   const handleClick = (componente) => {
     setActiveComponent(componente);
@@ -63,7 +82,7 @@ export function ProfilePage() {
         <ul>
           <li>
             <a
-              href="#"
+              href="#lists"
               className={activeComponent === "lists" ? "active" : ""}
               onClick={() => handleClick("lists")}
             >
@@ -72,7 +91,7 @@ export function ProfilePage() {
           </li>
           <li>
             <a
-              href="#"
+              href="#ratings"
               className={activeComponent === "ratings" ? "active" : ""}
               onClick={() => handleClick("ratings")}
             >
@@ -81,7 +100,7 @@ export function ProfilePage() {
           </li>
           <li>
             <a
-              href="#"
+              href="#options"
               className={activeComponent === "options" ? "active" : ""}
               onClick={() => handleClick("options")}
             >

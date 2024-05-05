@@ -90,6 +90,9 @@ const LoggedHeader = () => {
   function handleProfile() {
     navigate('/profile');
   }
+  function handleSettings() {
+    navigate('/profile#options');
+  }
   return (
     <div className="options-container">
       <button className="open-menu" onClick={handleOpenMenu}>
@@ -107,7 +110,7 @@ const LoggedHeader = () => {
             <a onClick={handleProfile}>Mi perfil</a>
           </li>
           <li>
-            <a>Ajustes</a>
+            <a onClick={handleSettings}>Ajustes</a>
           </li>
           <li>
             <a onClick={handleLogout}>Cerrar sesión</a>
