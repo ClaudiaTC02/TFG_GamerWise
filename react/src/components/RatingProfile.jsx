@@ -43,8 +43,13 @@ export function RatingProfile() {
       {ratings && <BarChart scores={ratings} onBarClick={handleBarClick} />}
       {value && games && (
         <>
-          <h2 className="rating-title-clicked">{`Juegos Puntuados con ${value} estrella`}</h2>
-          <GameSearch games={games} />
+          <section className="rating-section-container">
+            <h2 className="rating-title-clicked">{`Juegos Puntuados con ${value} estrella`}</h2>
+            <hr className="rating-hr" />
+            <div className="rating-games">
+              <GameSearch games={games} />
+            </div>
+          </section>
         </>
       )}
     </>

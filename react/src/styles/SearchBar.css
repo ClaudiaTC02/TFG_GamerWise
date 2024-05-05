@@ -4,6 +4,13 @@
   justify-content: center;
   gap: 10px;
 }
+.super-search-container{
+  margin: 1rem;
+  margin-left: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .container-search {
   display: flex;
   align-items: center;
@@ -64,6 +71,9 @@
 }
 
 @media screen and (max-width: 550px) {
+  .super-search-container{
+    margin-left: 1rem;
+  }
   .input-search {
     width: auto;
   }

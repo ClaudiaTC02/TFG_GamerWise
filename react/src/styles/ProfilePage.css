@@ -60,3 +60,10 @@
   color: #ef4f23;
   font-weight: bold;
 }
+
+@media (min-width: 1025px) {
+  .profile-background {
+    height: 100px;
+  }
+}
+
