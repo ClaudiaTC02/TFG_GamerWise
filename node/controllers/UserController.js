@@ -73,8 +73,8 @@ export const getBasicInfo = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const id = getUserIdFromToken(req);
-    const { name, email, password } = req.body;
-    const result = await updateUserLogic(id, { name, email, password });
+    const { name, email, password, password_before } = req.body;
+    const result = await updateUserLogic(id, { name, email, password, password_before });
     if (result.success) {
       res
         .status(200)

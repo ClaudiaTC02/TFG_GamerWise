@@ -279,7 +279,7 @@ describe("UserRoutes", () => {
     });
     it('should update only the password of a user', async () => {
       // Arrage
-      const updatePassword = {password: "Maria1234?"}
+      const updatePassword = {password: "Maria1234?", password_before: "Password123?"}
       // Act
       const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updatePassword);
       // Assert
@@ -288,7 +288,7 @@ describe("UserRoutes", () => {
     });
     it('should update the full user', async () => {
       // Arrage
-      const updateUser = {name: 'John', email: 'foo@gmail.com', password: 'John1*2354'}
+      const updateUser = {name: 'John', email: 'foo@gmail.com', password: 'John1*2354', password_before: "Password123?"}
       // Act
       const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updateUser);
       // Assert
@@ -331,6 +331,15 @@ describe("UserRoutes", () => {
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
+    });
+    it('should NOT update the the password if the actual password is wrong', async () => {
+      // Arrage
+      const updatePassword = {password: "Maria1234?", password_before: "Passw123?"}
+      // Act
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updatePassword);
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Passwords doen not match");
     });
     it('should delete a user', async () => {
       // Arrage

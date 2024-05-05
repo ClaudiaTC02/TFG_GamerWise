@@ -137,6 +137,9 @@ export const updateUserLogic = async (id, userData) => {
           "Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length"
         );
       }
+      if (!(await bcrypt.compare(userData.password_before, user.password))) {
+        throw new Error("Passwords doen not match");
+      }
       const hashedPassword = await hashPassword(userData.password);
       userData.password = hashedPassword;
     }

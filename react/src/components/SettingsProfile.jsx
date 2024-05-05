@@ -5,7 +5,7 @@ import { updateNameRequest } from "../api/user";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { deleteListRequest, getAllListOfUserRequest } from "../api/list";
-import { ModalEmail } from "./ModalSettings";
+import { ModalEmail, ModalPassowrd } from "./ModalSettings";
 
 export function SettingsProfile({ updateUser }) {
   const {
@@ -35,9 +35,13 @@ export function SettingsProfile({ updateUser }) {
   }, [token, lists]);
 
   // Modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showEmail, setShowEmail] = useState(false);
+  const [showPasword, setShowPassword] = useState(false);
+
+  const handleCloseEmail = () => setShowEmail(false);
+  const handleShowEmail = () => setShowEmail(true);
+  const handleClosePassword = () => setShowPassword(false);
+  const handleShowPassword = () => setShowPassword(true);
 
   const onSubmit = async (data) => {
     try {
@@ -75,9 +79,14 @@ export function SettingsProfile({ updateUser }) {
     }
   };
 
-  const handleOpenModal = () => {
-    handleShow()
+  const handleOpenModalEmail = () => {
+    handleShowEmail()
   };
+
+  const handleOpenModalPasword = () => {
+    handleShowPassword()
+  };
+
 
   return (
     <section className="settings-section">
@@ -115,10 +124,10 @@ export function SettingsProfile({ updateUser }) {
             <li className="settings-li">
               <a className="settings-link">Conectar cuenta de Steam</a>
             </li>
-            <li className="settings-li">
+            <li className="settings-li" onClick={handleOpenModalPasword}>
               <a className="settings-link">Cambiar contraseña</a>
             </li>
-            <li className="settings-li"  onClick={handleOpenModal}>
+            <li className="settings-li"  onClick={handleOpenModalEmail}>
               <a className="settings-link">Cambiar E-mail</a>
             </li>
             <li className="settings-li">
@@ -156,7 +165,8 @@ export function SettingsProfile({ updateUser }) {
           </div>
         </div>
       </div>
-      <ModalEmail show={show} handleClose={handleClose} token={token}/>
+      <ModalEmail show={showEmail} handleClose={handleCloseEmail} token={token}/>
+      <ModalPassowrd show={showPasword} handleClose={handleClosePassword} token={token}/>
     </section>
   );
 }

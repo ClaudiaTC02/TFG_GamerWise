@@ -53,3 +53,23 @@ export const updateEmailRequest = async (email, token) => {
   }
 };
 
+export const updatePasswordRequest = async (password, anterior, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      password: password,
+      password_before : anterior
+    }
+    const res = await axios.put(`${API}/user`, data, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+
