@@ -28,18 +28,18 @@ export const getGameDetailsRequest = async (id) => {
   }
 };
 
-export const searchGame = async (name, category, platform ) => {
+export const searchGame = async (name, category, platform) => {
   try {
     let url = `${API}/igdb/filter?`;
     const params = [];
     if (name) {
-      params.push(`name=${name}`);
+      params.push(`name=${encodeURIComponent(name)}`);
     }
     if (category) {
-      params.push(`category=${category}`);
+      params.push(`category=${encodeURIComponent(category)}`);
     }
     if (platform) {
-      params.push(`platform=${platform}`);
+      params.push(`platform=${encodeURIComponent(platform)}`);
     }
     if (params.length > 0) {
       url += params.join("&");

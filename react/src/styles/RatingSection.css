@@ -1,0 +1,53 @@
+.rating-section-container {
+  padding: 1rem;
+  margin-left: 5rem;
+}
+
+.bar-chart-container {
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  text-align: center;
+  width: 700px;
+}
+
+.rating-title-clicked {
+  margin-top: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.rating-hr {
+  margin: 0;
+  margin-top: 0;
+  height: 2px;
+  width: 150px;
+  border: 2px solid #ef4f23;
+  opacity: 1;
+}
+
+.games-search {
+  margin: 1rem 0rem;
+}
+
+@media screen and (max-width: 550px) {
+  .rating-section-container {
+    margin-left: 0.5rem;
+  }
+  .bar-chart-container {
+    margin-top: 0.2rem;
+    width: auto;
+    margin: 1rem;
+  }
+  .rating-hr {
+    margin-left: 0.5rem;
+    width: 85px;
+  }
+  .rating-title-clicked {
+    margin: 0.5rem;
+    font-size: 1.3rem;
+  }
+  .rating-games {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -37,7 +37,8 @@ export const validateDataTypesUpdate = (fields) => {
     const dataTypesUpdate = {
         email: ["string", "undefined"],
         name: ["string", "undefined"],
-        password: ["string", "undefined"]
+        password: ["string", "undefined"],
+        password_before: ["string", "undefined"]
     };
     for (let key in fields) {
         if (!dataTypesUpdate[key] || (!dataTypesUpdate[key].includes(typeof fields[key]))) {

@@ -45,7 +45,12 @@ export const createUserLogic = async (email, name, password) => {
     }
 
     const hashedPassword = await hashPassword(password);
-    await UserModel.create({ email, name, password: hashedPassword });
+    const user = await UserModel.create({ email, name, password: hashedPassword });
+    await ListModel.create({name: "Playing", user_id: user.id, description: "Games currently Playing"});
+    await ListModel.create({name: "Completed", user_id: user.id, description: "Games Completed"});
+    await ListModel.create({name: "Like", user_id: user.id, description: "Games that I Liked"});
+    await ListModel.create({name: "Dropped", user_id: user.id, description: "Games dropped"});
+
     return { success: true };
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
@@ -131,6 +136,9 @@ export const updateUserLogic = async (id, userData) => {
         throw new Error(
           "Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length"
         );
+      }
+      if (!(await bcrypt.compare(userData.password_before, user.password))) {
+        throw new Error("Passwords doen not match");
       }
       const hashedPassword = await hashPassword(userData.password);
       userData.password = hashedPassword;

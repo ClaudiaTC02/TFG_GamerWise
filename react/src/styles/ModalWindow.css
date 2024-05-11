@@ -54,3 +54,14 @@ body.modal-open{
     width: -webkit-fill-available;
     justify-content: space-between;
 }
+
+.modal-delete-paragraph{
+    margin: 0;
+    margin-left: 1rem;
+}
+
+.modal-delete-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

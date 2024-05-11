@@ -1,6 +1,6 @@
 import testServer from "../utils/testServer.js";
 import userRoutes from "../routes/UserRoutes.js";
-import { hashPassword } from "../utils/userUtils.js";
+import { generateAuthToken, hashPassword } from "../utils/userUtils.js";
 import ListModel from "../models/ListModel.js";
 import GameModel from "../models/GameModel.js";
 import ListGameModel from "../models/ListGameModel.js";
@@ -231,7 +231,7 @@ describe("UserRoutes", () => {
       // Arrage
       
       // Act
-      const { status, body } = await request.get("/user/1").set('Authorization', `Bearer ${authToken}`);
+      const { status, body } = await request.get("/user").set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("Information obtained successfully");
@@ -240,9 +240,9 @@ describe("UserRoutes", () => {
 
     it('should NOT get data of an inexistent user', async () => {
       // Arrage
-      
+      const inexistentUserToken = generateAuthToken(2)
       // Act
-      const { status, body } = await request.get("/user/2").set('Authorization', `Bearer ${authToken}`);
+      const { status, body } = await request.get("/user").set('Authorization', `Bearer ${inexistentUserToken}`);
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
@@ -250,9 +250,9 @@ describe("UserRoutes", () => {
     
     it('should NOT get data of a user with incorrect id datatype', async () => {
       // Arrage
-      
+      const inexistentUserToken = generateAuthToken('uno')
       // Act
-      const { status, body } = await request.get("/user/dos").set('Authorization', `Bearer ${authToken}`);
+      const { status, body } = await request.get("/user").set('Authorization', `Bearer ${inexistentUserToken}`);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Required id in number format");
@@ -261,7 +261,7 @@ describe("UserRoutes", () => {
       // Arrage
       const updateName = {name: "Maria"}
       // Act
-      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateName);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updateName);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("User updated successfully");
@@ -271,7 +271,7 @@ describe("UserRoutes", () => {
       // Arrage
       const updateEmail = {email: "maria@gmail.com"}
       // Act
-      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateEmail);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updateEmail);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("User updated successfully");
@@ -279,18 +279,18 @@ describe("UserRoutes", () => {
     });
     it('should update only the password of a user', async () => {
       // Arrage
-      const updatePassword = {password: "Maria1234?"}
+      const updatePassword = {password: "Maria1234?", password_before: "Password123?"}
       // Act
-      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updatePassword);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updatePassword);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("User updated successfully");
     });
     it('should update the full user', async () => {
       // Arrage
-      const updateUser = {name: 'John', email: 'foo@gmail.com', password: 'John1*2354'}
+      const updateUser = {name: 'John', email: 'foo@gmail.com', password: 'John1*2354', password_before: "Password123?"}
       // Act
-      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updateUser);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("User updated successfully");
@@ -299,7 +299,7 @@ describe("UserRoutes", () => {
       // Arrage
       const updateUser = {name: true, email: 'foo@gmail.com', password: 'John1*2354'}
       // Act
-      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updateUser);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Invalid data types in user data");
@@ -308,7 +308,7 @@ describe("UserRoutes", () => {
       // Arrage
       const updateUser = {email: '@gmail.com'}
       // Act
-      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updateUser);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Invalid email format");
@@ -317,7 +317,7 @@ describe("UserRoutes", () => {
       // Arrage
       const updateUser = {password: 'aaaaa'}
       // Act
-      const { status, body } = await request.put("/user/1").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updateUser);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length");
@@ -325,16 +325,26 @@ describe("UserRoutes", () => {
     it('should NOT update the the data of an inexistent user', async () => {
       // Arrage
       const updateUser = {password: 'Prueba1234^'}
+      const inexistentUserToken = generateAuthToken(5)
       // Act
-      const { status, body } = await request.put("/user/5").set('Authorization', `Bearer ${authToken}`).send(updateUser);
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${inexistentUserToken}`).send(updateUser);
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
     });
+    it('should NOT update the the password if the actual password is wrong', async () => {
+      // Arrage
+      const updatePassword = {password: "Maria1234?", password_before: "Passw123?"}
+      // Act
+      const { status, body } = await request.put("/user").set('Authorization', `Bearer ${authToken}`).send(updatePassword);
+      // Assert
+      expect(status).toEqual(400);
+      expect(body.message).toEqual("Passwords doen not match");
+    });
     it('should delete a user', async () => {
       // Arrage
       // Act
-      const { status, body } = await request.delete("/user/1").set('Authorization', `Bearer ${authToken}`);
+      const { status, body } = await request.delete("/user").set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("User deleted successfully");
@@ -354,7 +364,7 @@ describe("UserRoutes", () => {
       await ListGameModel.create({list_id: 1, game_id: 2});
       await PreferencesModel.create({rating: 1, user_id: 1, game_id: 2});
       // Act
-      const { status, body } = await request.delete("/user/1").set('Authorization', `Bearer ${authToken}`);
+      const { status, body } = await request.delete("/user").set('Authorization', `Bearer ${authToken}`);
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("User deleted successfully");
@@ -368,16 +378,18 @@ describe("UserRoutes", () => {
     });
     it('should NOT delete an inexistent user', async () => {
       // Arrage
+      const inexistentUserToken = generateAuthToken(5)
       // Act
-      const { status, body } = await request.delete("/user/5").set('Authorization', `Bearer ${authToken}`);
+      const { status, body } = await request.delete("/user").set('Authorization', `Bearer ${inexistentUserToken}`);
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
     });
     it('should NOT delete a user with incorrect data type', async () => {
       // Arrage
+      const inexistentUserToken = generateAuthToken('uno')
       // Act
-      const { status, body } = await request.delete("/user/uno").set('Authorization', `Bearer ${authToken}`);
+      const { status, body } = await request.delete("/user").set('Authorization', `Bearer ${inexistentUserToken}`);
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Required id in number format");

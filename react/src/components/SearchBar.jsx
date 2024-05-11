@@ -137,7 +137,7 @@ export function SearchBar() {
       {error && <p className="error-search">{error}</p>}
       {loading && !error && <p>Loading...</p>}
       {!loading && !error && (
-        <main>
+        <main className="super-search-container">
           <GameSearch games={games} />
         </main>
       )}

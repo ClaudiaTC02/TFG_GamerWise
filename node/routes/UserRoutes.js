@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.post('/login', login)
 router.post('/', createUser)
-router.get('/:id', verifyToken,getBasicInfo)
-router.put('/:id', verifyToken, updateUser)
-router.delete('/:id', verifyToken, deleteUser)
+router.get('/', verifyToken,getBasicInfo)
+router.put('/', verifyToken, updateUser)
+router.delete('/', verifyToken, deleteUser)
 
 export default (app) => {app.use("/user", router)}

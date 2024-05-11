@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "../utils/constants";
 
-export const getAllListOfUserRequest = async (token) => {
+export const getBasicInfoRequest = async (token) => {
   try {
     const config = {
       headers: {
@@ -9,29 +9,14 @@ export const getAllListOfUserRequest = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const res = await axios.get(`${API}/list/user`, config);
+    const res = await axios.get(`${API}/user`, config);
     return res.data;
   } catch (error) {
     throw new Error(error.response.data.message);
   }
 };
 
-export const countGamesInListRequest = async (list_id, token) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const res = await axios.get(`${API}/listgame/${list_id}/count`, config);
-    return res.data.count;
-  } catch (error) {
-    throw new Error(error.response.data.message);
-  }
-};
-
-export const addGameToListRequest = async (list_id, game_id, token) => {
+export const updateNameRequest = async (name, token) => {
   try {
     const config = {
       headers: {
@@ -40,32 +25,17 @@ export const addGameToListRequest = async (list_id, game_id, token) => {
       },
     };
     const data = {
-      list_id: list_id,
-      game_id: game_id,
+      name: name
     }
-    const res = await axios.post(`${API}/listgame`, data, config);
+    const res = await axios.put(`${API}/user`, data, config);
     return res.data;
   } catch (error) {
     throw new Error(error.response.data.message);
   }
 };
 
-export const getAllGamesOfListRequest = async (list_id, token) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const res = await axios.get(`${API}/listgame/${list_id}`, config);
-    return res.data.games;
-  } catch (error) {
-    throw new Error(error.response.data.message);
-  }
-}
 
-export const getListOfAUserRequest = async (name, token) => {
+export const updateEmailRequest = async (email, token) => {
   try {
     const config = {
       headers: {
@@ -73,24 +43,48 @@ export const getListOfAUserRequest = async (name, token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const res = await axios.get(`${API}/list/${name}`, config);
-    return res.data.list;
-  } catch (error) {
-    throw new Error(error.response.data.message);
-  }
-}
-
-export const deleteListRequest = async (id, token) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const res = await axios.delete(`${API}/list/${id}`, config);
+    const data = {
+      email: email
+    }
+    const res = await axios.put(`${API}/user`, data, config);
     return res.data;
   } catch (error) {
     throw new Error(error.response.data.message);
   }
-}
+};
+
+export const updatePasswordRequest = async (password, anterior, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      password: password,
+      password_before : anterior
+    }
+    const res = await axios.put(`${API}/user`, data, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const deleteAccountRequest = async (token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.delete(`${API}/user`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+

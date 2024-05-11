@@ -161,27 +161,27 @@ describe("ListRoutes", () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.get("/list/1").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/test").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("List obtained successfully");
       expect(body.list.name).toEqual('test')
       expect(body.list.description).toEqual("null")
     });
-    it("should NOT get information about a list with inexistent id", async () => {
+    it("should NOT get information about a list with inexistent name", async () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.get("/list/5").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/kek").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("List not found");
     });
     it("should NOT get information about a list with incorrect data type id", async () => {
       // Arrage
-
+      const inexistentUserToken = generateAuthToken('uno')
       // Act
-      const { status, body } = await request.get("/list/uno").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/test").set('Authorization', `Bearer ${inexistentUserToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Id is required");

@@ -197,6 +197,7 @@ export const getGamesWithSpecificRatingLogic = async (user_id, rating) => {
         "gender",
         "platforms",
         "max_players",
+        "igdb_id"
       ],
       include: [
         {
