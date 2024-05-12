@@ -17,15 +17,27 @@
   font-size: 0.8rem;
   border-radius: 10px;
   cursor: pointer;
+  margin: 0 auto;
+}
+
+.container-search-list{
+  margin: 0 auto;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  border: 2px solid #ef4f23;
+  border-radius: 10px;
+  background-color: white;
+  width: 325px;
 }
 
 @media (min-width: 1025px) {
+  .container-search-list{
+    width: 700px;
+  }
   .list-section {
     margin: 0 auto;
     margin-top: 3rem;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
-}
-.list-container {
-  margin: 0 auto;
 }

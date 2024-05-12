@@ -4,7 +4,7 @@ import "../styles/ModalWindow.css";
 import { FormInput } from "./FormInput";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { deleteListRequest, updateListRequest } from "../api/list";
+import { createListRequest, deleteListRequest, updateListRequest } from "../api/list";
 import { useNavigate } from "react-router-dom";
 
 export function ModalUpdateList({
@@ -153,6 +153,89 @@ export function ModalDeleteList({ show, handleClose, token, list }) {
         </div>
       </Modal.Body>
       <Modal.Footer>{incorrectChange && <p>{incorrectChange}</p>}</Modal.Footer>
+    </Modal>
+  );
+}
+
+export function ModalCreateList({ show, handleClose, token, addList }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitted },
+    reset,
+    setValue,
+  } = useForm();
+
+  useEffect(() => {
+    if (!show) {
+      reset();
+      setIcorrectChange(null);
+      setCorrectChange(null);
+      setValue("list_name", "");
+      setValue("list_description", "");
+    }
+  }, [show, reset, setValue]);
+
+  const [incorrectChange, setIcorrectChange] = useState(null);
+  const [correctChange, setCorrectChange] = useState(null);
+
+  const handleCreateList = async (datos) => {
+    try {
+      const data = {
+        name: datos.list_name_create,
+        description: datos.list_description
+      }
+      const newList = await createListRequest(data, token)
+      addList(newList.list);
+      setIcorrectChange(null);
+      setCorrectChange("Creada con éxito");
+    } catch (error) {
+      setIcorrectChange(error.message);
+      setCorrectChange(null);
+    }
+  };
+
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Crear nueva Lista</Modal.Title>
+      </Modal.Header>
+      <hr className="modal-hr" />
+      <Modal.Body>
+        <p className="modal-list-paragraph">Introduce el nombre</p>
+        <FormInput
+          type="text"
+          name="list_name_create"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+          noIcon={true}
+        >
+          Miedo, Aventura..
+        </FormInput>
+        <p className="modal-list-paragraph">Introduce la descripción</p>
+        <FormInput
+          type="text"
+          name="list_description"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+          noIcon={true}
+        >
+          Descripción (opcional)
+        </FormInput>
+      </Modal.Body>
+      <Modal.Footer>
+        <button
+          type="submit"
+          className="modal-add-button"
+          onClick={handleSubmit(handleCreateList)}
+        >
+          Crear
+        </button>
+        {correctChange && <p>{correctChange}</p>}
+        {incorrectChange && <p>{incorrectChange}</p>}
+      </Modal.Footer>
     </Modal>
   );
 }
