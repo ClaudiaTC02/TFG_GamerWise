@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import { getAllListOfUserRequest } from "../api/list";
 import { ModalCreateList } from "./ModalLists";
 import { searchIcon } from "./Icons";
+import { Link } from "react-router-dom";
 
 export function ListsProfile() {
   const [lists, setLists] = useState([]);
@@ -89,11 +90,17 @@ export function ListsProfile() {
         </div>
         {filteredLists.map((list) => (
           <div key={list.id}>
-            <ListPreview
-              name={list.name}
-              color={getColor(list.name)}
-              list_id={list.id}
-            />
+            <Link
+              to={`/list/${list.id}`}
+              className="list-link"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <ListPreview
+                name={list.name}
+                color={getColor(list.name)}
+                list_id={list.id}
+              />
+            </Link>
           </div>
         ))}
         <ModalCreateList
