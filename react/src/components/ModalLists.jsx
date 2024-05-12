@@ -4,9 +4,16 @@ import "../styles/ModalWindow.css";
 import { FormInput } from "./FormInput";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { updateListRequest } from "../api/list";
+import { deleteListRequest, updateListRequest } from "../api/list";
+import { useNavigate } from "react-router-dom";
 
-export function ModalUpdateList({ show, handleClose, token, list, updateList}) {
+export function ModalUpdateList({
+  show,
+  handleClose,
+  token,
+  list,
+  updateList,
+}) {
   const {
     register,
     handleSubmit,
@@ -22,9 +29,9 @@ export function ModalUpdateList({ show, handleClose, token, list, updateList}) {
       setCorrectChange(null);
       setValue("list_name", "");
       setValue("list_description", "");
-    } else{
-        setValue("list_name", list.name);
-        setValue("list_description", list.description);
+    } else {
+      setValue("list_name", list.name);
+      setValue("list_description", list.description);
     }
   }, [show, reset, setValue, list.name, list.description]);
 
@@ -46,9 +53,11 @@ export function ModalUpdateList({ show, handleClose, token, list, updateList}) {
       const updated = {
         id: list.id,
         name: data_update.name ? data_update.name : list.name,
-        description: data_update.description ? data_update.description : list.description,
-      }
-      updateList(updated)
+        description: data_update.description
+          ? data_update.description
+          : list.description,
+      };
+      updateList(updated);
     } catch (error) {
       setIcorrectChange(error.message);
       setCorrectChange(null);
@@ -96,6 +105,54 @@ export function ModalUpdateList({ show, handleClose, token, list, updateList}) {
         {correctChange && <p>{correctChange}</p>}
         {incorrectChange && <p>{incorrectChange}</p>}
       </Modal.Footer>
+    </Modal>
+  );
+}
+
+export function ModalDeleteList({ show, handleClose, token, list }) {
+  const [incorrectChange, setIcorrectChange] = useState(null);
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      await deleteListRequest(list.id, token);
+      navigate("/profile#lists");
+    } catch (error) {
+      setIcorrectChange(error.message);
+    }
+  };
+
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <div>
+          <Modal.Title>Zona de Peligro</Modal.Title>
+          <p className="modal-delete-paragraph">
+            No habrá marcha atrás si continuas, ¿estás seguro de que quieres
+            borrar esta lista?
+          </p>
+        </div>
+      </Modal.Header>
+      <hr className="modal-hr" />
+      <Modal.Body>
+        <div className="modal-delete-buttons">
+          <button
+            type="submit"
+            className="btn btn-danger"
+            onClick={handleDelete}
+          >
+            Eliminar
+          </button>
+          <button
+            type="submit"
+            className="btn btn-secondary"
+            onClick={handleClose}
+          >
+            Cancelar
+          </button>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>{incorrectChange && <p>{incorrectChange}</p>}</Modal.Footer>
     </Modal>
   );
 }

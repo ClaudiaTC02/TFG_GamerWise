@@ -99,3 +99,7 @@ export function editIcon(){
 export function backArrowIcon(){
     return <i className="bi bi-arrow-bar-left"></i>
 }
+
+export function deleteIcon(){
+    return <i className="bi bi-trash"></i>
+}

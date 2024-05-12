@@ -1,12 +1,12 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
-import { backArrowIcon, editIcon } from "../components/Icons";
+import { backArrowIcon, deleteIcon, editIcon } from "../components/Icons";
 import { ListGame } from "../components/ListGame";
 import "../styles/ListPage.css";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { getGamesOfListWithRatingLogic } from "../logic/listLogic";
-import { ModalUpdateList } from "../components/ModalLists";
+import { ModalDeleteList, ModalUpdateList } from "../components/ModalLists";
 
 export function ListPage() {
   const { id } = useParams();
@@ -16,9 +16,12 @@ export function ListPage() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [showList, setShowList] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const handleCloseList = () => setShowList(false);
   const handleShowList = () => setShowList(true);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
 
   useEffect(() => {
     const fetchListDetails = async () => {
@@ -60,6 +63,11 @@ export function ListPage() {
     handleShowList();
   };
 
+  const handleOpenModalDelete = (event) => {
+    event.preventDefault();
+    handleShowDelete();
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -79,11 +87,16 @@ export function ListPage() {
         </div>
         <div className="list-edit-container">
           {forbiddenNames.includes(list.name) ? null : (
-            <a onClick={handleOpenModalList}>{editIcon()}</a>
+            <>
+              <a className="list-edit-options edit" onClick={handleOpenModalList}>{editIcon()}</a>
+              <a className="list-edit-options delete" onClick={handleOpenModalDelete}>{deleteIcon()}</a>
+            </>
           )}
         </div>
       </div>
-      <p className="list-description">{list.description != "null" && list.description}</p>
+      <p className="list-description">
+        {list.description != "null" && list.description}
+      </p>
       {games.length != 0 ? (
         <main className="list-games-container">
           {games.map((game) => (
@@ -110,6 +123,12 @@ export function ListPage() {
         token={token}
         list={list}
         updateList={handleUpdateList}
+      />
+      <ModalDeleteList
+        show={showDelete}
+        handleClose={handleCloseDelete}
+        token={token}
+        list={list}
       />
     </>
   );
