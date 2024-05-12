@@ -14,7 +14,13 @@ import {
 } from "../logic/ratingLogic";
 import { getRatingRequest } from "../api/rating";
 import { getGameRequest } from "../api/game";
-import {ModalWindow} from "../components/ModalWindow,";
+import { ModalWindow } from "../components/ModalWindow,";
+import {
+  addGameToLikeList,
+  checkIfGameIsLiked,
+  deleteGameToLikeList,
+} from "../logic/listLogic";
+import { Loading } from "../components/Loading";
 
 export default function GameDetailPage() {
   const { id } = useParams();
@@ -22,6 +28,7 @@ export default function GameDetailPage() {
   const [gameDetails, setGameDetails] = useState([]);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   // Modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -44,6 +51,8 @@ export default function GameDetailPage() {
       try {
         const game = await getGameRequest(id, token);
         if (game) {
+          const like = await checkIfGameIsLiked(game.game[0].id, token);
+          setIsFavorite(like);
           const rating = await getRatingRequest(game.game[0].id, token);
           setRating(rating);
           setRated(true);
@@ -55,6 +64,21 @@ export default function GameDetailPage() {
     fetchDetails();
     fetchRating();
   }, [id, token]);
+
+  useEffect(() => {
+    setIsFavorite(false);
+    setRated(false);
+    setRating(0);
+  }, [id]);
+
+  const handleAddToFav = async () => {
+    setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      await addGameToLikeList(token, gameDetails, id);
+    } else {
+      await deleteGameToLikeList(token, id);
+    }
+  };
 
   const handleRatingChange = async (value) => {
     try {
@@ -76,7 +100,7 @@ export default function GameDetailPage() {
   };
 
   const handleAddList = () => {
-    handleShow()
+    handleShow();
   };
 
   const renderStars = () => {
@@ -103,7 +127,7 @@ export default function GameDetailPage() {
   };
 
   if (gameDetails.length === 0) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   return (
@@ -126,7 +150,13 @@ export default function GameDetailPage() {
             <button className="detail-addList-button" onClick={handleAddList}>
               Añadir a lista
             </button>
-            <ModalWindow show={show} handleClose={handleClose} gameName={gameDetails.name} igdb_id={id} gameDetails={gameDetails}/>
+            <ModalWindow
+              show={show}
+              handleClose={handleClose}
+              gameName={gameDetails.name}
+              igdb_id={id}
+              gameDetails={gameDetails}
+            />
           </div>
           <div className="detail-container-left">
             <div className="detail-container-info">
@@ -139,20 +169,31 @@ export default function GameDetailPage() {
                       .join(", ")}
                 </h3>
               </div>
-              <i className="bi bi-heart"></i>
+              <div className="details-heart">
+                <i
+                  className={isFavorite ? "bi bi-heart-fill" : "bi bi-heart"}
+                  onClick={handleAddToFav}
+                ></i>
+              </div>
             </div>
             <p className="detail-gender">
-              Género:{" "}
+              <span className="detail-bold">Género: </span>
               {gameDetails.genres &&
                 gameDetails.genres.map((genre) => genre.name).join(", ")}
             </p>
             <p className="detail-platforms">
-              Plataformas:{" "}
+              <span className="detail-bold">Plataformas: </span>
               {gameDetails.platforms &&
                 gameDetails.platforms
                   .map((platforms) => platforms.abbreviation)
                   .join(", ")}
             </p>
+            <div className="detail-container-description-web">
+              <h5 className="detail-title-description">Desripción</h5>
+              <p className="detail-text-description">
+                {gameDetails.summary && gameDetails.summary}
+              </p>
+            </div>
           </div>
         </div>
         <div className="detail-container-description">

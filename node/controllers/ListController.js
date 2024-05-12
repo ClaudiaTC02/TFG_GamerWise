@@ -5,6 +5,7 @@ import {
   updateListLogic,
   deleteListLogic,
   getListLogic,
+  getListByNameLogic
 } from "../logic/ListLogic.js";
 import { getUserIdFromToken } from '../utils/auth.js';
 
@@ -98,9 +99,9 @@ export const deleteList = async (req, res) => {
 // obtatin list
 export const getList = async (req, res) => {
   try {
-    const { name } = req.params;
+    const { id } = req.params;
     const user_id = getUserIdFromToken(req);
-    const result = await getListLogic(name, Number(user_id));
+    const result = await getListLogic(Number(id), Number(user_id));
     if (result.success) {
         res.status(200).json({message: "List obtained successfully", list: result.list});
     } else {
@@ -115,3 +116,25 @@ export const getList = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// obtatin list by name
+export const getListByName = async (req, res) => {
+  try {
+    const { name } = req.params;
+    const user_id = getUserIdFromToken(req);
+    const result = await getListByNameLogic(name, Number(user_id));
+    if (result.success) {
+        res.status(200).json({message: "List obtained successfully", list: result.list});
+    } else {
+      let statusCode = 400;
+      if (result.error === "List not found") {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ message: result.error });
+    }
+  } catch (error) {
+    // Internal server error
+    res.status(500).json({ message: error.message });
+  }
+};
+

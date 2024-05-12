@@ -83,3 +83,23 @@ export function filterIcon(){
 export function pixelsIcon(){
     return pixels
 }
+
+export function quitIcon(){
+    return <i className="bi bi-x-circle-fill"></i>
+}
+
+export function starFillIcon(){
+    return <i className="bi bi-star-fill"></i>
+}
+
+export function editIcon(){
+    return <i className="bi bi-pencil-square"></i>
+}
+
+export function backArrowIcon(){
+    return <i className="bi bi-arrow-bar-left"></i>
+}
+
+export function deleteIcon(){
+    return <i className="bi bi-trash"></i>
+}

@@ -4,10 +4,11 @@ import "../styles/CarouselSection.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Loading } from "./Loading";
 
 export function CarouselSection({ gamesData, text }) {
   if (!Array.isArray(gamesData) || gamesData.length === 0) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
   const uniqueGames = new Set();
 

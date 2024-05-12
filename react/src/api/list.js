@@ -73,7 +73,7 @@ export const getListOfAUserRequest = async (name, token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const res = await axios.get(`${API}/list/${name}`, config);
+    const res = await axios.get(`${API}/list/name/${name}`, config);
     return res.data.list;
   } catch (error) {
     throw new Error(error.response.data.message);
@@ -89,6 +89,74 @@ export const deleteListRequest = async (id, token) => {
       },
     };
     const res = await axios.delete(`${API}/list/${id}`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
+
+export const getListRequest = async (id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.get(`${API}/list/${id}`, config);
+    return res.data.list;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
+
+export const deleteGameFromListRequest = async (list_id, game_id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.delete(`${API}/listgame/${list_id}&${game_id}`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
+
+export const updateListRequest = async (list_id, datos, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      name: datos.name,
+      description: datos.description
+    }
+    const res = await axios.put(`${API}/list/${list_id}`, data, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
+
+export const createListRequest = async (datos, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      name: datos.name,
+      description: datos.description
+    }
+    const res = await axios.post(`${API}/list`, data, config);
     return res.data;
   } catch (error) {
     throw new Error(error.response.data.message);

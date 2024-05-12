@@ -161,7 +161,7 @@ describe("ListRoutes", () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.get("/list/test").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/1").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.message).toEqual("List obtained successfully");
@@ -172,7 +172,7 @@ describe("ListRoutes", () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.get("/list/kek").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/6").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("List not found");
