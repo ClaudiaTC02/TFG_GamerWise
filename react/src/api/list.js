@@ -94,3 +94,18 @@ export const deleteListRequest = async (id, token) => {
     throw new Error(error.response.data.message);
   }
 }
+
+export const getListRequest = async (id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.get(`${API}/list/${id}`, config);
+    return res.data.list;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
