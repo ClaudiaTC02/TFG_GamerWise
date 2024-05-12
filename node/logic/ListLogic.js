@@ -85,15 +85,15 @@ export async function deleteListLogic(id) {
 }
 
 // obatin list
-export async function getListLogic(name, user_id){
+export async function getListLogic(id, user_id){
     try {
-        if(!name || !user_id){
+        if(!id || !user_id){
             throw new Error("Id is required");
         }
-        if(!validateDataTypes({name, user_id})){
+        if(!validateDataTypes({id, user_id})){
             throw new Error("Invalid data type");
         }
-        const list = await ListModel.findOne({ where: { name: name, user_id: user_id } });
+        const list = await ListModel.findOne({ where: { id: id, user_id: user_id } });
         if(!list){
             throw new Error("List not found")
         }

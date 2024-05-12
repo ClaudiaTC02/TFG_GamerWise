@@ -98,9 +98,9 @@ export const deleteList = async (req, res) => {
 // obtatin list
 export const getList = async (req, res) => {
   try {
-    const { name } = req.params;
+    const { id } = req.params;
     const user_id = getUserIdFromToken(req);
-    const result = await getListLogic(name, Number(user_id));
+    const result = await getListLogic(Number(id), Number(user_id));
     if (result.success) {
         res.status(200).json({message: "List obtained successfully", list: result.list});
     } else {
