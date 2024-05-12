@@ -1,0 +1,38 @@
+.list-titles-container{
+    margin: 0.5rem 1rem;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list-title{
+    margin: 1rem 0 0.4rem 1rem;
+    font-size: 1.5rem;
+}
+
+.list-edit-container{
+    margin-right: 1rem;
+}
+
+.list-hr{
+    margin-top: 0;
+    margin-left: 1rem;
+    height: 2px;
+    width: 90px;
+    border: 2px solid #ef4f23;
+    opacity: 1;
+    margin-bottom: 0.3rem;
+}
+
+.list-description{
+    font-size: 1rem;
+    margin: 0 2rem 1rem 2rem;
+}
+
+.list-games-container{
+    margin: 0 auto;
+    display:grid;
+    width:90%;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 5px;
+}

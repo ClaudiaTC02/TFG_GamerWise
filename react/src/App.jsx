@@ -12,6 +12,7 @@ import GameDetailPage from "./pages/GameDetailPage.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./hooks/useAuth.js";
 import { ProfilePage } from "./pages/ProfilePage.jsx";
+import { ListPage } from "./pages/ListPage.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/logged" element={<LandingLogged />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/list/:id" element={<ListPage />} />
           </Route>
           <Route path="/game/:id" element={<GameDetailPage />} />
         </Routes>
