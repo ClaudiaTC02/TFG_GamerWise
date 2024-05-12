@@ -1,27 +1,29 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { editIcon } from "../components/Icons";
 import { ListGame } from "../components/ListGame";
 import "../styles/ListPage.css";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
-import { getListRequest } from "../api/list";
+import { getGamesOfListWithRatingLogic } from "../logic/listLogic";
 
 export function ListPage() {
   const { id } = useParams();
   const { token } = useAuth();
   const [list, setList] = useState([]);
-
+  const [games, setGames] = useState([]);
 
   useEffect(() => {
     const fetchListDetails = async () => {
       try {
-        const list_result = await getListRequest(id, token);
+        const list_result = await getGamesOfListWithRatingLogic(id, token);
         if (list_result) {
-            setList(list_result);
-          } else {
-            console.log("No se encontraron detalles del juego");
-          }
+          console.log(list_result);
+          setList(list_result.list);
+          setGames(list_result.games);
+        } else {
+          console.log("No se encontraron detalles del juego");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -43,12 +45,16 @@ export function ListPage() {
       </div>
       <p className="list-description">{list.description}</p>
       <main className="list-games-container">
-        <ListGame />
-        <ListGame />
-        <ListGame />
-        <ListGame />
-        <ListGame />
-        <ListGame />
+        {games.map((game) => (
+          <Link
+            key={game.id}
+            to={`/game/${game.igdb_id}`}
+            className="game-link"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ListGame game={game}/>
+          </Link>
+        ))}
       </main>
     </>
   );

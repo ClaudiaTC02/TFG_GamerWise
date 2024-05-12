@@ -102,6 +102,25 @@ export async function getListLogic(id, user_id){
         return { success: false, error: error.message };
     }
 }
+
+// obatin list
+export async function getListByNameLogic(name, user_id){
+    try {
+        if(!name || !user_id){
+            throw new Error("Id is required");
+        }
+        if(!validateDataTypes({name, user_id})){
+            throw new Error("Invalid data type");
+        }
+        const list = await ListModel.findOne({ where: { name: name, user_id: user_id } });
+        if(!list){
+            throw new Error("List not found")
+        }
+        return {success:true, list: list}
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
 //----------------------------------------------------------------------
 // Modular functions
 //----------------------------------------------------------------------

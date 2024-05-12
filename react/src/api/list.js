@@ -73,7 +73,7 @@ export const getListOfAUserRequest = async (name, token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const res = await axios.get(`${API}/list/${name}`, config);
+    const res = await axios.get(`${API}/list/name/${name}`, config);
     return res.data.list;
   } catch (error) {
     throw new Error(error.response.data.message);
