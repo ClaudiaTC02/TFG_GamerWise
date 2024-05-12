@@ -46,3 +46,12 @@
   font-weight: bold;
   color: white;
 }
+
+@media (min-width: 1025px) {
+  .listgame-game-img {
+    width: 9rem;
+  }
+  .listgame-info-container {
+    width: 144px;
+  }
+}

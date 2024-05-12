@@ -4,6 +4,14 @@
     align-items: center;
     justify-content: space-between;
 }
+.list-back-container{
+    margin: 1rem 0rem 0.5rem 2rem;
+}
+.list-back{
+    font-size: 1.2rem;
+    color: black;
+    padding: 0.5rem;
+}
 
 .list-title{
     margin: 1rem 0 0.4rem 1rem;
@@ -12,6 +20,7 @@
 
 .list-edit-container{
     margin-right: 1rem;
+    font-size: 1.1rem;
 }
 
 .list-hr{
@@ -33,6 +42,22 @@
     margin: 0 auto;
     display:grid;
     width:90%;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 5px;
+}
+
+@media (min-width: 1025px) {
+    .list-title{
+        font-size: 2rem;
+    }
+    .list-edit-container{
+        margin-right: 2rem;
+        font-size: 1.5rem;
+        color: black;
+    }
+    .list-games-container{
+        margin: 0 1.5rem 0 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 8px;
+    }
 }

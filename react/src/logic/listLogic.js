@@ -118,7 +118,6 @@ export const getGamesOfListWithRatingLogic = async (list_id, token) => {
         games_rating.push(g_r);
       }
     }
-    console.log(games_rating);
     return { list: list_result, games: games_rating };
   } catch (error) {
     throw new Error(error.response.data.message);

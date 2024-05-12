@@ -95,3 +95,7 @@ export function starFillIcon(){
 export function editIcon(){
     return <i className="bi bi-pencil-square"></i>
 }
+
+export function backArrowIcon(){
+    return <i className="bi bi-arrow-bar-left"></i>
+}
