@@ -65,3 +65,7 @@ body.modal-open{
     align-items: center;
     justify-content: space-around;
 }
+.modal-list-paragraph{
+    margin: 0.5rem 0;
+    font-weight: 500;
+}

@@ -14,6 +14,13 @@
   padding: 0;
   left: 90px;
   top: -15px;
+  border: 0;
+}
+
+.listgame-button:hover {
+  color: red;
+  outline: none;
+  border: 0;
 }
 
 .listgame-game-img {

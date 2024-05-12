@@ -124,3 +124,22 @@ export const deleteGameFromListRequest = async (list_id, game_id, token) => {
     throw new Error(error.response.data.message);
   }
 }
+
+export const updateListRequest = async (list_id, datos, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      name: datos.name,
+      description: datos.description
+    }
+    const res = await axios.put(`${API}/list/${list_id}`, data, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}

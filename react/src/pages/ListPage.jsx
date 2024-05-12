@@ -6,6 +6,7 @@ import "../styles/ListPage.css";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { getGamesOfListWithRatingLogic } from "../logic/listLogic";
+import { ModalUpdateList } from "../components/ModalLists";
 
 export function ListPage() {
   const { id } = useParams();
@@ -14,6 +15,10 @@ export function ListPage() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [showList, setShowList] = useState(false);
+
+  const handleCloseList = () => setShowList(false);
+  const handleShowList = () => setShowList(true);
 
   useEffect(() => {
     const fetchListDetails = async () => {
@@ -33,15 +38,26 @@ export function ListPage() {
     fetchListDetails();
   }, [id, token]);
 
+  const forbiddenNames = ["Playing", "Completed", "Like", "Dropped"];
+
   const handleClick = (event) => {
     event.preventDefault();
     navigate("/profile#lists");
+  };
+
+  const handleUpdateList = (updatedList) => {
+    setList(updatedList);
   };
 
   const updateGameList = (gameIdToDelete) => {
     setGames((prevList) =>
       prevList.filter((game) => game.id !== gameIdToDelete)
     );
+  };
+
+  const handleOpenModalList = (event) => {
+    event.preventDefault();
+    handleShowList();
   };
 
   if (loading) {
@@ -62,10 +78,12 @@ export function ListPage() {
           <hr className="list-hr" />
         </div>
         <div className="list-edit-container">
-          <a>{editIcon()}</a>
+          {forbiddenNames.includes(list.name) ? null : (
+            <a onClick={handleOpenModalList}>{editIcon()}</a>
+          )}
         </div>
       </div>
-      <p className="list-description">{list.description}</p>
+      <p className="list-description">{list.description != "null" && list.description}</p>
       {games.length != 0 ? (
         <main className="list-games-container">
           {games.map((game) => (
@@ -86,6 +104,13 @@ export function ListPage() {
       ) : (
         <p className="no-games-list">No hay juegos en esta lista</p>
       )}
+      <ModalUpdateList
+        show={showList}
+        handleClose={handleCloseList}
+        token={token}
+        list={list}
+        updateList={handleUpdateList}
+      />
     </>
   );
 }
