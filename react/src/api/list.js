@@ -109,3 +109,18 @@ export const getListRequest = async (id, token) => {
     throw new Error(error.response.data.message);
   }
 }
+
+export const deleteGameFromListRequest = async (list_id, game_id, token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.delete(`${API}/listgame/${list_id}&${game_id}`, config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}

@@ -46,6 +46,9 @@
     gap: 5px;
 }
 
+.no-games-list{
+    text-align: center;
+}
 @media (min-width: 1025px) {
     .list-title{
         font-size: 2rem;

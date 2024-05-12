@@ -12,12 +12,14 @@ export function ListPage() {
   const { token } = useAuth();
   const [list, setList] = useState([]);
   const [games, setGames] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchListDetails = async () => {
       try {
         const list_result = await getGamesOfListWithRatingLogic(id, token);
+        setLoading(false);
         if (list_result) {
           setList(list_result.list);
           setGames(list_result.games);
@@ -32,11 +34,17 @@ export function ListPage() {
   }, [id, token]);
 
   const handleClick = (event) => {
-    event.preventDefault(); 
-    navigate('/profile#lists');
-  }
+    event.preventDefault();
+    navigate("/profile#lists");
+  };
 
-  if(list.length == 0){
+  const updateGameList = (gameIdToDelete) => {
+    setGames((prevList) =>
+      prevList.filter((game) => game.id !== gameIdToDelete)
+    );
+  };
+
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -44,7 +52,9 @@ export function ListPage() {
     <>
       <Header isLogged={true} />
       <div className="list-back-container">
-        <a className="list-back" onClick={handleClick}>{backArrowIcon()}</a>
+        <a className="list-back" onClick={handleClick}>
+          {backArrowIcon()}
+        </a>
       </div>
       <div className="list-titles-container">
         <div className="list-title-container">
@@ -56,18 +66,26 @@ export function ListPage() {
         </div>
       </div>
       <p className="list-description">{list.description}</p>
-      <main className="list-games-container">
-        {games.map((game) => (
-          <Link
-            key={game.id}
-            to={`/game/${game.igdb_id}`}
-            className="game-link"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <ListGame game={game} />
-          </Link>
-        ))}
-      </main>
+      {games.length != 0 ? (
+        <main className="list-games-container">
+          {games.map((game) => (
+            <Link
+              key={game.id}
+              to={`/game/${game.igdb_id}`}
+              className="game-link"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <ListGame
+                game={game}
+                list_id={id}
+                updateGameList={updateGameList}
+              />
+            </Link>
+          ))}
+        </main>
+      ) : (
+        <p className="no-games-list">No hay juegos en esta lista</p>
+      )}
     </>
   );
 }

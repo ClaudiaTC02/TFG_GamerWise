@@ -103,7 +103,12 @@ export const getGamesOfListWithRatingLogic = async (list_id, token) => {
   try {
     const list_result = await getListRequest(list_id, token);
     if (!list_result) return;
-    const games = await getAllGamesOfListRequest(list_result.id, token);
+    let games = []
+    try {
+      games = await getAllGamesOfListRequest(list_result.id, token);
+    } catch (error) {
+      games = []
+    }
     const games_rating = [];
     for (const key in games) {
       if (Object.hasOwnProperty.call(games, key) && games[key]) {
