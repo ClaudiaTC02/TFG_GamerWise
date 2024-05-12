@@ -58,9 +58,15 @@ body.modal-open{
 .modal-delete-paragraph{
     margin: 0;
     margin-left: 1rem;
+    text-align: center;
+}
+
+.modal-delete-paragraph.sure{
+    margin: 0;
 }
 
 .modal-delete-buttons{
+    margin-top: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-around;

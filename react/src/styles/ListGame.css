@@ -4,6 +4,7 @@
   border: 2px solid #ef4f23;
   width: fit-content;
   position: relative;
+  height: 170px;
 }
 
 .listgame-button {
@@ -35,11 +36,11 @@
   align-items: center;
   justify-content: space-between;
   width: 96px;
-  bottom: 2px;
+  bottom: 35px;
 }
 .listgame-rating-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .listgame-rating-img {
@@ -55,12 +56,27 @@
   color: white;
 }
 
+.listgame-name {
+  margin-top: 0.5rem;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-align: center;
+  font-weight: bold;
+}
+
 @media (min-width: 1025px) {
+  .listgame-border {
+    height: 240px;
+  }
   .listgame-game-img {
     width: 9rem;
     height: 192px;
   }
   .listgame-info-container {
+    bottom: 40px;
     width: 144px;
   }
 }

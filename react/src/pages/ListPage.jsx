@@ -7,6 +7,9 @@ import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { getGamesOfListWithRatingLogic } from "../logic/listLogic";
 import { ModalDeleteList, ModalUpdateList } from "../components/ModalLists";
+import { CarouselSection } from "../components/CarouselSection";
+import datamock from "../mock/latestGame.json";
+import { Loading } from "../components/Loading";
 
 export function ListPage() {
   const { id } = useParams();
@@ -27,6 +30,7 @@ export function ListPage() {
     const fetchListDetails = async () => {
       try {
         const list_result = await getGamesOfListWithRatingLogic(id, token);
+        console.log(list_result)
         setLoading(false);
         if (list_result) {
           setList(list_result.list);
@@ -69,7 +73,7 @@ export function ListPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   return (
@@ -82,7 +86,7 @@ export function ListPage() {
       </div>
       <div className="list-titles-container">
         <div className="list-title-container">
-          <h1 className="list-title">{list.name}</h1>
+          <h1 className="list-title">Lista {list.name}</h1>
           <hr className="list-hr" />
         </div>
         <div className="list-edit-container">
@@ -130,6 +134,7 @@ export function ListPage() {
         token={token}
         list={list}
       />
+      <CarouselSection gamesData={datamock} text="Creemos que podrías incluir" />
     </>
   );
 }

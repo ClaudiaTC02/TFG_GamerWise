@@ -7,6 +7,7 @@ import {
   getAllGamesOfListRequest,
   getListOfAUserRequest,
   getListRequest,
+  deleteGameFromListRequest,
 } from "../api/list.js";
 import { createGameLogic } from "./gameLogic.js";
 
@@ -103,27 +104,71 @@ export const getGamesOfListWithRatingLogic = async (list_id, token) => {
   try {
     const list_result = await getListRequest(list_id, token);
     if (!list_result) return;
-    let games = []
+    let games = [];
     try {
       games = await getAllGamesOfListRequest(list_result.id, token);
     } catch (error) {
-      games = []
+      games = [];
     }
     const games_rating = [];
     for (const key in games) {
       if (Object.hasOwnProperty.call(games, key) && games[key]) {
         const details = await getGameDetailsRequest(games[key].igdb_id);
         const g_r = {
-          name: details.name,
-          rating: games[key].preferences[0].rating,
+          name: games[key].name,
+          rating: games[key].preferences[0].rating ? games[key].preferences[0].rating : null,
           id: games[key].id,
           igdb_id: games[key].igdb_id,
-          cover: details[0].cover.url,
+          cover: details[0].cover && details[0].cover.url ? details[0].cover.url : null,
         };
         games_rating.push(g_r);
       }
     }
     return { list: list_result, games: games_rating };
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const addGameToLikeList = async (token, gameDetails, id) => {
+  try {
+    const list_like = await getListOfAUserRequest("Like", token);
+    await addGameToListLogic(list_like.id, gameDetails, id, token)
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const deleteGameToLikeList = async (token, id) => {
+  try {
+    const list_like = await getListOfAUserRequest("Like", token);
+    const game = await getGameRequest(id, token);
+    await deleteGameFromListRequest(list_like.id, game.game[0].id, token)
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const checkIfGameIsLiked = async (game_id, token) => {
+  try {
+    const list_like = await getListOfAUserRequest("Like", token);
+    if (!list_like) return;
+    let games = [];
+    try {
+      games = await getAllGamesOfListRequest(list_like.id, token);
+    } catch (error) {
+      games = [];
+    }
+    for (const key in games) {
+      if (Object.hasOwnProperty.call(games, key) && games[key].lists) {
+        for (const listItem of games[key].lists) {
+          if (listItem.list_game.game_id === game_id) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   } catch (error) {
     throw new Error(error.response.data.message);
   }

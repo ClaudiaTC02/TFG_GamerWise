@@ -37,6 +37,9 @@ export function ListGame({ game, list_id, updateGameList }) {
           </button>
         </div>
       </div>
+      <div>
+        <p className="listgame-name">{game.name}</p>
+      </div>
     </div>
   );
 }

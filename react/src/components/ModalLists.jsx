@@ -4,7 +4,11 @@ import "../styles/ModalWindow.css";
 import { FormInput } from "./FormInput";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { createListRequest, deleteListRequest, updateListRequest } from "../api/list";
+import {
+  createListRequest,
+  deleteListRequest,
+  updateListRequest,
+} from "../api/list";
 import { useNavigate } from "react-router-dom";
 
 export function ModalUpdateList({
@@ -128,13 +132,15 @@ export function ModalDeleteList({ show, handleClose, token, list }) {
         <div>
           <Modal.Title>Zona de Peligro</Modal.Title>
           <p className="modal-delete-paragraph">
-            No habrá marcha atrás si continuas, ¿estás seguro de que quieres
-            borrar esta lista?
+            No habrá marcha atrás si continuas
           </p>
         </div>
       </Modal.Header>
       <hr className="modal-hr" />
       <Modal.Body>
+        <p className="modal-delete-paragraph sure">
+          ¿Estás seguro de que quieres borrar esta lista?
+        </p>
         <div className="modal-delete-buttons">
           <button
             type="submit"
@@ -183,9 +189,9 @@ export function ModalCreateList({ show, handleClose, token, addList }) {
     try {
       const data = {
         name: datos.list_name_create,
-        description: datos.list_description
-      }
-      const newList = await createListRequest(data, token)
+        description: datos.list_description,
+      };
+      const newList = await createListRequest(data, token);
       addList(newList.list);
       setIcorrectChange(null);
       setCorrectChange("Creada con éxito");

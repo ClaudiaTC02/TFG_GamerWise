@@ -7,6 +7,7 @@ import { useSearch } from "../hooks/useSearch";
 import { useGames } from "../hooks/useGame";
 import debounce from "just-debounce-it";
 import { filterIcon, searchIcon } from "./Icons";
+import { Loading } from "./Loading";
 
 export function SearchBar() {
   const [sort, setSort] = useState(false);
@@ -135,7 +136,7 @@ export function SearchBar() {
         </div>
       )}
       {error && <p className="error-search">{error}</p>}
-      {loading && !error && <p>Loading...</p>}
+      {loading && !error && <Loading/>}
       {!loading && !error && (
         <main className="super-search-container">
           <GameSearch games={games} />
