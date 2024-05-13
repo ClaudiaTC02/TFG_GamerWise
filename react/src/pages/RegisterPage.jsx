@@ -7,6 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Footer } from "../components/Footer";
 
 export default function RegisterPage() {
   const {
@@ -30,7 +31,7 @@ export default function RegisterPage() {
     usernameInput: t("usernameInput"),
     emailInput: t("emailInput"),
     passwordInput: t("passwordInput"),
-    repeatPasswordInput: t("repeatPasswordInput")
+    repeatPasswordInput: t("repeatPasswordInput"),
   };
 
   useEffect(() => {
@@ -50,44 +51,52 @@ export default function RegisterPage() {
   };
 
   return (
-    <AuthSection texts={texts} onSubmit={handleSubmit(onSubmit)} error={error} actionRoute='/login'>
-      <FormInput
-        type="text"
-        name="name"
-        register={register}
-        errors={errors}
-        isSubmitted={isSubmitted}
+    <>
+      <AuthSection
+        texts={texts}
+        onSubmit={handleSubmit(onSubmit)}
+        error={error}
+        actionRoute="/login"
       >
-        {texts.usernameInput}
-      </FormInput>
-      <FormInput
-        type="email"
-        name="email"
-        register={register}
-        errors={errors}
-        isSubmitted={isSubmitted}
-      >
-        {texts.emailInput}
-      </FormInput>
-      <FormInput
-        type="password"
-        name="password"
-        register={register}
-        errors={errors}
-        isSubmitted={isSubmitted}
-      >
-        {texts.passwordInput}
-      </FormInput>
-      <FormInput
-        type="password"
-        name="password-repeat"
-        register={register}
-        errors={errors}
-        isSubmitted={isSubmitted}
-        passwordValue={watch("password")}
-      >
-        {texts.repeatPasswordInput}
-      </FormInput>
-    </AuthSection>
+        <FormInput
+          type="text"
+          name="name"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+        >
+          {texts.usernameInput}
+        </FormInput>
+        <FormInput
+          type="email"
+          name="email"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+        >
+          {texts.emailInput}
+        </FormInput>
+        <FormInput
+          type="password"
+          name="password"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+        >
+          {texts.passwordInput}
+        </FormInput>
+        <FormInput
+          type="password"
+          name="password-repeat"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+          passwordValue={watch("password")}
+        >
+          {texts.repeatPasswordInput}
+        </FormInput>
+      </AuthSection>
+      <Footer />
+    </>
   );
 }

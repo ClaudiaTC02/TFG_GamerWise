@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { SearchBar } from "../components/SearchBar.jsx";
 import { pixelsIcon } from "../components/Icons.jsx";
+import { Footer } from "../components/Footer.jsx";
 
 export default function LandingLogged() {
   const [LatestgamesData, setLatestgamesData] = useState([]);
@@ -39,7 +40,7 @@ export default function LandingLogged() {
 
   return (
     <>
-      <Header isLogged={true}/>
+      <Header isLogged={true} />
       <section className="logged-container-section">
         <div className="logged-section">
           <div className="logged-pixels-container">
@@ -62,13 +63,14 @@ export default function LandingLogged() {
             />
           </div>
         </div>
-      <SearchBar />
+        <SearchBar />
       </section>
       <CarouselSection gamesData={LatestgamesData} text="Últimos estrenos" />
       <CarouselSection
         gamesData={UpcomminggamesData}
         text="Próximos lanzamientos"
       />
+      <Footer />
     </>
   );
 }

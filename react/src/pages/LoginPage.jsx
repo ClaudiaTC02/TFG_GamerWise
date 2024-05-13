@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../components/Footer";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function LoginPage() {
     formState: { errors, isSubmitted },
   } = useForm();
 
-  const {error, signIn, isAuthenticated, setError} = useAuth();
+  const { error, signIn, isAuthenticated, setError } = useAuth();
   const { t } = useTranslation("login");
 
   const onSubmit = async (data) => {
@@ -46,25 +47,33 @@ export default function LoginPage() {
   };
 
   return (
-      <AuthSection texts={texts} onSubmit={handleSubmit(onSubmit)} error={error} actionRoute='/signup'>
-      <FormInput
-        type="email"
-        name="email"
-        register={register}
-        errors={errors}
-        isSubmitted={isSubmitted}
-      > 
-      {texts.emailInput}
-      </FormInput>
-      <FormInput
-        type="password"
-        name="password"
-        register={register}
-        errors={errors}
-        isSubmitted={isSubmitted}
-      > 
-      {texts.passwordInput}
-      </FormInput>
+    <>
+      <AuthSection
+        texts={texts}
+        onSubmit={handleSubmit(onSubmit)}
+        error={error}
+        actionRoute="/signup"
+      >
+        <FormInput
+          type="email"
+          name="email"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+        >
+          {texts.emailInput}
+        </FormInput>
+        <FormInput
+          type="password"
+          name="password"
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
+        >
+          {texts.passwordInput}
+        </FormInput>
       </AuthSection>
+      <Footer />
+    </>
   );
 }

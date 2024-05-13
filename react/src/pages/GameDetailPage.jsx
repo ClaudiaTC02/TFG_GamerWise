@@ -22,6 +22,7 @@ import {
 } from "../logic/listLogic";
 import { Loading } from "../components/Loading";
 import { SearchBar } from "../components/SearchBar";
+import { Footer } from "../components/Footer";
 
 export default function GameDetailPage() {
   const { id } = useParams();
@@ -135,7 +136,7 @@ export default function GameDetailPage() {
     <>
       <Header isLogged={true} />
       <section className="logged-container-section">
-        <div style={{"paddingTop":"1rem"}}>
+        <div style={{ paddingTop: "1rem" }}>
           <SearchBar />
         </div>
       </section>
@@ -210,6 +211,7 @@ export default function GameDetailPage() {
         </div>
       </section>
       <CarouselSection gamesData={datamock} text="También puede gustarte" />
+      <Footer />
     </>
   );
 }
