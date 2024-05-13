@@ -13,6 +13,12 @@ let UserModel;
 import("../models/UserModel.js").then((module) => {
   UserModel = module.default;
 });
+// Importa dinámicamente
+let ListModel; 
+import("../models/ListModel.js").then((module) => {
+  ListModel = module.default;
+});
+
 
 passport.use(
   new SteamStrategy(
@@ -46,7 +52,7 @@ passport.deserializeUser(function (id, done) {
 async function createUserLogic(profile, done) {
   try {
     // Espera a que UserModel se haya cargado antes de usarlo
-    while (!UserModel) {
+    while (!UserModel || !ListModel) {
       await new Promise((resolve) => setTimeout(resolve, 100)); // Espera 100 ms
     }
 
@@ -57,17 +63,17 @@ async function createUserLogic(profile, done) {
         : null;
     console.log(profile.id);
     if (!user) {
-      console.log("No hay user")
       user = await UserModel.create({
         steam_token: profile.id,
         name: profile.displayName,
         email: email,
       });
-      console.log("Creo el user")
+      await ListModel.create({name: "Playing", user_id: user.id, description: "Games currently Playing"});
+      await ListModel.create({name: "Completed", user_id: user.id, description: "Games Completed"});
+      await ListModel.create({name: "Like", user_id: user.id, description: "Games that I Liked"});
+      await ListModel.create({name: "Dropped", user_id: user.id, description: "Games dropped"});
     }
-    console.log(user);
     const token = generateAuthToken(user.id);
-    console.log(token)
     done(null, { user, token });
   } catch (error) {
     done(error);

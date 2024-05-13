@@ -41,6 +41,7 @@ const UserModel = db.define(
     },
     steam_token: {
       type: DataType.BIGINT,
+      unique: true,
       //allow null TRUE
     },
   },
