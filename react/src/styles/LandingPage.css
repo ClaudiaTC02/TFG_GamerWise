@@ -1,0 +1,50 @@
+.landing-title-container{
+    position: absolute;
+}
+.landing-title{
+    margin-top: 3rem;
+    font-size:2rem;
+}
+.landing-image-container{
+    text-align: center;
+    top: 70px;
+    position: relative;
+}
+.landing-photo{
+    margin-left: 2rem;
+    width: 22.5rem;
+}
+.landing-option-super-container{
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+}
+.landing-option-container{
+    border: 1px solid #ff3d00;
+    background-color: #F2F2F2;
+    width: 165px;
+    padding: 0.6rem;
+    text-align: center;
+    margin: 2.5rem 0.2rem;
+}
+.landing-title-option{
+    font-weight: bold;
+}
+.landing-paragraph-option{
+    font-size: 0.8rem;
+}
+.landing-end-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.landing-joinus{
+    margin: 1.5rem auto;
+    width: 200px;
+}
+.landing-goDown{
+    margin: 0 auto;
+    color: black;
+    font-size: 2rem;
+    bottom: 0;
+}

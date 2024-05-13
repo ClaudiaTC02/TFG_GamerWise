@@ -1,4 +1,5 @@
 import { logoIcon } from "./Icons";
+import "../styles/Footer.css";
 
 export function FooterLanding() {
   return (
