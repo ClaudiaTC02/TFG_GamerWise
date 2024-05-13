@@ -48,3 +48,36 @@
     font-size: 2rem;
     bottom: 0;
 }
+.landing-posibilities-section{
+    padding: 2rem;
+}
+.landing-posibilities-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+.landing-posiibilities-container{
+    border: 1px solid #ff3d00;
+    background-color: #F2F2F2;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 1rem;
+}
+.landing-title-posibilities-container{
+    display: flex;
+    align-items: center;
+}
+.landing-posibilities-image{
+    margin: 0.5rem 0.5rem;
+    font-size: 1rem;
+}
+.landing-posibilities-subtitle{
+    margin: 0.5rem 0.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.landing-posibilities-paragraph{
+    margin: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-align: justify;
+}
