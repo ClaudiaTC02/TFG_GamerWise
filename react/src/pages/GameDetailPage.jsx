@@ -21,6 +21,7 @@ import {
   deleteGameToLikeList,
 } from "../logic/listLogic";
 import { Loading } from "../components/Loading";
+import { SearchBar } from "../components/SearchBar";
 
 export default function GameDetailPage() {
   const { id } = useParams();
@@ -127,12 +128,17 @@ export default function GameDetailPage() {
   };
 
   if (gameDetails.length === 0) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
     <>
       <Header isLogged={true} />
+      <section className="logged-container-section">
+        <div style={{"paddingTop":"1rem"}}>
+          <SearchBar />
+        </div>
+      </section>
       <section className="detail-section">
         <div className="detail-container">
           <div className="detail-container-right">

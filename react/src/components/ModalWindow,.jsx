@@ -8,9 +8,11 @@ import {
   addGameToListLogic,
   getListAndCountedGamesLogic,
 } from "../logic/listLogic";
+import { ModalCreateList } from "./ModalLists";
 
 export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }) {
   const [lists, setLists] = useState([]);
+  const [showList, setShowList] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [searchText, setSearchText] = useState("");
   const { token } = useAuth();
@@ -57,6 +59,20 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }
   const filteredLists = lists.filter((list) =>
     list.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  const handleCloseList = () => setShowList(false);
+  const handleShowList = () => setShowList(true);
+
+  const handleCreateList = (event) => {
+    event.preventDefault();
+    handleShowList()
+  }
+
+  const handleUpdateList = (list) => {
+    console.log(list)
+    setAdd(!add)
+  };
+
 
   const renderList = () => {
     if (filteredLists.length === 0) {
@@ -105,7 +121,7 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }
       <hr className="modal-hr" />
       <Modal.Body>
         <div className="modal-container">
-          <p className="modal-newList">+ New List...</p>
+          <a className="modal-newList" onClick={handleCreateList}>+ New List...</a>
           <input
             type="text"
             placeholder="Type to search..."
@@ -124,6 +140,7 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }
           Añadir
         </button>
       </Modal.Footer>
+      <ModalCreateList show={showList} handleClose={handleCloseList} token={token} addList={handleUpdateList}/>
     </Modal>
   );
 }
