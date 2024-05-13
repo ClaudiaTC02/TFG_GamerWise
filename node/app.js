@@ -30,7 +30,7 @@ import preferencesRoutes from "./routes/PreferencesRoutes.js";
 import steamRoutes from "./routes/SteamRoutes.js";
 // import services
 import igdbRoutes from "./routes/igdbRoutes.js";
-import 'dotenv/config'
+import "dotenv/config";
 
 syncModels();
 
