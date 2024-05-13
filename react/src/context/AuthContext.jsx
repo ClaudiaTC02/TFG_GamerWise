@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { registerRequest, loginRequest } from "../api/auth";
 import Cookies from 'js-cookie';
-import { loginWithSteamRequest } from "../api/steam";
 
 export const AuthContext = createContext();
 
@@ -49,14 +48,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signInSteam = async () => {
+  const signInSteam = (token) => {
     try {
-      const res = await loginWithSteamRequest();
-      setUser(res.user);
-      setError(null);
       setIsAuthenticated(true);
-      setToken(res.token)
-      Cookies.set('token', res.token, { expires: 1 });
+      setToken(token)
+      Cookies.set('token', token, { expires: 1 });
     } catch (error) {
       setError(error.message);
       setUser(null);

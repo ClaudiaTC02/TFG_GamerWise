@@ -1,12 +1,14 @@
-import axios from "axios";
+//import axios from "axios";
 import { API } from "../utils/constants";
 
 export const loginWithSteamRequest = async () => {
   try {
-    const res = await axios.get(`${API}/steam`);
+    window.location.href=`${API}/steam`
+    /*const res = await axios.get(`${API}/steam`, { headers: { 'Origin': 'http://localhost:5173/' } });
     console.log(res)
-    return res;
+    return res;*/
   } catch (error) {
-    throw new Error(error.response.data.message);
+    //throw new Error(error.response.data.message);
+    console.log(error)
   }
 };

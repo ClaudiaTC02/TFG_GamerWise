@@ -13,6 +13,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./hooks/useAuth.js";
 import { ProfilePage } from "./pages/ProfilePage.jsx";
 import { ListPage } from "./pages/ListPage.jsx";
+import { SteamPage } from "./pages/SteamPage.jsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/list/:id" element={<ListPage />} />
           </Route>
           <Route path="/game/:id" element={<GameDetailPage />} />
+          <Route path="/steam/:token" element={<SteamPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
