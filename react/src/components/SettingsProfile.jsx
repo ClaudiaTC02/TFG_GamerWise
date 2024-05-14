@@ -155,11 +155,6 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
                   Conectar cuenta de Steam
                 </a>
               )}
-              {user && !user.email && (
-                <a className="settings-link" onClick={handleSteam}>
-                  Conectar cuenta de Steam
-                </a>
-              )}
               {user && connectedSteam && user.email && (
                 <a className="settings-link" onClick={handleDeleteSteam}>
                   Desvincular cuenta de Steam

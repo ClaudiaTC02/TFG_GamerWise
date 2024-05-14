@@ -45,8 +45,8 @@ export function GameCarousel({ game }) {
           <p className="game-date">{date}</p>
         </div>
         <div className="game-platforms">
-          {[...uniquePlatforms].map((platform) => (
-            <GamePlatformIcon key={platform} platform={platform} />
+          {[...uniquePlatforms].map((platform, index) => (
+            <GamePlatformIcon key={index} platform={platform} />
           ))}
         </div>
       </div>
