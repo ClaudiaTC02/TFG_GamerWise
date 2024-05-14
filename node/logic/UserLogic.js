@@ -103,7 +103,7 @@ export const getBasicInfoLogic = async (id) => {
       throw new Error("User not found");
     }
 
-    return { success: true, info: { name: user.name } };
+    return { success: true, info: { name: user.name, steam: user.steam_token, email: user.email } };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -171,6 +171,28 @@ export const deleteUserLogic = async (id) => {
 
     await user.destroy();
     return {success: true,};
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// delete steam_token of a user
+export const deleteSteamLogic = async (id) => {
+  try {
+    id = Number(id);
+    if (!id) {
+      throw new Error("Required id in number format");
+    }
+
+    const user = await UserModel.findByPk(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // delete relations
+    user.steam_token = null
+    await user.save();
+    return {success: true};
   } catch (error) {
     return { success: false, error: error.message };
   }

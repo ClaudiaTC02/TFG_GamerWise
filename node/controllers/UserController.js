@@ -5,6 +5,7 @@ import {
   getBasicInfoLogic,
   updateUserLogic,
   deleteUserLogic,
+  deleteSteamLogic
 } from "../logic/UserLogic.js";
 import { getUserIdFromToken } from "../utils/auth.js";
 
@@ -100,6 +101,27 @@ export const deleteUser = async (req, res) => {
       res
         .status(200)
         .json({ message: "User deleted successfully"});
+    } else {
+      let statusCode = 400;
+      if (result.error === "User not found") {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ message: result.error });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// delete steam_token of a user
+export const deleteSteam = async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req);
+    const result = await deleteSteamLogic(id);
+    if (result.success) {
+      res
+        .status(200)
+        .json({ message: "User updated successfully", user: result.user });
     } else {
       let statusCode = 400;
       if (result.error === "User not found") {

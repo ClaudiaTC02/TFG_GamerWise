@@ -59,6 +59,11 @@ export function ProfilePage() {
       console.log(error);
     }
   };
+
+  // Función para actualizar el token de steam
+  const updateUserSteam = (newSteamValue) => {
+    setUser((prevUser) => ({ ...prevUser, steam: newSteamValue }));
+  };
   return (
     <>
       <Header isLogged={true} />
@@ -113,7 +118,7 @@ export function ProfilePage() {
       {activeComponent === "lists" && <ListsProfile />}
       {activeComponent === "ratings" && <RatingProfile />}
       {activeComponent === "options" && (
-        <SettingsProfile updateUser={updateUser} />
+        <SettingsProfile updateUser={updateUser} user={user} updateUserSteam={updateUserSteam}/>
       )}
     </>
   );
