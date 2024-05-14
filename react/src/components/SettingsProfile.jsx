@@ -6,6 +6,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { deleteListRequest, getAllListOfUserRequest } from "../api/list";
 import { ModalDeleteAccount, ModalEmail, ModalPassowrd } from "./ModalSettings";
+import { linkWithSteamRequest } from "../api/steam";
 
 export function SettingsProfile({ updateUser }) {
   const {
@@ -17,6 +18,10 @@ export function SettingsProfile({ updateUser }) {
   const { token } = useAuth();
   const [selectedList, setSelectedList] = useState("");
   const [deleteInput, setDeleteInput] = useState("");
+
+  const handleSteam = async () => {
+    await linkWithSteamRequest(token)
+  }
 
   useEffect(() => {
     const forbiddenNames = ["Playing", "Completed", "Like", "Dropped"];
@@ -130,7 +135,7 @@ export function SettingsProfile({ updateUser }) {
         <div className="settings-container-right">
           <ul className="settings-ul">
             <li className="settings-li">
-              <a className="settings-link">Conectar cuenta de Steam</a>
+              <a className="settings-link" onClick={handleSteam}>Conectar cuenta de Steam</a>
             </li>
             <li className="settings-li" onClick={handleOpenModalPasword}>
               <a className="settings-link">Cambiar contraseña</a>

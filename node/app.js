@@ -9,6 +9,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import cookieParser from 'cookie-parser';
 import session from "express-session";
 import passport from "passport";
 // conection db
@@ -37,6 +38,7 @@ syncModels();
 const app = express();
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use(
   session({
