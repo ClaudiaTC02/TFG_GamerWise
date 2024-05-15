@@ -18,7 +18,7 @@ export const createGameLogic = async (gameDetails, id, token) => {
       (gameDetails.genres &&
         gameDetails.genres.map((genre) => genre.name).join(", ")) ||
       "none";
-    const multiplayer = gameDetails?.multiplayer_modes?.onlinemax || 1;
+    const multiplayer = gameDetails?.multiplayer_modes?.[0]?.onlinemax || 1;
     const newGame = await postNewGameRequest(
       gameDetails.name,
       company,
