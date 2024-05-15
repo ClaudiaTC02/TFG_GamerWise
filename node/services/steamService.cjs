@@ -20,7 +20,7 @@ const loginWithSteam = (req, res, next) => {
         return res.status(500).send("Error al crear el usuario");
       }
     } catch (error) {
-      return res.status(500).send("Error interno del servidor");
+      return res.status(500).send(error.message);
     }
   })(req, res, next);
 };

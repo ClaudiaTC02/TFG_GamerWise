@@ -109,6 +109,24 @@ export const getBasicInfoLogic = async (id) => {
   }
 };
 
+// Get buser by steam_token
+export const getUserBySteamToken = async (steam_token) => {
+  try {
+    if (!steam_token) {
+      throw new Error("Required steam_token");
+    }
+    const user = await UserModel.findOne({
+      where: {steam_token: steam_token}
+    })
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return { success: true, user };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
 // Update a user
 export const updateUserLogic = async (id, userData) => {
   try {

@@ -2,11 +2,40 @@ require("dotenv").config();
 
 const passport = require("passport");
 const { Strategy: SteamStrategy } = require("passport-steam");
-
+// Importa dinámicamente
+let GameModel;
+import("../models/GameModel.js").then((module) => {
+  GameModel = module.default;
+});
+// Importa dinámicamente
+let getGameLogic;
+import("./GameLogic.js").then((module) => {
+  getGameLogic = module.getGameLogic;
+});
+// Importa dinámicamente
+let addGameToListLogic;
+import("./ListGameLogic.js").then((module) => {
+  addGameToListLogic = module.addGameToListLogic;
+});
+// Importa dinámicamente
+let getListByNameLogic;
+import("./ListLogic.js").then((module) => {
+  getListByNameLogic = module.getListByNameLogic;
+});
+// Importa dinámicamente
+let getUserBySteamToken;
+import("./UserLogic.js").then((module) => {
+  getUserBySteamToken = module.getUserBySteamToken;
+});
 // Importa dinámicamente
 let generateAuthToken;
 import("../utils/userUtils.js").then((module) => {
   generateAuthToken = module.generateAuthToken;
+});
+// Importa dinámicamente
+let searchGameByNameLogic;
+import("./igdbServiceLogic.cjs").then((module) => {
+  searchGameByNameLogic = module.searchGameByNameLogic;
 });
 // Importa dinámicamente
 let UserModel;
@@ -77,7 +106,7 @@ async function getData(profile, done) {
 async function createUserLogic(profile) {
   try {
     // Espera a que UserModel se haya cargado antes de usarlo
-    while (!UserModel || !ListModel) {
+    while (!UserModel || !ListModel || !GameModel) {
       await new Promise((resolve) => setTimeout(resolve, 100)); // Espera 100 ms
     }
 
@@ -114,6 +143,7 @@ async function createUserLogic(profile) {
       });
     }
     const token = generateAuthToken(user.id);
+    await obtainGamesLogic(profile.id);
     return { success: true, user, token };
   } catch (error) {
     console.log(error.message);
@@ -142,9 +172,107 @@ async function linkSteamAccount(profile, userId) {
     }
     user.steam_token = profile.id;
     const updatedUser = await user.save();
+    await obtainGamesLogic(profile.id);
     return { success: true, updatedUser };
   } catch (error) {
     return { success: false, error: error };
+  }
+}
+
+async function obtainGamesLogic(steamId) {
+  const apiKey = process.env.STEAM_key;
+  try {
+    const juegosUrl = `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamId}&format=json`;
+    const juegosResponse = await fetch(juegosUrl);
+    const juegosData = await juegosResponse.json();
+    if (juegosData.response && juegosData.response.games) {
+      const juegosPromises = juegosData.response.games.map(
+        async (juego, index) => {
+          await new Promise((resolve) => setTimeout(resolve, index * 250));
+          const [gameName, releaseDate] = await obtainGamesDetailsLogic(
+            juego.appid
+          );
+          if (gameName && releaseDate) {
+            const id = await searchGameByNameLogic(gameName, releaseDate);
+            const details = id.data;
+            if (details) {
+              await postInfoInDataBase(steamId, details);
+            }
+            return details;
+          }
+        }
+      );
+
+      return Promise.all(juegosPromises);
+    } else {
+      throw new Error("No se pudieron obtener los juegos del usuario.");
+    }
+  } catch (error) {
+    console.error("Error al obtener los juegos:", error);
+    return null;
+  }
+}
+
+// Función para obtener detalles de un juego por su ID de aplicación
+async function obtainGamesDetailsLogic(appid) {
+  const detallesJuegoUrl = `https://store.steampowered.com/api/appdetails?appids=${appid}`;
+
+  try {
+    const response = await fetch(detallesJuegoUrl);
+    const data = await response.json();
+
+    if (data && data[appid] && data[appid].success) {
+      return [data[appid].data.name, data[appid].data.release_date.date];
+    } else {
+      return [null, null];
+    }
+  } catch (error) {
+    return [null, null];
+  }
+}
+
+async function postInfoInDataBase(token, gameDetails) {
+  try {
+    const game = await getGameDataBase(gameDetails)
+    const user = await getUserBySteamToken(token);
+    const list = await getListByNameLogic("Like", user.user.id);
+    await addGameToListLogic(list.list.id, game.id);
+  } catch (error) {
+    console.error(`No se pudo incluir en la base de datos`, error);
+  }
+}
+
+async function getGameDataBase(gameDetails) {
+  const company =
+    (gameDetails.involved_companies &&
+      gameDetails.involved_companies
+        .map((company) => company.company.name)
+        .join(", ")) ||
+    "anonymus";
+  const platforms =
+    (gameDetails.platforms &&
+      gameDetails.platforms
+        .map((platforms) => platforms.abbreviation)
+        .join(", ")) ||
+    "none";
+  const genres =
+    (gameDetails.genres &&
+      gameDetails.genres.map((genre) => genre.name).join(", ")) ||
+    "none";
+  const multiplayer = gameDetails?.multiplayer_modes?.[0]?.onlinemax || 1;
+  try {
+    const game = await getGameLogic(gameDetails.id);
+    return game.game[0];
+  } catch (error) {
+    const newGame = await GameModel.create({
+      name: gameDetails.name,
+      company,
+      platforms,
+      max_players: multiplayer,
+      gender: genres,
+      igdb_id: gameDetails.id,
+    });
+    return newGame;
   }
 }
 
