@@ -57,8 +57,8 @@ const getUpcomingReleases = async (req, res) => {
 // Search a specific game
 const searchGameByName = async (req, res) => {
   try {
-    const { name } = req.query;
-    const result = await searchGameByNameLogic(name);
+    const { name, date } = req.query;
+    const result = await searchGameByNameLogic(name, date);
     if (result.success) {
       res.status(200).json(result.data);
     } else {

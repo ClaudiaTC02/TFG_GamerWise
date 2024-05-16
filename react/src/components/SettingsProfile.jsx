@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import { FormInput } from "./FormInput";
 import "../styles/SettingsProfile.css";
-import { updateNameRequest } from "../api/user";
+import { deleteSteamRequest, updateNameRequest } from "../api/user";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { deleteListRequest, getAllListOfUserRequest } from "../api/list";
 import { ModalDeleteAccount, ModalEmail, ModalPassowrd } from "./ModalSettings";
+import { linkWithSteamRequest } from "../api/steam";
 
-export function SettingsProfile({ updateUser }) {
+export function SettingsProfile({ updateUser, user, updateUserSteam }) {
   const {
     register,
     handleSubmit,
@@ -17,6 +18,7 @@ export function SettingsProfile({ updateUser }) {
   const { token } = useAuth();
   const [selectedList, setSelectedList] = useState("");
   const [deleteInput, setDeleteInput] = useState("");
+  const [connectedSteam, setConnectedSteam] = useState(false);
 
   useEffect(() => {
     const forbiddenNames = ["Playing", "Completed", "Like", "Dropped"];
@@ -31,8 +33,9 @@ export function SettingsProfile({ updateUser }) {
         console.log(error);
       }
     };
+    if (user && user.steam) setConnectedSteam(true);
     fetchData();
-  }, [token, lists]);
+  }, [token, user]);
 
   // Modal
   const [showEmail, setShowEmail] = useState(false);
@@ -70,7 +73,7 @@ export function SettingsProfile({ updateUser }) {
         await deleteListRequest(id, token);
         setDeleteInput("");
         setSelectedList("");
-        const updatedLists = lists.filter(list => list.id !== id);
+        const updatedLists = lists.filter((list) => list.id !== id);
         setLists(updatedLists);
       } catch (error) {
         console.log("Algo salió mal");
@@ -83,17 +86,31 @@ export function SettingsProfile({ updateUser }) {
   };
 
   const handleOpenModalEmail = () => {
-    handleShowEmail()
+    handleShowEmail();
   };
 
   const handleOpenModalPasword = () => {
-    handleShowPassword()
+    handleShowPassword();
   };
 
   const handleOpenModalDelete = () => {
-    handleShowDelete()
+    handleShowDelete();
   };
 
+  const handleSteam = async () => {
+    await linkWithSteamRequest(token);
+    setConnectedSteam(true);
+  };
+
+  const handleDeleteSteam = async () => {
+    try {
+      await deleteSteamRequest(token);
+      updateUserSteam(!connectedSteam)
+      setConnectedSteam(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className="settings-section">
@@ -112,7 +129,10 @@ export function SettingsProfile({ updateUser }) {
                 errors={errors}
                 isSubmitted={isSubmitted}
                 noIcon={true}
-                style_error={{ "margin-left": '20px', "margin-bottom":"0.2rem" }}
+                style_error={{
+                  "margin-left": "20px",
+                  "margin-bottom": "0.2rem",
+                }}
               >
                 Noa
               </FormInput>
@@ -130,12 +150,21 @@ export function SettingsProfile({ updateUser }) {
         <div className="settings-container-right">
           <ul className="settings-ul">
             <li className="settings-li">
-              <a className="settings-link">Conectar cuenta de Steam</a>
+              {user && !connectedSteam && (
+                <a className="settings-link" onClick={handleSteam}>
+                  Conectar cuenta de Steam
+                </a>
+              )}
+              {user && connectedSteam && user.email && (
+                <a className="settings-link" onClick={handleDeleteSteam}>
+                  Desvincular cuenta de Steam
+                </a>
+              )}
             </li>
             <li className="settings-li" onClick={handleOpenModalPasword}>
               <a className="settings-link">Cambiar contraseña</a>
             </li>
-            <li className="settings-li"  onClick={handleOpenModalEmail}>
+            <li className="settings-li" onClick={handleOpenModalEmail}>
               <a className="settings-link">Cambiar E-mail</a>
             </li>
             <li className="settings-li" onClick={handleOpenModalDelete}>
@@ -158,7 +187,11 @@ export function SettingsProfile({ updateUser }) {
             >
               <option>Elige una Lista..</option>
               {lists &&
-                lists.map((list) => <option value={list.id} key={list.id}>{list.name}</option>)}
+                lists.map((list) => (
+                  <option value={list.id} key={list.id}>
+                    {list.name}
+                  </option>
+                ))}
             </select>
             <div className="input-wrapper">
               <input
@@ -173,9 +206,21 @@ export function SettingsProfile({ updateUser }) {
           </div>
         </div>
       </div>
-      <ModalEmail show={showEmail} handleClose={handleCloseEmail} token={token}/>
-      <ModalPassowrd show={showPasword} handleClose={handleClosePassword} token={token}/>
-      <ModalDeleteAccount show={showDelete} handleClose={handleCloseDelete} token={token}/>
+      <ModalEmail
+        show={showEmail}
+        handleClose={handleCloseEmail}
+        token={token}
+      />
+      <ModalPassowrd
+        show={showPasword}
+        handleClose={handleClosePassword}
+        token={token}
+      />
+      <ModalDeleteAccount
+        show={showDelete}
+        handleClose={handleCloseDelete}
+        token={token}
+      />
     </section>
   );
 }

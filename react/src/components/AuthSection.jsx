@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import "../styles/AuthSection.css";
 import { Header } from "./Header";
 import { steamIcon } from "./Icons";
+import { loginWithSteamRequest } from "../api/steam";
 
 export function AuthSection({ texts, onSubmit, children, error, actionRoute }) {
+  const handleSteam = async () => {
+    await loginWithSteamRequest()
+  }
   return (
     <section>
       <Header />
@@ -23,7 +27,7 @@ export function AuthSection({ texts, onSubmit, children, error, actionRoute }) {
         </form>
         <div className="steam-container">
           <p className="steam-paragraph">{texts.steamText}</p>
-          <button className="steam-register">
+          <button className="steam-register" onClick={handleSteam}>
             <span>{steamIcon()}</span>
           </button>
         </div>

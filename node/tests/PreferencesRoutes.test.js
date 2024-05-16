@@ -6,9 +6,6 @@ const request = testServer(preferencesRoutes);
 
 describe('PreferencesRoutes', () => {
     beforeEach(async () => {
-        await UserModel.destroy({ where: {} });
-        await GameModel.destroy({ where: {} });
-        await PreferencesModel.destroy({ where: {} });
         await UserModel.create({
             name: "test",
             email: "test@example.com",
@@ -168,7 +165,7 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 40,
                 id: 2,
-                igdb_id: 1
+                igdb_id: 50
             });
             // Act
             const {status, body} = await request.put('/preferences/2').send(newRating).set('Authorization', `Bearer ${authToken}`);
@@ -272,7 +269,7 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 40,
                 id: 2,
-                igdb_id: 1
+                igdb_id: 33
             });
             await PreferencesModel.create({ game_id:1, user_id:1, rating:2})
             await PreferencesModel.create({ game_id:2, user_id:1, rating:4})
@@ -307,28 +304,8 @@ describe('PreferencesRoutes', () => {
         });
     });
     describe('[ routes / preferences / games ? rating = : rating]', () => {
-        beforeEach(async() =>{
-            await GameModel.create({
-                name: "test2",
-                company: "test company",
-                gender: "test gender",
-                platforms: "name, name",
-                max_players: 40,
-                id: 2,
-                igdb_id: 1
-            });
-            await GameModel.create({
-                name: "test3",
-                company: "test company",
-                gender: "test gender",
-                platforms: "name, name",
-                max_players: 10,
-                id: 3,
-                igdb_id: 1
-            });
+        beforeEach(async () =>{
             await PreferencesModel.create({ game_id:1, user_id:1, rating:2})
-            await PreferencesModel.create({ game_id:2, user_id:1, rating:4})
-            await PreferencesModel.create({ game_id:3, user_id:1, rating:2})
         })
         it('should get all the games with specific rating', async () => {
             // Arrange
@@ -337,7 +314,7 @@ describe('PreferencesRoutes', () => {
             // Assert
             expect(status).toEqual(200)
             expect(body.message).toEqual('Games obtained successfully')
-            expect(body.games.length).toEqual(2)
+            expect(body.games.length).toEqual(1)
             expect(body.games[0].name).toEqual('test')
         });
         it('should NOT get any game if rating is not set and get error', async () => {
@@ -384,7 +361,7 @@ describe('PreferencesRoutes', () => {
         });
     });
     
-    afterAll(async () =>{
+    afterEach(async () =>{
         await UserModel.destroy({ where: {} });
         await GameModel.destroy({ where: {} });
         await PreferencesModel.destroy({ where: {} });

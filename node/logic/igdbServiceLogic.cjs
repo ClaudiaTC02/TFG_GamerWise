@@ -69,14 +69,24 @@ const getUpcomingReleasesLogic = async () => {
 };
 
 // Search a specific game
-const searchGameByNameLogic = async (name) => {
+const searchGameByNameLogic = async (name, dateString) => {
+  const date = new Date(dateString);
+  date.setMonth(0);
+  date.setDate(1); 
+  const marcaTiempoUnixInicio = date.getTime() / 1000;
+  date.setMonth(11);
+  date.setDate(31); 
+  const marcaTiempoUnixFinal = date.getTime() / 1000;
   try {
     const response = await apicalypse(requestOptions)
-      .fields("*, cover.url")
+      .fields(
+        "name, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinemax, first_release_date"
+      )
       .search(name)
-      .limit(40)
+      .where(`first_release_date <= ${marcaTiempoUnixFinal} & platforms=(6)`)
+      .limit(1)
       .request("/games");
-    return { success: true, data: response.data };
+    return { success: true, data: response.data[0] };
   } catch (error) {
     return { success: false, error: error.message };
   }

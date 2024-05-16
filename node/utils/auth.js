@@ -23,3 +23,8 @@ export const getUserIdFromToken = (req) => {
   const decoded = jwt.verify(token, process.env.JWT_token_secret);
   return decoded.userId;
 };
+
+export const getUserId = (token) => {
+  const decoded = jwt.verify(token, process.env.JWT_token_secret);
+  return decoded.userId;
+};

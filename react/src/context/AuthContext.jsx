@@ -48,6 +48,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const signInSteam = (token) => {
+    try {
+      setIsAuthenticated(true);
+      setToken(token)
+      Cookies.set('token', token, { expires: 1 });
+    } catch (error) {
+      setError(error.message);
+      setUser(null);
+      setToken(null)
+      setIsAuthenticated(false);
+    }
+  };
+
   useEffect(() => {
     const token = Cookies.get('token');
     if(token){
@@ -75,7 +88,8 @@ export const AuthProvider = ({ children }) => {
         setError,
         isAuthenticated,
         loading,
-        token
+        token,
+        signInSteam
       }}
     >
       {children}

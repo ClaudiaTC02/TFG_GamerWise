@@ -87,4 +87,23 @@ export const deleteAccountRequest = async (token) => {
   }
 };
 
+export const deleteSteamRequest = async (token) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = {
+      steam_token: null,
+    }
+    const res = await axios.put(`${API}/user/steam`, data, config);
+    return res;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+
 
