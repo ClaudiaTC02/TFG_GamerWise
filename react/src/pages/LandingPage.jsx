@@ -7,9 +7,11 @@ import "../styles/LandingPage.css";
 import { getLatestGamesRequest } from "../api/igdb";
 import { Loading } from "../components/Loading";
 import { GameCarousel } from "../components/GameCarousel";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
   const [LatestgamesData, setLatestgamesData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLatestGames = async () => {
@@ -23,10 +25,17 @@ export default function LandingPage() {
     };
     fetchLatestGames();
   }, []);
+
+  const handleSignUp = () => {
+    navigate("/signup");
+  };
+  const scrollToSection = (id) => {
+    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <>
       <Header isLanding={true} headerClass={"landing-header"} />
-      <section>
+      <section id="home">
         <div className="landing-title-container">
           <h1 className="landing-title">
             CADA <span className="highlited-text">JUGADOR</span> MERECE SU JUEGO{" "}
@@ -57,13 +66,13 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="landing-end-container">
-          <button className="landing-joinus">Únete</button>
-          <a className="landing-goDown">
+          <button className="landing-joinus" onClick={handleSignUp}>Únete</button>
+          <a className="landing-goDown" onClick={() => scrollToSection("posibilities")}>
             <i className="bi bi-chevron-down"></i>
           </a>
         </div>
       </section>
-      <section className="landing-posibilities-section">
+      <section id="posibilities" className="landing-posibilities-section">
         <h2 className="landing-posibilities-title">POSIBILIDADES</h2>
         <div className="landing-posiibilities-container">
           <div className="landing-title-posibilities-container">
@@ -124,7 +133,7 @@ export default function LandingPage() {
           </p>
         </div>
       </section>
-      <section className="landing-posibilities-section">
+      <section id="latest" className="landing-posibilities-section">
         <h2 className="landing-latest-title">NUEVOS LANZAMIENTOS</h2>
         <p className="landing-latest-paragraph">
           Estamos comprometidos a mantenerte al tanto de las últimas
