@@ -13,6 +13,9 @@ header {
   position: relative;
   z-index: 2;
 }
+.landing-header{
+  background-color: white;
+}
 .options-container {
   display: flex;
   gap: 1rem;

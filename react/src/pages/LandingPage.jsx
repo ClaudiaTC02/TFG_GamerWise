@@ -1,12 +1,31 @@
+import { useEffect, useState } from "react";
 import { FooterLanding } from "../components/Footer";
 import { Header } from "../components/Header";
 import { landingPhotoIcon } from "../components/Icons";
+import { SearchBar } from "../components/SearchBar";
 import "../styles/LandingPage.css";
+import { getLatestGamesRequest } from "../api/igdb";
+import { Loading } from "../components/Loading";
+import { GameCarousel } from "../components/GameCarousel";
 
 export default function LandingPage() {
+  const [LatestgamesData, setLatestgamesData] = useState([]);
+
+  useEffect(() => {
+    const fetchLatestGames = async () => {
+      try {
+        const games = await getLatestGamesRequest();
+        const sixGames = games.slice(0, 6);
+        setLatestgamesData(sixGames);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchLatestGames();
+  }, []);
   return (
     <>
-      <Header isLanding={true} />
+      <Header isLanding={true} headerClass={"landing-header"}/>
       <section>
         <div className="landing-title-container">
           <h1 className="landing-title">
@@ -101,6 +120,24 @@ export default function LandingPage() {
             Crea listas a medida para tus juegos favoritos y gestionalos como
             nunca antes. Tendrás el control total sobre tu biblioteca de juegos
           </p>
+        </div>
+      </section>
+      <section className="landing-posibilities-section">
+        <h2 className="landing-latest-title">NUEVOS LANZAMIENTOS</h2>
+        <p className="landing-latest-paragraph">
+          Estamos comprometidos a mantenerte al tanto de las últimas
+          incorporaciones, asegurándonos de que siempre tengas algo nuevo que
+          explorar
+        </p>
+        <SearchBar />
+        <div className="landing-games">
+          {LatestgamesData.length == 0 ? (
+            <Loading />
+          ) : (
+            LatestgamesData.map((game) => (
+              <GameCarousel game={game} key={game.id} />
+            ))
+          )}
         </div>
       </section>
       <FooterLanding />

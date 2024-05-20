@@ -81,3 +81,17 @@
     font-size: 0.8rem;
     text-align: justify;
 }
+.landing-latest-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+}
+.landing-latest-paragraph{
+    font-size: 0.9rem;
+    margin-bottom: 1.8rem;
+}
+.landing-games{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    gap: 5px;
+}

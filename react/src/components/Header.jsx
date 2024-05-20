@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import LanguageSelector from "./LanguageSelector";
 import { useAuth } from "../hooks/useAuth";
 
-export function Header({ isLanding, isLogged }) {
+export function Header({ isLanding, isLogged, headerClass }) {
   const navigate = useNavigate();
   const handleLogo = () => {
     if (isLanding) {
@@ -17,7 +17,7 @@ export function Header({ isLanding, isLogged }) {
     }
   };
   return (
-    <header>
+    <header className={headerClass}>
       <a href="/" onClick={handleLogo}>
         <img className="logo" src={logoIcon()} alt="logo gamerwise buho" />
       </a>
