@@ -17,3 +17,14 @@ export function verifyToken(req, res, next) {
       return res.status(403).json({ message: "Token not valid" });
     }
   }
+
+export const getUserIdFromToken = (req) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decoded = jwt.verify(token, process.env.JWT_token_secret);
+  return decoded.userId;
+};
+
+export const getUserId = (token) => {
+  const decoded = jwt.verify(token, process.env.JWT_token_secret);
+  return decoded.userId;
+};

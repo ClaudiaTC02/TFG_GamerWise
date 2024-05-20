@@ -1,0 +1,82 @@
+.listgame-border {
+  padding: 0.2rem;
+  margin: 0.3rem;
+  border: 2px solid #ef4f23;
+  width: fit-content;
+  position: relative;
+  height: 170px;
+}
+
+.listgame-button {
+  background-color: transparent;
+  color: #ffb7b7;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  left: 90px;
+  top: -15px;
+  border: 0;
+}
+
+.listgame-button:hover {
+  color: red;
+  outline: none;
+  border: 0;
+}
+
+.listgame-game-img {
+  width: 6rem;
+  position: relative;
+  height: 128px;
+}
+.listgame-info-container {
+  background-color: rgba(0, 0, 0, 0.342);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 96px;
+  bottom: 35px;
+}
+.listgame-rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.listgame-rating-img {
+  font-size: 1.3rem;
+  color: rgb(255, 217, 0);
+  margin: 0;
+}
+
+.listgame-rating {
+  font-size: 1.3rem;
+  margin: 0 0 0 0.3rem;
+  font-weight: bold;
+  color: white;
+}
+
+.listgame-name {
+  margin-top: 0.5rem;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (min-width: 1025px) {
+  .listgame-border {
+    height: 240px;
+  }
+  .listgame-game-img {
+    width: 9rem;
+    height: 192px;
+  }
+  .listgame-info-container {
+    bottom: 40px;
+    width: 144px;
+  }
+}

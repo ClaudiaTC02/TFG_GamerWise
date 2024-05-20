@@ -1,0 +1,100 @@
+[
+    {
+        "id": 732,
+        "cover": {
+            "id": 120933,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co2lb9.jpg"
+        },
+        "genres": [
+            {
+                "id": 5,
+                "name": "Shooter"
+            },
+            {
+                "id": 10,
+                "name": "Racing"
+            },
+            {
+                "id": 31,
+                "name": "Adventure"
+            }
+        ],
+        "involved_companies": [
+            {
+                "id": 55979,
+                "company": {
+                    "id": 365,
+                    "name": "Rockstar North"
+                }
+            },
+            {
+                "id": 210804,
+                "company": {
+                    "id": 139,
+                    "name": "Take-Two Interactive"
+                }
+            },
+            {
+                "id": 210805,
+                "company": {
+                    "id": 29,
+                    "name": "Rockstar Games"
+                }
+            },
+            {
+                "id": 210806,
+                "company": {
+                    "id": 1967,
+                    "name": "TransGaming Inc."
+                }
+            }
+        ],
+        "multiplayer_modes": [
+            {
+                "id": 1858,
+                "onlinecoopmax": 0,
+                "onlinemax": 0
+            }
+        ],
+        "name": "Grand Theft Auto: San Andreas",
+        "platforms": [
+            {
+                "id": 6,
+                "abbreviation": "PC"
+            },
+            {
+                "id": 8,
+                "abbreviation": "PS2"
+            },
+            {
+                "id": 9,
+                "abbreviation": "PS3"
+            },
+            {
+                "id": 11,
+                "abbreviation": "XBOX"
+            },
+            {
+                "id": 12,
+                "abbreviation": "X360"
+            },
+            {
+                "id": 14,
+                "abbreviation": "Mac"
+            },
+            {
+                "id": 34,
+                "abbreviation": "Android"
+            },
+            {
+                "id": 39,
+                "abbreviation": "iOS"
+            },
+            {
+                "id": 48,
+                "abbreviation": "PS4"
+            }
+        ],
+        "summary": "Returning after his mother's murder to the semi-fictional city of Los Santos (based on Los Angeles), Carl Johnson, a former gang banger, must take back the streets for his family and friends by gaining respect and once again gaining control over the streets. However, a story filled with crime, lies and corruption will lead him to trudge the entire state of San Andreas (based on California and Nevada) to rebuild his life."
+    }
+]

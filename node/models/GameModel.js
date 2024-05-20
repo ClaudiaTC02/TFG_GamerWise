@@ -23,6 +23,11 @@ const GameModel = db.define('game', {
     gender:{
         type: DataType.STRING,
         allowNull: false
+    },
+    igdb_id: {
+        type: DataType.INTEGER,
+        allowNull: false,
+        unique: true
     }
 },{
     //Other model options

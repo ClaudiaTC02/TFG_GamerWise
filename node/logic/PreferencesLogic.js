@@ -12,7 +12,6 @@ export const addRatingLogic = async (user_id, game_id, rating) => {
   try {
     user_id = Number(user_id);
     game_id = Number(game_id);
-
     if (!user_id || rating === null || rating === undefined || !game_id) {
       throw new Error("Required fields not provided");
     }
@@ -198,6 +197,7 @@ export const getGamesWithSpecificRatingLogic = async (user_id, rating) => {
         "gender",
         "platforms",
         "max_players",
+        "igdb_id"
       ],
       include: [
         {

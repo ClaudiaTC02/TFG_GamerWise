@@ -1,6 +1,7 @@
 import ListModel from '../models/ListModel.js';
 import UserModel from "../models/UserModel.js";
 import ListGameModel from "../models/ListGameModel.js";
+import { where } from 'sequelize';
 
 //----------------------------------------------------------------------
 // CRUD Methods
@@ -84,15 +85,34 @@ export async function deleteListLogic(id) {
 }
 
 // obatin list
-export async function getListLogic(id){
+export async function getListLogic(id, user_id){
     try {
-        if(!id){
+        if(!id || !user_id){
             throw new Error("Id is required");
         }
-        if(!validateDataTypes({id})){
+        if(!validateDataTypes({id, user_id})){
             throw new Error("Invalid data type");
         }
-        const list = await foundList(id)
+        const list = await ListModel.findOne({ where: { id: id, user_id: user_id } });
+        if(!list){
+            throw new Error("List not found")
+        }
+        return {success:true, list: list}
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// obatin list
+export async function getListByNameLogic(name, user_id){
+    try {
+        if(!name || !user_id){
+            throw new Error("Id is required");
+        }
+        if(!validateDataTypes({name, user_id})){
+            throw new Error("Invalid data type");
+        }
+        const list = await ListModel.findOne({ where: { name: name, user_id: user_id } });
         if(!list){
             throw new Error("List not found")
         }

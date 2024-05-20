@@ -167,4 +167,21 @@ dist
 .env.production.local
 .env.local
 
+# Vite
+node_modules/
+/dist/
+/.cache/
+/public/build/
+
+# React
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+*.sublime*
+psd
+thumb
+sketch
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode

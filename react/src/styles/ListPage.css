@@ -1,0 +1,87 @@
+.list-titles-container {
+  margin: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list-back-container {
+  margin: 1rem 0rem 0.5rem 2rem;
+}
+.list-back {
+  font-size: 1.2rem;
+  color: black;
+  padding: 0.5rem;
+}
+
+.list-title {
+  margin: 1rem 0 0.4rem 1rem;
+  font-size: 1.5rem;
+}
+
+.list-edit-container {
+  margin-right: 1rem;
+  font-size: 1.1rem;
+}
+
+.list-hr {
+  margin-top: 0;
+  margin-left: 1rem;
+  height: 2px;
+  width: 90px;
+  border: 2px solid #ef4f23;
+  opacity: 1;
+  margin-bottom: 0.3rem;
+}
+
+.list-description {
+  font-size: 1rem;
+  margin: 0 2rem 1rem 2rem;
+}
+
+.list-games-container {
+  margin: 0 auto;
+  display: grid;
+  width: 90%;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 5px;
+}
+.list-edit-options {
+  padding: 0.3rem;
+  color: black;
+  margin-right: 0rem;
+}
+.list-edit-options.edit:hover {
+  color: rgb(0, 153, 255);
+}
+
+.list-edit-options.delete:hover {
+  color: red;
+}
+.no-games-list {
+  text-align: center;
+}
+@media (min-width: 1025px) {
+  .list-back-container {
+    margin: 1rem 0rem 0.5rem 3rem;
+  }
+  .list-hr {
+    margin-left: 3rem;
+  }
+  .list-title {
+    margin-left: 3rem;
+    font-size: 2rem;
+  }
+  .list-description {
+    margin: 0 3rem 1rem 4rem;
+  }
+  .list-edit-container {
+    margin-right: 2rem;
+    font-size: 1.5rem;
+    color: black;
+  }
+  .list-games-container {
+    margin: 0 3rem 0 3rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+  }
+}

@@ -37,7 +37,8 @@ export const validateDataTypesUpdate = (fields) => {
     const dataTypesUpdate = {
         email: ["string", "undefined"],
         name: ["string", "undefined"],
-        password: ["string", "undefined"]
+        password: ["string", "undefined"],
+        password_before: ["string", "undefined"]
     };
     for (let key in fields) {
         if (!dataTypesUpdate[key] || (!dataTypesUpdate[key].includes(typeof fields[key]))) {
@@ -74,5 +75,5 @@ export const hashPassword = async (password) => {
 };
 
 export const generateAuthToken = (userId) => {
-    return jwt.sign({ userId }, `${process.env.JWT_token_secret}`, { expiresIn: '1h' });
+    return jwt.sign({ userId }, `${process.env.JWT_token_secret}`, { expiresIn: '24h' });
 };

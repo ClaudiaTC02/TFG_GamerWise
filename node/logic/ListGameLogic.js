@@ -83,6 +83,7 @@ export const getAllGamesLogic = async (list_id) => {
         "gender",
         "platforms",
         "max_players",
+        "igdb_id"
       ],
       include: [
         {

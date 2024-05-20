@@ -5,7 +5,9 @@ import {
   getBasicInfoLogic,
   updateUserLogic,
   deleteUserLogic,
+  deleteSteamLogic
 } from "../logic/UserLogic.js";
+import { getUserIdFromToken } from "../utils/auth.js";
 
 //----------------------------------------------------------------------
 // HTTP Methods
@@ -48,8 +50,9 @@ export const login = async (req, res) => {
 // get basic information by id
 export const getBasicInfo = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = getUserIdFromToken(req);
     const result = await getBasicInfoLogic(id);
+
     if (result.success) {
       res.status(200).json({
         message: "Information obtained successfully",
@@ -70,9 +73,9 @@ export const getBasicInfo = async (req, res) => {
 // update a user
 export const updateUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { name, email, password } = req.body;
-    const result = await updateUserLogic(id, { name, email, password });
+    const id = getUserIdFromToken(req);
+    const { name, email, password, password_before } = req.body;
+    const result = await updateUserLogic(id, { name, email, password, password_before });
     if (result.success) {
       res
         .status(200)
@@ -92,12 +95,33 @@ export const updateUser = async (req, res) => {
 // delete a user
 export const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = getUserIdFromToken(req);
     const result = await deleteUserLogic(id);
     if (result.success) {
       res
         .status(200)
         .json({ message: "User deleted successfully"});
+    } else {
+      let statusCode = 400;
+      if (result.error === "User not found") {
+        statusCode = 404;
+      }
+      res.status(statusCode).json({ message: result.error });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// delete steam_token of a user
+export const deleteSteam = async (req, res) => {
+  try {
+    const id = getUserIdFromToken(req);
+    const result = await deleteSteamLogic(id);
+    if (result.success) {
+      res
+        .status(200)
+        .json({ message: "User updated successfully", user: result.user });
     } else {
       let statusCode = 400;
       if (result.error === "User not found") {

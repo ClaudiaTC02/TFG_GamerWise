@@ -1,0 +1,1605 @@
+[
+    {
+        "id": 732,
+        "age_ratings": [
+            31849,
+            47915,
+            47916,
+            47917,
+            47918,
+            47919,
+            47920
+        ],
+        "aggregated_rating": 93.14285714285714,
+        "aggregated_rating_count": 7,
+        "alternative_names": [
+            2332,
+            6795,
+            52703,
+            52704,
+            144662,
+            144663,
+            148468
+        ],
+        "artworks": [
+            34971
+        ],
+        "bundles": [
+            5850
+        ],
+        "category": 0,
+        "cover": {
+            "id": 120933,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co2lb9.jpg"
+        },
+        "created_at": 1317748966,
+        "external_games": [
+            14740,
+            17904,
+            72864,
+            85113,
+            94603,
+            96695,
+            150549,
+            189779,
+            213596,
+            223571,
+            224842,
+            245148,
+            352189,
+            403724,
+            1185090,
+            1304318,
+            1859369,
+            1929382,
+            1930015,
+            1931787,
+            1933109,
+            1933194,
+            1934769,
+            1937264,
+            2082270,
+            2160950,
+            2161125
+        ],
+        "first_release_date": 1098748800,
+        "franchises": [
+            493
+        ],
+        "game_engines": [
+            41
+        ],
+        "game_modes": [
+            1,
+            3
+        ],
+        "genres": [
+            5,
+            10,
+            31
+        ],
+        "hypes": 2,
+        "involved_companies": [
+            55979,
+            210804,
+            210805,
+            210806
+        ],
+        "keywords": [
+            21,
+            57,
+            58,
+            72,
+            109,
+            129,
+            155,
+            221,
+            222,
+            284,
+            392,
+            403,
+            427,
+            535,
+            558,
+            563,
+            621,
+            642,
+            729,
+            735,
+            839,
+            889,
+            977,
+            1033,
+            1293,
+            1403,
+            1437,
+            1503,
+            1669,
+            1898,
+            2069,
+            2071,
+            2156,
+            2324,
+            2841,
+            3586,
+            3831,
+            4134,
+            4272,
+            4287,
+            4298,
+            4355,
+            4359,
+            4452,
+            4544,
+            4614,
+            4615,
+            4647,
+            4709,
+            4730,
+            4884,
+            4998,
+            5264,
+            5377,
+            5408,
+            5425,
+            5471,
+            5542,
+            5563,
+            5730,
+            5836,
+            5850,
+            5909,
+            5999,
+            6134,
+            6385,
+            6471,
+            6716,
+            7369,
+            8170,
+            8172,
+            8272,
+            8281,
+            9066,
+            9256,
+            9536,
+            10435,
+            11635,
+            38555
+        ],
+        "multiplayer_modes": [
+            1858
+        ],
+        "name": "Grand Theft Auto: San Andreas",
+        "platforms": [
+            6,
+            8,
+            9,
+            11,
+            12,
+            14,
+            34,
+            39,
+            48
+        ],
+        "player_perspectives": [
+            1,
+            2
+        ],
+        "rating": 90.69460322069652,
+        "rating_count": 2950,
+        "release_dates": [
+            1613,
+            3317,
+            3318,
+            48660,
+            55583,
+            123523,
+            123524,
+            147098,
+            363462,
+            468249
+        ],
+        "screenshots": [
+            679,
+            189150,
+            189151,
+            189152,
+            189153,
+            778550,
+            778551,
+            778552,
+            778553,
+            778554,
+            778555,
+            778556
+        ],
+        "similar_games": [
+            40,
+            533,
+            564,
+            730,
+            731,
+            733,
+            1020,
+            3262,
+            3263,
+            19441
+        ],
+        "slug": "grand-theft-auto-san-andreas",
+        "storyline": "Five years ago, Carl Johnson escaped from the pressures of life in Los Santos, San Andreas, a city tearing itself apart with gang trouble, drugs and corruption. Where filmstars and millionaires do their best to avoid the dealers and gangbangers.\nNow, it’s the early 90’s. Carl’s got to go home. His mother has been murdered, his family has fallen apart and his childhood friends are all heading towards disaster.\n\nOn his return to the neighborhood, a couple of corrupt cops frame him for homicide. CJ is forced on a journey that takes him across the entire state of San Andreas, to save his family and to take control of the streets.",
+        "summary": "Returning after his mother's murder to the semi-fictional city of Los Santos (based on Los Angeles), Carl Johnson, a former gang banger, must take back the streets for his family and friends by gaining respect and once again gaining control over the streets. However, a story filled with crime, lies and corruption will lead him to trudge the entire state of San Andreas (based on California and Nevada) to rebuild his life.",
+        "tags": [
+            1,
+            23,
+            38,
+            268435461,
+            268435466,
+            268435487,
+            536870933,
+            536870969,
+            536870970,
+            536870984,
+            536871021,
+            536871041,
+            536871067,
+            536871133,
+            536871134,
+            536871196,
+            536871304,
+            536871315,
+            536871339,
+            536871447,
+            536871470,
+            536871475,
+            536871533,
+            536871554,
+            536871641,
+            536871647,
+            536871751,
+            536871801,
+            536871889,
+            536871945,
+            536872205,
+            536872315,
+            536872349,
+            536872415,
+            536872581,
+            536872810,
+            536872981,
+            536872983,
+            536873068,
+            536873236,
+            536873753,
+            536874498,
+            536874743,
+            536875046,
+            536875184,
+            536875199,
+            536875210,
+            536875267,
+            536875271,
+            536875364,
+            536875456,
+            536875526,
+            536875527,
+            536875559,
+            536875621,
+            536875642,
+            536875796,
+            536875910,
+            536876176,
+            536876289,
+            536876320,
+            536876337,
+            536876383,
+            536876454,
+            536876475,
+            536876642,
+            536876748,
+            536876762,
+            536876821,
+            536876911,
+            536877046,
+            536877297,
+            536877383,
+            536877628,
+            536878281,
+            536879082,
+            536879084,
+            536879184,
+            536879193,
+            536879978,
+            536880168,
+            536880448,
+            536881347,
+            536882547,
+            536909467
+        ],
+        "themes": [
+            1,
+            23,
+            38
+        ],
+        "total_rating": 91.91873018177682,
+        "total_rating_count": 2957,
+        "updated_at": 1713648707,
+        "url": "https://www.igdb.com/games/grand-theft-auto-san-andreas",
+        "videos": [
+            19022,
+            19023
+        ],
+        "websites": [
+            12921,
+            12922,
+            12923,
+            12924,
+            12925,
+            12926,
+            67033,
+            72229,
+            72599,
+            516689
+        ],
+        "checksum": "2ccf93f7-7cd2-176e-586b-a024547ff503",
+        "remasters": [
+            178126
+        ],
+        "language_supports": [
+            701701,
+            701702,
+            701703
+        ],
+        "game_localizations": [
+            25680
+        ],
+        "collections": [
+            847
+        ]
+    },
+    {
+        "id": 3270,
+        "age_ratings": [
+            31644,
+            47900,
+            47901,
+            47902,
+            47903,
+            47904,
+            82165
+        ],
+        "aggregated_rating": 89,
+        "aggregated_rating_count": 12,
+        "alternative_names": [
+            3659,
+            52708,
+            52709,
+            52710,
+            53893
+        ],
+        "bundles": [
+            99753
+        ],
+        "category": 0,
+        "cover": {
+            "id": 120934,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co2lba.jpg"
+        },
+        "created_at": 1388262162,
+        "external_games": [
+            17811,
+            72805,
+            80001,
+            92825,
+            137875,
+            188952,
+            217908,
+            225064,
+            303481,
+            363876,
+            403535
+        ],
+        "first_release_date": 1237248000,
+        "franchises": [
+            493
+        ],
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            5,
+            31
+        ],
+        "involved_companies": [
+            8549,
+            8550,
+            8551
+        ],
+        "keywords": [
+            21,
+            129,
+            221,
+            222,
+            274,
+            284,
+            558,
+            660,
+            735,
+            889,
+            1033,
+            1293,
+            1333,
+            1403,
+            1669,
+            1754,
+            1821,
+            1887,
+            2002,
+            2452,
+            2543,
+            2803,
+            3831,
+            4134,
+            4179,
+            4285,
+            4345,
+            4353,
+            4388,
+            4397,
+            4398,
+            4510,
+            4541,
+            4613,
+            4615,
+            4709,
+            4777,
+            4852,
+            4869,
+            4884,
+            4891,
+            4897,
+            4927,
+            4990,
+            4998,
+            5143,
+            5328,
+            5471,
+            5474,
+            5517,
+            5523,
+            5690,
+            5812,
+            5941,
+            5971,
+            6084,
+            6623,
+            6711,
+            6813,
+            6832,
+            6860,
+            7185,
+            7396,
+            7568,
+            8272,
+            8281,
+            8828,
+            9066,
+            9471,
+            10440,
+            12231,
+            13068,
+            13076,
+            13209,
+            23933,
+            38555
+        ],
+        "multiplayer_modes": [
+            1831
+        ],
+        "name": "Grand Theft Auto: Chinatown Wars",
+        "platforms": [
+            20,
+            34,
+            38,
+            39
+        ],
+        "player_perspectives": [
+            3
+        ],
+        "rating": 78.05532468609383,
+        "rating_count": 138,
+        "release_dates": [
+            7476,
+            7478,
+            139965,
+            139966,
+            147527,
+            224368,
+            224369,
+            224370,
+            363480
+        ],
+        "screenshots": [
+            8569,
+            8570,
+            8571,
+            8572,
+            8573,
+            160570,
+            160571,
+            160572,
+            160573,
+            160574,
+            160575,
+            160576
+        ],
+        "similar_games": [
+            40,
+            731,
+            732,
+            733,
+            980,
+            1020,
+            1121,
+            3262,
+            3263,
+            19441
+        ],
+        "slug": "grand-theft-auto-chinatown-wars",
+        "storyline": "Huang Lee, the spoiled son of a recently murdered Triad boss, arrives by plane in Liberty City with Yu Jian, a sword that Huang's father won in a poker game and has decided to use as an heirloom, to deliver it to the new patriarch of the family, Huang's uncle Wu \"Kenny\" Lee. Shortly after landing, Huang's escorts are killed by assassins and he is shot and kidnapped. The assailants steal the sword and, thinking Huang is dead, dump his body in the water. Huang manages to survive and informs Kenny that Yu Jian has been taken. Kenny explains that he had intended to offer the sword to Hsin Jaoming, the aging Triad boss in Liberty City, as a means of securing a position as his replacement. Kenny has been dishonored and reduced in power due to the loss of Yu Jian, leaving him and Huang working to keep their businesses afloat.",
+        "summary": "Grand Theft Auto: Chinatown Wars is an entirely original entry into the critically acclaimed Grand Theft Auto series, and brings a new level of interactivity to its sprawling open environments. With the use of the DS touch screen, players navigate their way through the streets as they uncover the truth behind an epic tale of crime and corruption within the Triad crime syndicate, delivering the unprecedented amount of depth that has become a true trademark of the franchise.",
+        "tags": [
+            1,
+            27,
+            33,
+            38,
+            268435461,
+            268435487,
+            536870933,
+            536871041,
+            536871133,
+            536871134,
+            536871186,
+            536871196,
+            536871470,
+            536871572,
+            536871647,
+            536871801,
+            536871945,
+            536872205,
+            536872245,
+            536872315,
+            536872581,
+            536872666,
+            536872733,
+            536872799,
+            536872914,
+            536873364,
+            536873455,
+            536873715,
+            536874743,
+            536875046,
+            536875091,
+            536875197,
+            536875257,
+            536875265,
+            536875300,
+            536875309,
+            536875310,
+            536875422,
+            536875453,
+            536875525,
+            536875527,
+            536875621,
+            536875689,
+            536875764,
+            536875781,
+            536875796,
+            536875803,
+            536875809,
+            536875839,
+            536875902,
+            536875910,
+            536876055,
+            536876240,
+            536876383,
+            536876386,
+            536876429,
+            536876435,
+            536876602,
+            536876724,
+            536876853,
+            536876883,
+            536876996,
+            536877535,
+            536877623,
+            536877725,
+            536877744,
+            536877772,
+            536878097,
+            536878308,
+            536878480,
+            536879184,
+            536879193,
+            536879740,
+            536879978,
+            536880383,
+            536881352,
+            536883143,
+            536883980,
+            536883988,
+            536884121,
+            536894845,
+            536909467
+        ],
+        "themes": [
+            1,
+            27,
+            33,
+            38
+        ],
+        "total_rating": 83.52766234304691,
+        "total_rating_count": 150,
+        "updated_at": 1713235103,
+        "url": "https://www.igdb.com/games/grand-theft-auto-chinatown-wars",
+        "videos": [
+            1811
+        ],
+        "websites": [
+            1086,
+            72117,
+            79663,
+            123254,
+            342171
+        ],
+        "checksum": "a1383913-dde8-011b-f71f-382879f64431",
+        "collections": [
+            847
+        ]
+    },
+    {
+        "id": 45131,
+        "age_ratings": [
+            90110
+        ],
+        "alternative_names": [
+            53202,
+            53203,
+            53204,
+            53205,
+            53206
+        ],
+        "category": 0,
+        "cover": {
+            "id": 123528,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co2nbc.jpg"
+        },
+        "created_at": 1499454358,
+        "external_games": [
+            26297,
+            1933044
+        ],
+        "first_release_date": 1379376000,
+        "franchises": [
+            493
+        ],
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            5,
+            10,
+            14
+        ],
+        "involved_companies": [
+            104253,
+            104254
+        ],
+        "name": "Grand Theft Auto V: Special Edition",
+        "platforms": [
+            9,
+            12
+        ],
+        "player_perspectives": [
+            1,
+            2
+        ],
+        "rating": 99.51737730113243,
+        "rating_count": 48,
+        "release_dates": [
+            94075,
+            159145
+        ],
+        "screenshots": [
+            344198,
+            393460,
+            393461,
+            393462
+        ],
+        "similar_games": [
+            1877,
+            19164,
+            37419,
+            82090,
+            95340,
+            103292,
+            105011,
+            115785,
+            118871,
+            119161
+        ],
+        "slug": "grand-theft-auto-v-special-edition",
+        "summary": "The Grand Theft Auto V Special Edition includes: Full retail copy of Grand Theft Auto V; Collectible SteelBook with Exclusive Artwork - features custom color and metallic treatments to bring out the detail of the Michael, Trevor and Franklin artwork created exclusively for this SteelBook; Blueprint Map - exclusive, 21.5” x 26.75” map displays a blueprint view of Los Santos and Blaine County; Special Ability Boost - Michael, Franklin and Trevor each have a unique special ability. With this boost, the special ability bar will generate 25% faster; Stunt Plane Trials – single-player Stunt Plane Trials let players take on additional aerial challenges spread throughout Los Santos and Blaine County; Bonus Outfits, Tattoos and More - Michael, Franklin and Trevor get bonus outfits in their wardrobes, character specific tattoos at tattoo parlors, and special deals from shopkeepers across Los Santos and Blaine County; Additional Weapons - when visiting Ammunation stores in single-player, merchants will have special weapons in their inventory available for free: the Pistol .50, Bullpup Shotgun and melee Hammer.\n\nGrand Theft Auto V is the largest and most ambitious game Rockstar Games has yet created, and takes full advantage of every ounce of processing power available in the current generation of consoles. In order to provide the best possible experience for such a massive and detailed world, the game will have installation requirements on the Xbox 360.\n\nGrand Theft Auto V will ship on two discs; Disc 1 will be used for a one-time mandatory install and Disc 2 will be used to play the game. After the install, players will be able to enjoy both Grand Theft Auto V and Grand Theft Auto Online without any need to switch discs.\n\nThis initial install will require an Xbox 360 Hard Drive or an external 16GB USB flash drive (sold separately) with at least 8 GB of free space. If using a USB flash drive it must be at least USB 2.0 with a minimum 15mb/s read speed and formatted for Xbox 360 use. A new USB flash drive is recommended to ensure optimum performance.",
+        "tags": [
+            1,
+            27,
+            38,
+            268435461,
+            268435466,
+            268435470
+        ],
+        "themes": [
+            1,
+            27,
+            38
+        ],
+        "total_rating": 99.51737730113243,
+        "total_rating_count": 48,
+        "updated_at": 1713235117,
+        "url": "https://www.igdb.com/games/grand-theft-auto-v-special-edition",
+        "version_parent": 1020,
+        "version_title": "Special Edition",
+        "checksum": "0ed0426b-f671-8e62-1758-45b75f7c526b"
+    },
+    {
+        "id": 27912,
+        "age_ratings": [
+            11672,
+            90109
+        ],
+        "alternative_names": [
+            53197,
+            53198,
+            53199,
+            53200,
+            53201
+        ],
+        "category": 3,
+        "cover": {
+            "id": 85406,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co1twe.jpg"
+        },
+        "created_at": 1490098359,
+        "external_games": [
+            85123,
+            1931853,
+            1931898,
+            1933831,
+            1933997,
+            2613796
+        ],
+        "first_release_date": 1288051200,
+        "franchises": [
+            493
+        ],
+        "game_modes": [
+            1,
+            2,
+            3
+        ],
+        "genres": [
+            5,
+            31
+        ],
+        "involved_companies": [
+            45426,
+            45427,
+            45428
+        ],
+        "keywords": [
+            299,
+            1127,
+            1308,
+            1511,
+            1539,
+            1669,
+            5836
+        ],
+        "name": "Grand Theft Auto IV: Complete Edition",
+        "platforms": [
+            6,
+            9,
+            12
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "rating": 87.19789466287862,
+        "rating_count": 66,
+        "release_dates": [
+            189906,
+            211239,
+            211240,
+            211241,
+            211242
+        ],
+        "screenshots": [
+            39153,
+            39154,
+            39155,
+            39156,
+            39157
+        ],
+        "similar_games": [
+            1877,
+            17379,
+            17548,
+            19164,
+            26574,
+            37419,
+            47823,
+            103261,
+            103292,
+            115785
+        ],
+        "slug": "grand-theft-auto-iv-complete-edition",
+        "summary": "This standalone retail title spans three distinct stories, interwoven to create one of the most unique and engaging single-player experiences of this generation. This definitive Grand Theft Auto bundle boasts hundreds of hours of single-player gameplay; a full suite of open-world multiplayer game types limited only by players’ creativity; dozens of eclectic radio stations with hours of music and original dialogue.",
+        "tags": [
+            1,
+            33,
+            38,
+            268435461,
+            268435487,
+            536871211,
+            536872039,
+            536872220,
+            536872423,
+            536872451,
+            536872581,
+            536876748
+        ],
+        "themes": [
+            1,
+            33,
+            38
+        ],
+        "total_rating": 87.19789466287862,
+        "total_rating_count": 66,
+        "updated_at": 1713605869,
+        "url": "https://www.igdb.com/games/grand-theft-auto-iv-complete-edition",
+        "videos": [
+            97269
+        ],
+        "websites": [
+            17627,
+            312862,
+            322977
+        ],
+        "checksum": "7e1a1dab-fc93-df5b-b985-85dbadfd12d8",
+        "language_supports": [
+            512057,
+            512058,
+            512059,
+            512060,
+            512061
+        ]
+    },
+    {
+        "id": 98077,
+        "age_ratings": [
+            94459,
+            104929,
+            130355
+        ],
+        "alternative_names": [
+            53189,
+            53193,
+            53194,
+            53195,
+            53196,
+            105976
+        ],
+        "category": 0,
+        "cover": {
+            "id": 85409,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co1twh.jpg"
+        },
+        "created_at": 1524644111,
+        "external_games": [
+            1865450,
+            1865536,
+            1865548,
+            1865596,
+            1865688,
+            1865768,
+            1928446,
+            1928746,
+            1929031,
+            1930606,
+            1932129,
+            1933876,
+            1934447,
+            1934845,
+            1935706,
+            1936489,
+            1936864,
+            1937178,
+            1937784,
+            1938185,
+            1938242,
+            1938306,
+            2002107,
+            2071901,
+            2085126,
+            2220445,
+            2439088,
+            2439118,
+            2588992,
+            2626616
+        ],
+        "first_release_date": 1524182400,
+        "franchises": [
+            493
+        ],
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            5,
+            10,
+            14,
+            31
+        ],
+        "involved_companies": [
+            104257,
+            104258
+        ],
+        "name": "Grand Theft Auto V: Premium Online Edition",
+        "platforms": [
+            6,
+            48,
+            49
+        ],
+        "player_perspectives": [
+            1,
+            2
+        ],
+        "rating": 93.48128663698583,
+        "rating_count": 36,
+        "release_dates": [
+            189410,
+            189411,
+            189412
+        ],
+        "screenshots": [
+            344193,
+            344194,
+            344195,
+            344196,
+            344197
+        ],
+        "similar_games": [
+            1877,
+            19164,
+            55038,
+            81249,
+            103292,
+            103303,
+            105011,
+            106805,
+            115785,
+            119161
+        ],
+        "slug": "grand-theft-auto-v-premium-online-edition",
+        "summary": "The Grand Theft Auto V: Premium Online Edition includes the complete Grand Theft Auto V story experience, free access to the ever evolving Grand Theft Auto Online and all existing gameplay upgrades and content including The Doomsday Heist, Gunrunning, Smuggler’s Run, Bikers and much more. You’ll also get the Criminal Enterprise Starter Pack, the fastest way to jumpstart your criminal empire in Grand Theft Auto Online.",
+        "tags": [
+            1,
+            27,
+            38,
+            268435461,
+            268435466,
+            268435470,
+            268435487
+        ],
+        "themes": [
+            1,
+            27,
+            38
+        ],
+        "total_rating": 93.48128663698583,
+        "total_rating_count": 36,
+        "updated_at": 1713636341,
+        "url": "https://www.igdb.com/games/grand-theft-auto-v-premium-online-edition",
+        "version_parent": 1020,
+        "version_title": "Premium Online Edition",
+        "websites": [
+            218027
+        ],
+        "checksum": "367df7f7-6bc3-9fa0-40d1-894bee7c194d",
+        "game_localizations": [
+            24081
+        ]
+    },
+    {
+        "id": 204875,
+        "age_ratings": [
+            74914,
+            74956
+        ],
+        "alternative_names": [
+            91649
+        ],
+        "artworks": [
+            78615
+        ],
+        "category": 0,
+        "cover": {
+            "id": 227268,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co4vd0.jpg"
+        },
+        "created_at": 1655209556,
+        "external_games": [
+            2449407
+        ],
+        "genres": [
+            13,
+            31,
+            33
+        ],
+        "name": "Prison Life Simulator 2022: World Fight Battle GTA Ultimate",
+        "screenshots": [
+            812236,
+            812237,
+            812238,
+            812239,
+            812240,
+            812241
+        ],
+        "similar_games": [
+            25311,
+            26574,
+            35994,
+            56033,
+            87622,
+            96217,
+            103292,
+            103369,
+            111130,
+            112078
+        ],
+        "slug": "prison-life-simulator-2022-world-fight-battle-gta-ultimate",
+        "summary": "Simulator with a third-person view. The game takes place in a jail, after a failed bank robbery and a city chase, you arrested for 7 years.",
+        "tags": [
+            1,
+            268435469,
+            268435487,
+            268435489
+        ],
+        "themes": [
+            1
+        ],
+        "updated_at": 1698220582,
+        "url": "https://www.igdb.com/games/prison-life-simulator-2022-world-fight-battle-gta-ultimate",
+        "websites": [
+            494205
+        ],
+        "checksum": "b5ea0727-f56c-6047-b4f7-997f1e97eafc",
+        "language_supports": [
+            506243
+        ]
+    },
+    {
+        "id": 121176,
+        "category": 0,
+        "cover": {
+            "id": 309041,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co6mgh.jpg"
+        },
+        "created_at": 1564279298,
+        "external_games": [
+            1952897
+        ],
+        "follows": 2,
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            5,
+            13
+        ],
+        "keywords": [
+            2004,
+            24124
+        ],
+        "name": "GTA: La Heist",
+        "player_perspectives": [
+            3
+        ],
+        "similar_games": [
+            19164,
+            19341,
+            37419,
+            76263,
+            95340,
+            103218,
+            103292,
+            103302,
+            106805,
+            119177
+        ],
+        "slug": "gta-la-heist",
+        "summary": "A fan game with the motif of GTA.",
+        "tags": [
+            1,
+            32,
+            268435461,
+            268435469,
+            536872916,
+            536895036
+        ],
+        "themes": [
+            1,
+            32
+        ],
+        "updated_at": 1692352641,
+        "url": "https://www.igdb.com/games/gta-la-heist",
+        "websites": [
+            410305
+        ],
+        "checksum": "a2a20673-f267-2a52-4f0f-c14b9c7ed995"
+    },
+    {
+        "id": 277872,
+        "alternative_names": [
+            144308,
+            144309
+        ],
+        "category": 5,
+        "created_at": 1700766142,
+        "first_release_date": 1116028800,
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            5,
+            31,
+            33
+        ],
+        "name": "GTA Turk City",
+        "parent_game": 733,
+        "platforms": [
+            6
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "release_dates": [
+            538961
+        ],
+        "screenshots": [
+            1196383,
+            1196384,
+            1196385
+        ],
+        "slug": "gta-turk-city",
+        "status": 8,
+        "summary": "GTA Turk City (also known as GTA Türk) is a mod of GTA Vice City",
+        "themes": [
+            1,
+            33,
+            38
+        ],
+        "updated_at": 1700787702,
+        "url": "https://www.igdb.com/games/gta-turk-city",
+        "checksum": "26a31bc0-bd95-41b0-2c6b-e75e7a843508"
+    },
+    {
+        "id": 163114,
+        "alternative_names": [
+            70969,
+            70970,
+            70971,
+            89192
+        ],
+        "category": 5,
+        "cover": {
+            "id": 164861,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co3j7h.jpg"
+        },
+        "created_at": 1628381178,
+        "first_release_date": 1577750400,
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            5
+        ],
+        "involved_companies": [
+            144944
+        ],
+        "keywords": [
+            1643,
+            2004
+        ],
+        "name": "Grand Theft Auto: Brasil",
+        "parent_game": 732,
+        "platforms": [
+            6
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "release_dates": [
+            313351
+        ],
+        "screenshots": [
+            579709,
+            579710,
+            579711,
+            579712
+        ],
+        "similar_games": [
+            1877,
+            19164,
+            37419,
+            38030,
+            76263,
+            81249,
+            95340,
+            103292,
+            106805,
+            119177
+        ],
+        "slug": "grand-theft-auto-brasil",
+        "summary": "Grand Theft Auto: Brasil is a mod of Grand Theft Auto: San Andreas which changes everything in the game to match with the Brazilian theme. The city is changed to the city of Santos (which is located in the State of São Paulo).",
+        "tags": [
+            1,
+            38,
+            268435461,
+            536872555,
+            536872916
+        ],
+        "themes": [
+            1,
+            38
+        ],
+        "updated_at": 1713187434,
+        "url": "https://www.igdb.com/games/grand-theft-auto-brasil",
+        "videos": [
+            53256,
+            53257
+        ],
+        "websites": [
+            318142,
+            318143,
+            318144,
+            318145
+        ],
+        "checksum": "e441e65a-e4b8-653f-4f95-16e63fca1690"
+    },
+    {
+        "id": 733,
+        "age_ratings": [
+            31962,
+            31963,
+            47910,
+            47911,
+            47912,
+            47913,
+            47914
+        ],
+        "aggregated_rating": 94,
+        "aggregated_rating_count": 6,
+        "alternative_names": [
+            21962,
+            52701,
+            52702,
+            148467
+        ],
+        "artworks": [
+            35392
+        ],
+        "bundles": [
+            5850,
+            119155
+        ],
+        "category": 0,
+        "cover": {
+            "id": 120935,
+            "url": "//images.igdb.com/igdb/image/upload/t_thumb/co2lbb.jpg"
+        },
+        "created_at": 1317748970,
+        "external_games": [
+            14741,
+            17938,
+            96696,
+            141517,
+            189680,
+            246155
+        ],
+        "first_release_date": 1035676800,
+        "franchises": [
+            493
+        ],
+        "game_engines": [
+            41
+        ],
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            5,
+            10,
+            31,
+            33
+        ],
+        "hypes": 1,
+        "involved_companies": [
+            8285,
+            63950,
+            63951,
+            210802,
+            210803
+        ],
+        "keywords": [
+            57,
+            128,
+            129,
+            155,
+            221,
+            222,
+            284,
+            343,
+            558,
+            661,
+            735,
+            839,
+            889,
+            992,
+            1033,
+            1379,
+            1403,
+            1440,
+            1669,
+            1754,
+            1834,
+            1898,
+            2069,
+            2071,
+            2439,
+            2452,
+            3087,
+            3831,
+            4134,
+            4138,
+            4179,
+            4272,
+            4285,
+            4287,
+            4340,
+            4345,
+            4353,
+            4388,
+            4613,
+            4615,
+            4709,
+            4850,
+            4884,
+            4891,
+            4927,
+            4981,
+            4990,
+            5264,
+            5328,
+            5377,
+            5425,
+            5471,
+            5474,
+            5488,
+            5517,
+            5599,
+            5690,
+            6062,
+            6369,
+            7075,
+            7185,
+            7294,
+            7530,
+            8137,
+            8150,
+            8170,
+            8172,
+            8263,
+            8272,
+            8281,
+            8828,
+            9066,
+            9529,
+            9540,
+            9722,
+            9893,
+            11635,
+            11643,
+            11696,
+            12231,
+            16716,
+            23933
+        ],
+        "multiplayer_modes": [
+            25106
+        ],
+        "name": "Grand Theft Auto: Vice City",
+        "platforms": [
+            6,
+            8,
+            11,
+            14
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "rating": 87.63142656303883,
+        "rating_count": 2328,
+        "release_dates": [
+            2204,
+            3319,
+            124933,
+            147097,
+            468248
+        ],
+        "screenshots": [
+            8541,
+            23406,
+            23407,
+            23408,
+            23409
+        ],
+        "similar_games": [
+            40,
+            730,
+            731,
+            732,
+            980,
+            1020,
+            3262,
+            3263,
+            3270,
+            19441
+        ],
+        "slug": "grand-theft-auto-vice-city",
+        "storyline": "Welcome to Vice City. Welcome to the 1980s.\n\nHaving just made it back onto the streets of Liberty City after a long stretch in maximum security, Tommy Vercetti is sent to Vice City by his old boss, Sonny Forelli. They were understandably nervous about his re-appearance in Liberty City, so a trip down south seemed like a good idea. But all does not go smoothly upon his arrival in the glamorous, hedonistic metropolis of Vice City. He's set up and is left with no money and no merchandise. Sonny wants his money back, but the biker gangs, Cuban gangsters, and corrupt politicians stand in his way. Most of Vice City seems to want Tommy dead. His only answer is to fight back and take over the city himself.",
+        "summary": "In the year 1986, Tommy Vercetti is heavily indebted to his mafia superiors after a drug deal gone awry, but his dreams of taking over Vice City (based on Miami) push him down a different path. Featuring a wide variety of vehicles and weapons, radio stations playing hit songs from the era and an intense atmosphere, GTA: Vice City is an open-world sandbox satire of '80's Miami.",
+        "tags": [
+            1,
+            27,
+            33,
+            38,
+            268435461,
+            268435466,
+            268435487,
+            268435489,
+            536870969,
+            536871040,
+            536871041,
+            536871067,
+            536871133,
+            536871134,
+            536871196,
+            536871255,
+            536871470,
+            536871573,
+            536871647,
+            536871751,
+            536871801,
+            536871904,
+            536871945,
+            536872291,
+            536872315,
+            536872352,
+            536872581,
+            536872666,
+            536872746,
+            536872810,
+            536872981,
+            536872983,
+            536873351,
+            536873364,
+            536873999,
+            536874743,
+            536875046,
+            536875050,
+            536875091,
+            536875184,
+            536875197,
+            536875199,
+            536875252,
+            536875257,
+            536875265,
+            536875300,
+            536875525,
+            536875527,
+            536875621,
+            536875762,
+            536875796,
+            536875803,
+            536875839,
+            536875893,
+            536875902,
+            536876176,
+            536876240,
+            536876289,
+            536876337,
+            536876383,
+            536876386,
+            536876400,
+            536876429,
+            536876511,
+            536876602,
+            536876974,
+            536877281,
+            536877987,
+            536878097,
+            536878206,
+            536878442,
+            536879049,
+            536879062,
+            536879082,
+            536879084,
+            536879175,
+            536879184,
+            536879193,
+            536879740,
+            536879978,
+            536880441,
+            536880452,
+            536880634,
+            536880805,
+            536882547,
+            536882555,
+            536882608,
+            536883143,
+            536887628,
+            536894845
+        ],
+        "themes": [
+            1,
+            27,
+            33,
+            38
+        ],
+        "total_rating": 90.81571328151941,
+        "total_rating_count": 2334,
+        "updated_at": 1713444067,
+        "url": "https://www.igdb.com/games/grand-theft-auto-vice-city",
+        "videos": [
+            3544,
+            3546,
+            18992,
+            19717
+        ],
+        "websites": [
+            19244,
+            42934,
+            42943,
+            67035,
+            72600,
+            333388
+        ],
+        "checksum": "bfe215bc-0606-ae75-f742-674367ac4f58",
+        "remasters": [
+            178125
+        ],
+        "ports": [
+            215549,
+            215550
+        ],
+        "game_localizations": [
+            25824
+        ],
+        "collections": [
+            847
+        ]
+    }
+]

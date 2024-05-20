@@ -1,5 +1,6 @@
 import testServer from "../utils/testServer.js";
 import listRoutes from "../routes/ListRoutes.js";
+import { generateAuthToken } from "../utils/userUtils.js";
 
 const request = testServer(listRoutes);
 
@@ -28,7 +29,7 @@ describe("ListRoutes", () => {
       // Arrange
 
       // Act
-      const { status, body } = await request.get("/list/user/1").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/user").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(200);
       expect(body.length).toEqual(3);
@@ -39,9 +40,9 @@ describe("ListRoutes", () => {
 
     it("should NOT show lists of inexistent user", async () => {
       // Arrange
-
+      const inexistentUserToken = generateAuthToken(2)
       // Act
-      const { status, body } = await request.get("/list/user/2").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/user").set('Authorization', `Bearer ${inexistentUserToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("User not found");
@@ -49,16 +50,16 @@ describe("ListRoutes", () => {
 
     it("should NOT show lists with invalid format", async () => {
       // Arrange
-
+      const inexistentUserToken = generateAuthToken('uno')
       // Act
-      const { status, body } = await request.get("/list/user/uno").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/user").set('Authorization', `Bearer ${inexistentUserToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("User is required");
     });
     afterAll(async () => {
       await ListModel.destroy({ where: {} });
-      await UserModel.destroy({ where: { id: 1 } });
+      await UserModel.destroy({ where: {} });
     });
   });
 
@@ -167,20 +168,20 @@ describe("ListRoutes", () => {
       expect(body.list.name).toEqual('test')
       expect(body.list.description).toEqual("null")
     });
-    it("should NOT get information about a list with inexistent id", async () => {
+    it("should NOT get information about a list with inexistent name", async () => {
       // Arrage
 
       // Act
-      const { status, body } = await request.get("/list/5").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/6").set('Authorization', `Bearer ${authToken}`);;
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("List not found");
     });
     it("should NOT get information about a list with incorrect data type id", async () => {
       // Arrage
-
+      const inexistentUserToken = generateAuthToken('uno')
       // Act
-      const { status, body } = await request.get("/list/uno").set('Authorization', `Bearer ${authToken}`);;
+      const { status, body } = await request.get("/list/test").set('Authorization', `Bearer ${inexistentUserToken}`);;
       // Assert
       expect(status).toEqual(400);
       expect(body.message).toEqual("Id is required");
@@ -205,8 +206,7 @@ describe("ListRoutes", () => {
       // Arrage
       const list = {
         name: "test",
-        description: "test description",
-        user_id: 1,
+        description: "test description"
       };
       // Act
       const { status, body } = await request.post("/list").send(list).set('Authorization', `Bearer ${authToken}`);;
@@ -219,7 +219,7 @@ describe("ListRoutes", () => {
 
     it("should create a new list with no description", async () => {
       // Arrage
-      const noDescriptionList = { name: "test", user_id: 1 };
+      const noDescriptionList = { name: "test" };
       // Act
       const { status, body } = await request
         .post("/list")
@@ -234,7 +234,7 @@ describe("ListRoutes", () => {
 
     it("should NOT create a new list with no name", async () => {
       // Arrage
-      const incompleteList = { description: "test description", user_id: 1 };
+      const incompleteList = { description: "test description" };
       // Act
       const { status, body } = await request.post("/list").send(incompleteList).set('Authorization', `Bearer ${authToken}`);;
       // Assert
@@ -246,8 +246,7 @@ describe("ListRoutes", () => {
       // Arrage
       const dataInvalidList = {
         name: 1,
-        description: "test description",
-        user_id: 1,
+        description: "test description"
       };
       // Act
       const { status, body } = await request
@@ -259,35 +258,35 @@ describe("ListRoutes", () => {
       expect(body.message).toEqual("Invalid data type");
     });
 
-    it("should NOT create a new list with invalid id data type", async () => {
+    it("should NOT create a new list with invalid id data type id", async () => {
       // Arrage
+      const inexistentUserToken = generateAuthToken('uno')
       const dataInvalidList = {
         name: "test",
-        description: "test description",
-        user_id: "1",
+        description: "test description"
       };
       // Act
       const { status, body } = await request
         .post("/list")
         .send(dataInvalidList)
-        .set('Authorization', `Bearer ${authToken}`);
+        .set('Authorization', `Bearer ${inexistentUserToken}`);
       // Assert
       expect(status).toEqual(400);
-      expect(body.message).toEqual("Invalid data type");
+      expect(body.message).toEqual("Name and user_id are required");
     });
 
     it("should NOT create a new list with inexistent user", async () => {
       // Arrage
+      const inexistentUserToken = generateAuthToken(2)
       const invalidUserList = {
         name: "test",
-        description: "test description",
-        user_id: 2,
+        description: "test description"
       };
       // Act
       const { status, body } = await request
         .post("/list")
         .send(invalidUserList)
-        .set('Authorization', `Bearer ${authToken}`);
+        .set('Authorization', `Bearer ${inexistentUserToken}`);
       // Assert
       expect(status).toEqual(404);
       expect(body.message).toEqual("The user does not exist");
@@ -296,4 +295,8 @@ describe("ListRoutes", () => {
       await ListModel.destroy({ where: {} });
     });
   });
+  afterAll(async () => {
+    await UserModel.destroy({ where: {} });
+    await GameModel.destroy({ where: {} });
+  })
 });

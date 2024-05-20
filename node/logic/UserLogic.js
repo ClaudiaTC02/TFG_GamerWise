@@ -45,7 +45,12 @@ export const createUserLogic = async (email, name, password) => {
     }
 
     const hashedPassword = await hashPassword(password);
-    await UserModel.create({ email, name, password: hashedPassword });
+    const user = await UserModel.create({ email, name, password: hashedPassword });
+    await ListModel.create({name: "Playing", user_id: user.id, description: "Games currently Playing"});
+    await ListModel.create({name: "Completed", user_id: user.id, description: "Games Completed"});
+    await ListModel.create({name: "Like", user_id: user.id, description: "Games that I Liked"});
+    await ListModel.create({name: "Dropped", user_id: user.id, description: "Games dropped"});
+
     return { success: true };
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
@@ -98,7 +103,25 @@ export const getBasicInfoLogic = async (id) => {
       throw new Error("User not found");
     }
 
-    return { success: true, info: { name: user.name } };
+    return { success: true, info: { name: user.name, steam: user.steam_token, email: user.email } };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// Get buser by steam_token
+export const getUserBySteamToken = async (steam_token) => {
+  try {
+    if (!steam_token) {
+      throw new Error("Required steam_token");
+    }
+    const user = await UserModel.findOne({
+      where: {steam_token: steam_token}
+    })
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return { success: true, user };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -132,6 +155,9 @@ export const updateUserLogic = async (id, userData) => {
           "Invalid password format, It must contain uppercase, lowercase, symbol and >= 8 length"
         );
       }
+      if (!(await bcrypt.compare(userData.password_before, user.password))) {
+        throw new Error("Passwords doen not match");
+      }
       const hashedPassword = await hashPassword(userData.password);
       userData.password = hashedPassword;
     }
@@ -163,6 +189,28 @@ export const deleteUserLogic = async (id) => {
 
     await user.destroy();
     return {success: true,};
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// delete steam_token of a user
+export const deleteSteamLogic = async (id) => {
+  try {
+    id = Number(id);
+    if (!id) {
+      throw new Error("Required id in number format");
+    }
+
+    const user = await UserModel.findByPk(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // delete relations
+    user.steam_token = null
+    await user.save();
+    return {success: true};
   } catch (error) {
     return { success: false, error: error.message };
   }
