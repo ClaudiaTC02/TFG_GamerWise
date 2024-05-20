@@ -1,0 +1,100 @@
+footer {
+  margin-top: 2rem;
+  background-color: rgb(245, 245, 245);
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-landing-container {
+  margin: 0 auto;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-landing-relog {
+  margin: 0;
+  font-weight: bold;
+  text-align: start;
+}
+.footer-landing-slog {
+  margin: 0;
+  text-align: start;
+}
+.footer-register {
+  padding: 0.5rem;
+  width: 140px;
+  margin-right: 0.5rem;
+}
+.footer-login {
+  padding: 0.5rem;
+  width: 140px;
+  background-color: white;
+  color: black;
+  border: 2px solid #ff3d00;
+}
+.footer-line {
+  margin: 1rem auto;
+  height: 1px;
+  border: 1px solid #ef4f23;
+  opacity: 1;
+  width: 90%;
+}
+.logo-footer {
+  width: 4rem;
+  margin-bottom: 1.3rem;
+}
+.footer-options-container {
+  margin: 0 auto;
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-option {
+  font-size: 1rem;
+}
+.footer-end {
+  margin-top: 1rem;
+  color: #333333;
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: 550px) {
+  footer {
+    padding: 10px;
+  }
+  .footer-landing-container {
+    width: 95%;
+  }
+  .footer-landing-relog,
+  .footer-landing-slog {
+    font-size: 0.7em;
+  }
+  .footer-landing-buttons {
+    display: flex;
+  }
+  .footer-register,
+  .footer-login {
+    width: 77px;
+    padding: 0.3rem;
+    font-size: 0.7rem;
+    margin-bottom: 0.3rem;
+  }
+  .footer-options-container {
+    width: 70%;
+  }
+  .footer-line {
+    width: 99%;
+  }
+  .footer-option {
+    font-size: 0.7rem;
+  }
+  .footer-end {
+    font-size: 0.6rem;
+  }
+}

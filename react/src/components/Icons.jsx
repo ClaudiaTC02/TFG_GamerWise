@@ -11,6 +11,7 @@ import android from"../assets/android.png";
 import ios from"../assets/apple.png";
 import vr from"../assets/vr.png";
 import pixels from "../assets/pixels.png"
+import landingPhoto from "../assets/LandingPhoto.png"
 
 export function logoIcon() {
     return logo
@@ -102,4 +103,8 @@ export function backArrowIcon(){
 
 export function deleteIcon(){
     return <i className="bi bi-trash"></i>
+}
+
+export function landingPhotoIcon(){
+    return landingPhoto
 }

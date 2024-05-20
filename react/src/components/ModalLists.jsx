@@ -177,7 +177,7 @@ export function ModalCreateList({ show, handleClose, token, addList }) {
       reset();
       setIcorrectChange(null);
       setCorrectChange(null);
-      setValue("list_name", "");
+      setValue("list_name_create", "");
       setValue("list_description", "");
     }
   }, [show, reset, setValue]);

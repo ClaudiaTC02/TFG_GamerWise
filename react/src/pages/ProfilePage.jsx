@@ -8,6 +8,7 @@ import { getBasicInfoRequest } from "../api/user";
 import { getCountOfGamesProfileLogic } from "../logic/listLogic";
 import { RatingProfile } from "../components/RatingProfile";
 import { SettingsProfile } from "../components/SettingsProfile";
+import { Footer } from "../components/Footer";
 
 export function ProfilePage() {
   const { token } = useAuth();
@@ -37,10 +38,10 @@ export function ProfilePage() {
         setActiveComponent("lists");
       }
     };
-  
+
     window.addEventListener("hashchange", handleHashChange);
     handleHashChange();
-  
+
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
     };
@@ -120,6 +121,7 @@ export function ProfilePage() {
       {activeComponent === "options" && (
         <SettingsProfile updateUser={updateUser} user={user} updateUserSteam={updateUserSteam}/>
       )}
+      <Footer />
     </>
   );
 }

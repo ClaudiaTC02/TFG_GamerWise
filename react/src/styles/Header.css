@@ -9,9 +9,12 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background-color: #e7e7e7;
+  background-color: #EAEAEA;
   position: relative;
   z-index: 2;
+}
+.landing-header{
+  background-color: white;
 }
 .options-container {
   display: flex;

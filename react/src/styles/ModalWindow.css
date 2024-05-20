@@ -23,6 +23,8 @@ body.modal-open{
 }
 .modal-newList{
     margin: 0;
+    text-decoration: none;
+    color: black;
 }
 .no-list-found-modular, .selected-list-modular{
     margin: 0.5rem;

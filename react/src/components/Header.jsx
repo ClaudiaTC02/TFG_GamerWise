@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import LanguageSelector from "./LanguageSelector";
 import { useAuth } from "../hooks/useAuth";
 
-export function Header({ isLanding, isLogged }) {
+export function Header({ isLanding, isLogged, headerClass }) {
   const navigate = useNavigate();
   const handleLogo = () => {
     if (isLanding) {
@@ -17,7 +17,7 @@ export function Header({ isLanding, isLogged }) {
     }
   };
   return (
-    <header>
+    <header className={headerClass}>
       <a href="/" onClick={handleLogo}>
         <img className="logo" src={logoIcon()} alt="logo gamerwise buho" />
       </a>
@@ -42,6 +42,10 @@ const LandingHeader = () => {
   const handleSignIn = () => {
     navigate("/login");
   };
+  const scrollToSection = (id) => {
+    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    setNavClassName("nav"); 
+  };
   return (
     <div className="options-container">
       <button className="register-button" onClick={handleSignIn}>
@@ -56,10 +60,13 @@ const LandingHeader = () => {
         </button>
         <ul className="nav-list">
           <li>
-            <a>{t("home")}</a>
+            <a href="#home" onClick={() => scrollToSection("home")}>{t("home")}</a>
           </li>
           <li>
-            <a>{t("posibilities")}</a>
+            <a href="#posibilities" onClick={() => scrollToSection("posibilities")}>{t("posibilities")}</a>
+          </li>
+          <li>
+            <a href="#latest" onClick={() => scrollToSection("latest")}>{t("latest")}</a>
           </li>
           <li>
             <a>

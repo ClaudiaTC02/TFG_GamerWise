@@ -51,3 +51,7 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+html {
+  scroll-behavior: smooth;
+}
