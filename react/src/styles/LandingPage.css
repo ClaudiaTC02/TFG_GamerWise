@@ -95,3 +95,91 @@
     grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
     gap: 5px;
 }
+
+@media (min-width: 1025px) {
+    .landing-title-container{
+        width: 50%;
+        right: 80px;
+    }
+    .landing-title{
+        margin-top: 4rem;
+        font-size:3rem;
+        text-align: center;
+    }
+    .landing-image-options-container{
+        margin: 0 auto;
+        margin-top: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 490px;
+        width: 85%;
+    }
+    .landing-image-container{
+        text-align: center;
+        top: -80px;
+        position: relative;
+    }
+    .landing-photo{
+        width: 35rem;
+    }
+    .landing-option-super-container{
+        width: 40%;
+        justify-content: space-around;
+    }
+    .landing-option-container{
+        width: 250px;
+        margin-top: 3.5rem;
+    }
+    .landing-joinus{
+        margin: 0 auto;
+        width: 200px;
+    }
+    .landing-posibilities-section{
+        width: 80%;
+        margin: 0 auto;
+    }
+    .landing-posibilities-paragraph, .landing-paragraph-option{
+        font-size: 1em;
+    }
+    .landing-posibilities-title, .landing-latest-title{
+        font-size: 2rem;
+        text-align: center;
+    }
+    .landing-posiibilities-container{
+        width: 70%;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+    }
+    .landing-latest-paragraph{
+        font-size: 1rem;
+        text-align: center;
+    }
+    .landing-games{
+        text-align: center;
+        display:grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .landing-title{
+        margin-top: 7rem;
+    }
+    .landing-image-options-container{
+        height: 650px;
+    }
+    .landing-games{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .landing-joinus{
+        margin: 0 auto;
+        font-size: 1.2rem;
+    }
+    .landing-goDown{
+        margin: 2rem auto;
+    }
+}

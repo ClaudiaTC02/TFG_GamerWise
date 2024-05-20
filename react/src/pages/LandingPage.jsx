@@ -25,7 +25,7 @@ export default function LandingPage() {
   }, []);
   return (
     <>
-      <Header isLanding={true} headerClass={"landing-header"}/>
+      <Header isLanding={true} headerClass={"landing-header"} />
       <section>
         <div className="landing-title-container">
           <h1 className="landing-title">
@@ -33,25 +33,27 @@ export default function LandingPage() {
             <span className="highlited-text">PERFECTO</span>
           </h1>
         </div>
-        <div className="landing-image-container">
-          <img
-            className="landing-photo"
-            src={landingPhotoIcon()}
-            alt="chica gamer"
-          ></img>
-        </div>
-        <div className="landing-option-super-container">
-          <div className="landing-option-container">
-            <h3 className="landing-title-option">Organiza</h3>
-            <p className="landing-paragraph-option">
-              Añade juegos a listas únicas y puntúalos
-            </p>
+        <div className="landing-image-options-container">
+          <div className="landing-image-container">
+            <img
+              className="landing-photo"
+              src={landingPhotoIcon()}
+              alt="chica gamer"
+            ></img>
           </div>
-          <div className="landing-option-container">
-            <h3 className="landing-title-option">Descubre</h3>
-            <p className="landing-paragraph-option">
-              Recibe recomendaciones personalizadas
-            </p>
+          <div className="landing-option-super-container">
+            <div className="landing-option-container">
+              <h3 className="landing-title-option">Organiza</h3>
+              <p className="landing-paragraph-option">
+                Añade juegos a listas únicas y puntúalos
+              </p>
+            </div>
+            <div className="landing-option-container">
+              <h3 className="landing-title-option">Descubre</h3>
+              <p className="landing-paragraph-option">
+                Recibe recomendaciones personalizadas
+              </p>
+            </div>
           </div>
         </div>
         <div className="landing-end-container">
