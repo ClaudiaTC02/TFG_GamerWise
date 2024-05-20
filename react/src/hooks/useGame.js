@@ -30,5 +30,5 @@ export function useGames({ query, sort, category }) {
     }
   }, []);
 
-  return { games, getGames, loading };
+  return { games, getGames, loading, setGames };
 }

@@ -10,7 +10,7 @@ import {
 } from "../logic/listLogic";
 import { ModalCreateList } from "./ModalLists";
 
-export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }) {
+export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails, onAddToLikeList  }) {
   const [lists, setLists] = useState([]);
   const [showList, setShowList] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -42,6 +42,10 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails }
   const handleAddToList = async () => {
     try {
       for (const listId of selectedItems) {
+        const list = lists.find((list) => list.id === listId);
+        if (list.name === "Like") {
+          onAddToLikeList();
+        }
         await addGameToListLogic(listId, gameDetails, igdb_id, token);
         console.log(`Juego añadido a la lista con ID ${listId}`);
       }

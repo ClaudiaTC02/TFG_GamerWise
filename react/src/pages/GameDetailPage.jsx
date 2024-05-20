@@ -163,6 +163,7 @@ export default function GameDetailPage() {
               gameName={gameDetails.name}
               igdb_id={id}
               gameDetails={gameDetails}
+              onAddToLikeList={() => setIsFavorite(true)}
             />
           </div>
           <div className="detail-container-left">

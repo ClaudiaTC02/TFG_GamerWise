@@ -5,13 +5,13 @@ import { defaultCoverIcon } from "./Icons";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-export function GameSearch({ games }) {
+export function GameSearch({ games, onGameClick  }) {
   const hasGames = games?.length > 0;
 
-  return hasGames ? <ListOfGames games={games} /> : <NoGameResults />;
+  return hasGames ? <ListOfGames games={games} onGameClick={onGameClick} /> : <NoGameResults />;
 }
 
-function ListOfGames({ games }) {
+function ListOfGames({ games, onGameClick  }) {
   return (
     <ul className="games-search">
       {games.map((games) => {
@@ -22,6 +22,7 @@ function ListOfGames({ games }) {
               to={`/game/${games.id}`}
               className="game-link"
               style={{ textDecoration: "none", color: "inherit" }}
+              onClick={onGameClick}
             >
               <div className="game-container">
                 <div className="info-game-container">

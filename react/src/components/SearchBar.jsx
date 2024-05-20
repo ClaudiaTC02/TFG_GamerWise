@@ -14,7 +14,7 @@ export function SearchBar() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const { query, setQuery, error, setSortSearch } = useSearch();
-  const { games, getGames, loading } = useGames({ query, sort });
+  const { games, getGames, loading, setGames  } = useGames({ query, sort });
 
   const debounceGetGames = useCallback(
     debounce((query, category, platform) => {
@@ -51,6 +51,10 @@ export function SearchBar() {
     console.log(event.target.value);
   };
 
+  const clearGames = () => {
+    setGames([]);
+    setQuery("")
+  };
   return (
     <>
       <form className="form-search" onSubmit={handleSubmit}>
@@ -139,7 +143,7 @@ export function SearchBar() {
       {loading && !error && <Loading/>}
       {!loading && !error && (
         <main className="super-search-container">
-          <GameSearch games={games} />
+          <GameSearch games={games} onGameClick={clearGames} />
         </main>
       )}
     </>

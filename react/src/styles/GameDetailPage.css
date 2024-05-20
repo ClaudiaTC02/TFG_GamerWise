@@ -93,10 +93,10 @@ i {
     margin-left: 3rem;
   }
   .detail-container-info {
-    justify-content: space-between;
+    justify-content: start;
   }
   .details-heart {
-    margin-right: 3rem;
+    margin-left: 3rem;
   }
   .detail-container-description-web {
     display: block;
