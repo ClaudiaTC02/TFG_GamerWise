@@ -141,9 +141,9 @@ async function createUserLogic(profile) {
         user_id: user.id,
         description: "Games dropped",
       });
+      await obtainGamesLogic(profile.id);
     }
     const token = generateAuthToken(user.id);
-    await obtainGamesLogic(profile.id);
     return { success: true, user, token };
   } catch (error) {
     console.log(error.message);
