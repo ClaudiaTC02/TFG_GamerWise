@@ -63,11 +63,11 @@ print("RMSE: ", rmse)
 # print("Resultados de validación cruzada: ", results)
 
 # Paso 5: Guardar el modelo entrenado
-#with open('svd_model.pkl', 'wb') as f:
-#    pickle.dump(modelo, f)
+with open('svd_model.pkl', 'wb') as f:
+    pickle.dump(modelo, f)
 
-
-user_id = 5  # Usuario para el que se desea obtener recomendaciones
+# BASADO EN FILTRADO COLABORATIVO
+"""user_id = 5  # Usuario para el que se desea obtener recomendaciones
 user_predictions = [pred for pred in predictions if pred.uid == user_id]
 user_predictions.sort(key=lambda x: x.est, reverse=True)
 top_n = 5  # Número de recomendaciones
@@ -78,4 +78,39 @@ print(f"Recomendaciones para el usuario {user_id}:")
 
 for pred in top_user_predictions:
     game_title = df.loc[df['gameId'] == pred.iid, 'gameName'].iloc[0]
-    print(f"Título: {game_title}, Calificación estimada: {pred.est}")
+    print(f"Título: {game_title}, Calificación estimada: {pred.est}")"""
+
+
+# USANDO IGDB
+# Función para obtener datos de IGDB
+"""def obtener_datos_igdb():
+    response = requests.get('http://localhost:8000/igdb/games')
+    data = response.json()
+    return data
+
+# Función para procesar los datos de IGDB
+def procesar_datos_igdb(data):
+    df_igdb = pd.DataFrame(data)
+    df_igdb.rename(columns={'id': 'gameId', 'name': 'gameName'}, inplace=True)
+    return df_igdb
+
+# Cargar datos de IGDB
+data_igdb = obtener_datos_igdb()
+df_igdb = procesar_datos_igdb(data_igdb)
+
+# Obtener predicciones para los juegos de IGDB
+def obtener_recomendaciones(modelo, df_igdb, user_id):
+    predicciones = []
+    for gameId in df_igdb['gameId'].unique():
+        pred = modelo.predict(user_id, gameId)
+        predicciones.append(pred)
+    predicciones.sort(key=lambda x: x.est, reverse=True)
+    return predicciones[:10]
+
+# Obtener y mostrar recomendaciones
+recomendaciones = obtener_recomendaciones(modelo, df_igdb, user_id)
+
+print(f"Recomendaciones para el usuario {user_id}:")
+for pred in recomendaciones:
+    game_name = df_igdb.loc[df_igdb['gameId'] == pred.iid, 'gameName'].iloc[0]
+    print(f"Título: {game_name}, Calificación estimada: {pred.est}")"""

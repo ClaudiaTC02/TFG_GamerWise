@@ -18,8 +18,9 @@ const getGamesLogic = async () => {
   try {
     const response = await apicalypse(requestOptions)
       .fields("name")
-      .limit(10)
-      .request("/games");
+      .limit(500)
+      .sort("date", "desc")
+      .request("/games")
     return { success: true, data: response.data };
   } catch (error) {
     return { success: false, error: error.message };
