@@ -14,9 +14,14 @@ export function GameCarousel({ game }) {
     Switch: "Nintendo",
     Linux: "PC",
     Mac: "PC",
+    Stadia: "PC",
     "Meta Quest 2": "VR",
     PSVR2: "VR",
-    PS1: 'PlayStation'
+    PSVR: "VR",
+    PS1: 'PlayStation',
+    "Steam VR": "VR",
+    "Win Phone": "Android",
+    "Oculus VR": "VR"
   };
   const uniquePlatforms = new Set();
 
