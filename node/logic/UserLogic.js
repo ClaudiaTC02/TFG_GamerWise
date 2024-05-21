@@ -1,7 +1,7 @@
 import UserModel from "../models/UserModel.js";
-import ListModel from '../models/ListModel.js';
-import PreferencesModel from '../models/PreferencesModel.js';
-import ListGameModel from '../models/ListGameModel.js';
+import ListModel from "../models/ListModel.js";
+import PreferencesModel from "../models/PreferencesModel.js";
+import ListGameModel from "../models/ListGameModel.js";
 import bcrypt from "bcrypt";
 import {
   validateRequiredFields,
@@ -12,6 +12,7 @@ import {
   generateAuthToken,
   validateDataTypesUpdate,
 } from "../utils/userUtils.js";
+import GameModel from "../models/GameModel.js";
 
 //----------------------------------------------------------------------
 // CRUD Methods
@@ -45,11 +46,31 @@ export const createUserLogic = async (email, name, password) => {
     }
 
     const hashedPassword = await hashPassword(password);
-    const user = await UserModel.create({ email, name, password: hashedPassword });
-    await ListModel.create({name: "Playing", user_id: user.id, description: "Games currently Playing"});
-    await ListModel.create({name: "Completed", user_id: user.id, description: "Games Completed"});
-    await ListModel.create({name: "Like", user_id: user.id, description: "Games that I Liked"});
-    await ListModel.create({name: "Dropped", user_id: user.id, description: "Games dropped"});
+    const user = await UserModel.create({
+      email,
+      name,
+      password: hashedPassword,
+    });
+    await ListModel.create({
+      name: "Playing",
+      user_id: user.id,
+      description: "Games currently Playing",
+    });
+    await ListModel.create({
+      name: "Completed",
+      user_id: user.id,
+      description: "Games Completed",
+    });
+    await ListModel.create({
+      name: "Like",
+      user_id: user.id,
+      description: "Games that I Liked",
+    });
+    await ListModel.create({
+      name: "Dropped",
+      user_id: user.id,
+      description: "Games dropped",
+    });
 
     return { success: true };
   } catch (error) {
@@ -103,7 +124,10 @@ export const getBasicInfoLogic = async (id) => {
       throw new Error("User not found");
     }
 
-    return { success: true, info: { name: user.name, steam: user.steam_token, email: user.email } };
+    return {
+      success: true,
+      info: { name: user.name, steam: user.steam_token, email: user.email },
+    };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -116,8 +140,8 @@ export const getUserBySteamToken = async (steam_token) => {
       throw new Error("Required steam_token");
     }
     const user = await UserModel.findOne({
-      where: {steam_token: steam_token}
-    })
+      where: { steam_token: steam_token },
+    });
     if (!user) {
       throw new Error("User not found");
     }
@@ -188,7 +212,7 @@ export const deleteUserLogic = async (id) => {
     await PreferencesModel.destroy({ where: { user_id: id } });
 
     await user.destroy();
-    return {success: true,};
+    return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -208,9 +232,90 @@ export const deleteSteamLogic = async (id) => {
     }
 
     // delete relations
-    user.steam_token = null
+    user.steam_token = null;
     await user.save();
-    return {success: true};
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// get users, games and ratings
+export const getUsersGamesAndRatingsLogic = async () => {
+  try {
+    const info = await PreferencesModel.findAll({
+      include: [
+        {
+          model: UserModel,
+          attributes: ["id", "name"],
+        },
+        {
+          model: GameModel,
+          attributes: ["igdb_id", "name", "gender", "platforms", "company"],
+        },
+      ],
+    });
+    const info_mapped = info.map((inf) => ({
+      user: {
+        id: inf.user.id,
+        name: inf.user.name,
+      },
+      game: {
+        igdb_id: inf.game.igdb_id,
+        name: inf.game.name,
+        genres: inf.game.gender,        
+        platforms: inf.game.platforms,
+        company: inf.game.company
+      },
+      rating: inf.rating,
+    }));
+    const games = await GameModel.findAll({
+      attributes: ["igdb_id", "name", "gender", "platforms", "company"],
+      include: [
+        {
+          model: ListModel,
+          where: {
+            name: ["Like", "Completed", "Playing"],
+          },
+          through: { model: ListGameModel },
+          include: [
+            {
+              model: UserModel,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
+      ],
+    });
+    const games_mapped = games.flatMap((game) => {
+      return game.lists.flatMap((list) => {
+        if (list.user) {
+          return {
+            user: {
+              id: list.user.id,
+              name: list.user.name,
+            },
+            game: {
+              id: game.igdb_id,
+              name: game.name,
+              genres: game.gender,        
+              platforms: game.platforms,
+              company: game.company
+            },
+            rating: null,
+          };
+        }
+      });
+    });
+    const combined_info = [...info_mapped, ...games_mapped].filter(
+      (item) => item.user && item.game
+    );
+    combined_info.forEach((item) => {
+      if (item.rating === null) {
+        item.rating = 3;
+      }
+    });
+    return { success: true, info: combined_info };
   } catch (error) {
     return { success: false, error: error.message };
   }

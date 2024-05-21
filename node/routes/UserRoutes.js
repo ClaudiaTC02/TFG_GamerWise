@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, login, getBasicInfo, updateUser, deleteUser, deleteSteam } from "../controllers/UserController.js"
+import { createUser, login, getBasicInfo, updateUser, deleteUser, deleteSteam, getUsersGamesAndRatings } from "../controllers/UserController.js"
 import { verifyToken } from '../utils/auth.js'
 const router = express.Router();
 
@@ -9,5 +9,6 @@ router.get('/', verifyToken,getBasicInfo)
 router.put('/', verifyToken, updateUser)
 router.delete('/', verifyToken, deleteUser)
 router.put('/steam', verifyToken, deleteSteam)
+router.get('/all', getUsersGamesAndRatings)
 
 export default (app) => {app.use("/user", router)}
