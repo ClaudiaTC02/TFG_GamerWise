@@ -251,7 +251,7 @@ export const getUsersGamesAndRatingsLogic = async () => {
         },
         {
           model: GameModel,
-          attributes: ["igdb_id", "name"],
+          attributes: ["igdb_id", "name", "gender", "platforms", "company"],
         },
       ],
     });
@@ -263,11 +263,14 @@ export const getUsersGamesAndRatingsLogic = async () => {
       game: {
         igdb_id: inf.game.igdb_id,
         name: inf.game.name,
+        genres: inf.game.gender,        
+        platforms: inf.game.platforms,
+        company: inf.game.company
       },
       rating: inf.rating,
     }));
     const games = await GameModel.findAll({
-      attributes: ["igdb_id", "name"],
+      attributes: ["igdb_id", "name", "gender", "platforms", "company"],
       include: [
         {
           model: ListModel,
@@ -295,6 +298,9 @@ export const getUsersGamesAndRatingsLogic = async () => {
             game: {
               id: game.igdb_id,
               name: game.name,
+              genres: game.gender,        
+              platforms: game.platforms,
+              company: game.company
             },
             rating: null,
           };
