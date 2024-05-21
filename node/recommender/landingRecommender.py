@@ -3,8 +3,9 @@ import pickle
 import requests
 import pandas as pd
 from surprise import Dataset, Reader
+import json
 
-def recomendar_juegos(user_id, model_path='svd_model.pkl', backend_url='http://localhost:8000/recommendations'):
+def recomendar_juegos(user_id, model_path='svd_model.pkl'):
     # Cargar el modelo entrenado
     with open(model_path, 'rb') as f:
         modelo = pickle.load(f)
@@ -52,9 +53,11 @@ def recomendar_juegos(user_id, model_path='svd_model.pkl', backend_url='http://l
     return recomendaciones
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
         print("Uso: python landingRecommender.py <user_id>")
         sys.exit(1)
     
     user_id = int(sys.argv[1])
-    recomendaciones = recomendar_juegos(user_id)
+    model_path = sys.argv[2]
+    recomendaciones = recomendar_juegos(user_id, model_path)
+    print(json.dumps(recomendaciones))
