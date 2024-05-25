@@ -1,5 +1,4 @@
 import { getGameRequest } from "../api/game.js";
-import { getGameDetailsRequest } from "../api/igdb.js";
 import {
   getAllListOfUserRequest,
   countGamesInListRequest,
@@ -113,13 +112,12 @@ export const getGamesOfListWithRatingLogic = async (list_id, token) => {
     const games_rating = [];
     for (const key in games) {
       if (Object.hasOwnProperty.call(games, key) && games[key]) {
-        const details = await getGameDetailsRequest(games[key].igdb_id);
         const g_r = {
           name: games[key].name,
           rating: games[key].preferences[0].rating ? games[key].preferences[0].rating : null,
           id: games[key].id,
           igdb_id: games[key].igdb_id,
-          cover: details[0].cover && details[0].cover.url ? details[0].cover.url : null,
+          cover: games[key].cover ? games[key].cover : null,
         };
         games_rating.push(g_r);
       }
