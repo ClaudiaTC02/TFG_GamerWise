@@ -7,11 +7,14 @@ import { Link } from "react-router-dom";
 export function GameCarousel({ game }) {
   const platformMap = {
     PS4: "PlayStation",
+    PS3: "PlayStation",
     PS5: "PlayStation",
     XONE: "Xbox",
     XBOX: 'Xbox',
+    X360: "Xbox",
     "Series X": "Xbox",
     Switch: "Nintendo",
+    "3DS": "Nintendo",
     Linux: "PC",
     Mac: "PC",
     Stadia: "PC",
