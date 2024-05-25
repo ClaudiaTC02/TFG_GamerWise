@@ -171,10 +171,10 @@ export default function GameDetailPage() {
               <div className="detail-container-title">
                 <h1 className="detail-title">{gameDetails.name}</h1>
                 <h3 className="detail-subtitle">
-                  {gameDetails.involved_companies &&
-                    gameDetails.involved_companies
-                      .map((company) => company.company.name)
-                      .join(", ")}
+                  {gameDetails.involved_companies
+                    .map((company) => company.company.name)
+                    .filter((name) => name)
+                    .join(", ")}
                 </h3>
               </div>
               <div className="details-heart">
