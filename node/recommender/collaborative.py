@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 from surprise import Dataset, Reader, SVD
 from surprise.model_selection import train_test_split, cross_validate, GridSearchCV
+from sklearn.preprocessing import LabelEncoder, MultiLabelBinarizer
 from surprise import accuracy
 import pickle
 
@@ -19,9 +20,17 @@ df['gameName'] = df['game.name']
 df['rating'] = df['rating']
 df['genres'] = df['game.genres']
 df['platforms'] = df['game.platforms']
+df = df[['userId', 'gameId', 'rating', 'genres', 'platforms']]
+user_encoder = LabelEncoder()
+game_encoder = LabelEncoder()
+mlb = MultiLabelBinarizer()
+df = df.join(pd.DataFrame(mlb.fit_transform(df.pop('genres').str.split(',')), columns = mlb.classes_, index = df.index ))
 
+df['userId'] = user_encoder.fit_transform(df['userId'])
+df['gameId'] = game_encoder.fit_transform(df['gameId'])
+
+print(df.head())
 # Filtrar y seleccionar columnas necesarias
-df = df[['userId', 'gameId', 'gameName', 'rating', 'genres', 'platforms']]
 
 # num_valores = df.shape[0]
 # print("El DataFrame tiene", num_valores, "valores.")
@@ -29,8 +38,9 @@ df = df[['userId', 'gameId', 'gameName', 'rating', 'genres', 'platforms']]
 # Paso 3: Preparar los datos para Surprise
 reader = Reader(rating_scale=(1, 5))  # Ajusta el rango de ratings según tus datos
 data = Dataset.load_from_df(df[['userId', 'gameId', 'rating']], reader)
-
 trainset, testset = train_test_split(data, test_size=0.2)
+trainset = data.build_full_trainset()
+
 
 # Definir el espacio de búsqueda de hiperparámetros
 param_grid = {
@@ -53,8 +63,7 @@ modelo = SVD(n_factors=best_params['n_factors'], lr_all=best_params['lr_all'], r
 modelo.fit(trainset)
 
 # Evaluar el modelo
-items_a_predecir = trainset.build_anti_testset()
-predictions = modelo.test(items_a_predecir )
+predictions = modelo.test(trainset.build_anti_testset())
 rmse = accuracy.rmse(predictions)
 print("RMSE: ", rmse)
 

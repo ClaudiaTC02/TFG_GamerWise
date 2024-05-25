@@ -296,7 +296,7 @@ export const getUsersGamesAndRatingsLogic = async () => {
               name: list.user.name,
             },
             game: {
-              id: game.igdb_id,
+              igdb_id: game.igdb_id,
               name: game.name,
               genres: game.gender,        
               platforms: game.platforms,
