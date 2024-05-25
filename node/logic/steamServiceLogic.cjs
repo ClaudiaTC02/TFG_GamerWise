@@ -192,8 +192,9 @@ async function obtainGamesLogic(steamId) {
           const [gameName, releaseDate] = await obtainGamesDetailsLogic(
             juego.appid
           );
-          if (gameName && releaseDate) {
-            const id = await searchGameByNameLogic(gameName, releaseDate);
+          console.log(gameName)
+          if (gameName) {
+            const id = await searchGameByNameLogic(gameName);
             const details = id.data;
             if (details) {
               await postInfoInDataBase(steamId, details);

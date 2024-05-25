@@ -20,7 +20,7 @@ const getGamesLogic = async () => {
       .fields("name")
       .limit(500)
       .sort("date", "desc")
-      .request("/games")
+      .request("/games");
     return { success: true, data: response.data };
   } catch (error) {
     return { success: false, error: error.message };
@@ -70,24 +70,40 @@ const getUpcomingReleasesLogic = async () => {
 };
 
 // Search a specific game
-const searchGameByNameLogic = async (name, dateString) => {
-  const date = new Date(dateString);
+const searchGameByNameLogic = async (name) => {
+  const normalizeName = (str) => str.toLowerCase().replace(/-/g, ' ').replace(/[^a-z0-9\s']/g, '').replace(/\s+/g, ' ').trim();
+  const normalizedSearchName = normalizeName(name);
+  console.log('Normalized search name:', normalizedSearchName);
+  /*const date = new Date(dateString);
   date.setMonth(0);
-  date.setDate(1); 
+  date.setDate(1);
   const marcaTiempoUnixInicio = date.getTime() / 1000;
   date.setMonth(11);
-  date.setDate(31); 
-  const marcaTiempoUnixFinal = date.getTime() / 1000;
+  date.setDate(31);
+  const marcaTiempoUnixFinal = date.getTime() / 1000;*/
   try {
     const response = await apicalypse(requestOptions)
       .fields(
         "name, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinemax, first_release_date, cover.url"
       )
-      .search(name)
-      .where(`first_release_date <= ${marcaTiempoUnixFinal} & platforms=(6)`)
-      .limit(1)
+      .search(normalizedSearchName)
+      .limit(10)
       .request("/games");
-    return { success: true, data: response.data[0] };
+
+    if (response.data.length > 1) {
+      const foundGame = response.data.find(game => {
+        const normalizedGameName = normalizeName(game.name);
+        console.log('Normalized game name:', normalizedGameName);
+        return normalizedGameName === normalizedSearchName;
+      });
+      if (foundGame) {
+        return { success: true, data: foundGame };
+      } else {
+        return { success: false, error: "Game not found" };
+      }
+    } else {
+      return {success: true, data: response.data[0]};
+    }
   } catch (error) {
     return { success: false, error: error.message };
   }
