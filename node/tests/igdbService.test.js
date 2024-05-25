@@ -11,7 +11,7 @@ describe("[ routes / igd ]", () => {
     const { status, body } = await request.get('/igdb/games');
     // Assert
     expect(status).toEqual(200);
-    expect(body.length).toEqual(10);
+    expect(body.length).toEqual(500);
   });
 
   it("[ routes / igd / latest ]", async () => {
@@ -35,10 +35,10 @@ describe("[ routes / igd ]", () => {
   it("[ routes / igd / game ]", async () => {
     // Arrage
     // Act
-    const { status, body } = await request.get('/igdb/game/?name=Helldivers 2');
+    const { status, body } = await request.get('/igdb/game/?name=Helldivers 2&date=08-02-2024');
     // Assert
     expect(status).toEqual(200);
-    expect(body[0].name).toEqual("Helldivers 2");
+    expect(body.name).toEqual("Helldivers 2");
   });
 
   it("[ routes / igd / gameDetails ]", async () => {

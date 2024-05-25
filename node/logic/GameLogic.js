@@ -5,18 +5,19 @@ import GameModel from "../models/GameModel.js";
 //----------------------------------------------------------------------
 
 // create a new Game
-export async function createGameLogic(name, company, platforms, max_players, gender, igdb_id) {
+export async function createGameLogic(name, company, platforms, max_players, gender, igdb_id, cover, release_date) {
+    console.log(name, company, platforms, max_players, gender, igdb_id, release_date)
     try {
         // Validar campos requeridos
-        if (!validateRequiredFields({ name, company, platforms, max_players, gender, igdb_id })) {
+        if (!validateRequiredFields({ name, company, platforms, max_players, gender, igdb_id, release_date})) {
             throw new Error("Required fields are not provided");
         }
         // Validar tipos de datos
-        if (!validateDataTypes({ name, company, platforms, max_players, gender, igdb_id })) {
+        if (!validateDataTypes({ name, company, platforms, max_players, gender, igdb_id, release_date })) {
             throw new Error("Invalid data type");
         }
         // Crear nuevo juego
-        const newGame = await GameModel.create({ name, company, platforms, max_players, gender, igdb_id });
+        const newGame = await GameModel.create({ name, company, platforms, max_players, cover, release_date, gender, igdb_id });
         return { success: true, newGame };
     } catch (error) {
         return { success: false, error: error.message };
@@ -56,7 +57,8 @@ const validateDataTypes = (fields) => {
         platforms: "string",
         max_players: "number",
         gender: "string",
-        igdb_id: "number"
+        igdb_id: "number",
+        release_date: "number"
     };
     for (let key in fields) {
         if (!dataTypes[key] || (typeof fields[key] !== dataTypes[key] && !dataTypes[key].includes(typeof fields[key]))) {
@@ -67,7 +69,7 @@ const validateDataTypes = (fields) => {
 };
 
 const validateRequiredFields = (fields) => {
-    const requiredFields = ["name", "company", "platforms", "max_players", "gender", "igdb_id"];
+    const requiredFields = ["name", "company", "platforms", "max_players", "gender", "igdb_id", "release_date"];
     for (let field of requiredFields) {
         if (!fields[field]) {
             return false;

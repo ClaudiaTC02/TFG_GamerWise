@@ -24,6 +24,7 @@ describe("ListGameRoutes", () => {
       max_players: 40,
       id: 1,
       igdb_id: 1,
+      release_date: 1716634021
     });
   });
   describe("[ routes / listgame ]", () => {

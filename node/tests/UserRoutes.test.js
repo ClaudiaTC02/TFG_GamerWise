@@ -359,7 +359,8 @@ describe("UserRoutes", () => {
         platforms: "name, name",
         max_players: 40,
         id: 2,
-        igdb_id: 2
+        igdb_id: 2,
+        release_date: 1716634021
       });
       await ListGameModel.create({list_id: 1, game_id: 2});
       await PreferencesModel.create({rating: 1, user_id: 1, game_id: 2});
