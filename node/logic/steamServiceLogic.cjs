@@ -260,6 +260,8 @@ async function getGameDataBase(gameDetails) {
       gameDetails.genres.map((genre) => genre.name).join(", ")) ||
     "none";
   const multiplayer = gameDetails?.multiplayer_modes?.[0]?.onlinemax || 1;
+  const cover = gameDetails.cover ? gameDetails.cover.url : null
+  const release_date = gameDetails?.first_release_date || 0;
   try {
     const game = await getGameLogic(gameDetails.id);
     return game.game[0];
@@ -270,6 +272,8 @@ async function getGameDataBase(gameDetails) {
       platforms,
       max_players: multiplayer,
       gender: genres,
+      cover: cover,
+      release_date: release_date,
       igdb_id: gameDetails.id,
     });
     return newGame;

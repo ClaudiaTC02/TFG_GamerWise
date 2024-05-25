@@ -17,7 +17,7 @@ def recomendar_juegos(user_id, model_path='svd_model.pkl'):
     # Paso 2: Crear un DataFrame
     df = pd.json_normalize(data)
     df['userId'] = df['user.id']
-    df['gameId'] = df['game.igdb_id'].combine_first(df['game.id'])
+    df['gameId'] = df['game.igdb_id']
     df['gameName'] = df['game.name']
     df['rating'] = df['rating']
     df['genres'] = df['game.genres']

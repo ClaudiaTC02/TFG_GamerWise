@@ -81,7 +81,7 @@ const searchGameByNameLogic = async (name, dateString) => {
   try {
     const response = await apicalypse(requestOptions)
       .fields(
-        "name, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinemax, first_release_date"
+        "name, platforms.abbreviation, involved_companies.company.name, genres.name, multiplayer_modes.onlinemax, first_release_date, cover.url"
       )
       .search(name)
       .where(`first_release_date <= ${marcaTiempoUnixFinal} & platforms=(6)`)

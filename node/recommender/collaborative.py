@@ -14,7 +14,7 @@ df = pd.json_normalize(data)
 
 # Asegúrate de que las columnas estén correctas
 df['userId'] = df['user.id']
-df['gameId'] = df['game.igdb_id'].combine_first(df['game.id'])  # Combina igdb_id y id
+df['gameId'] = df['game.igdb_id']
 df['gameName'] = df['game.name']
 df['rating'] = df['rating']
 df['genres'] = df['game.genres']
@@ -67,7 +67,7 @@ with open('svd_model.pkl', 'wb') as f:
     pickle.dump(modelo, f)
 
 # BASADO EN FILTRADO COLABORATIVO
-"""user_id = 5  # Usuario para el que se desea obtener recomendaciones
+"""user_id = 1  # Usuario para el que se desea obtener recomendaciones
 user_predictions = [pred for pred in predictions if pred.uid == user_id]
 user_predictions.sort(key=lambda x: x.est, reverse=True)
 top_n = 5  # Número de recomendaciones
