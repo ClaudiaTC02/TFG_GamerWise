@@ -11,8 +11,9 @@ export function ListPreview({ name, color, newlist, list_id }) {
   return (
     <div
       style={{
-        backgroundColor: color,
-        color: newlist ? "black" : "white",
+        border:`2px solid ${color}`,
+        color: "black",
+        backgroundColor: newlist ? color : "rgb(249 249 249)" 
       }}
       className="list-container"
       onClick={handleListClick}
