@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "../utils/constants";
 
-export const postNewGameRequest = async (name, company, platforms, max_players, gender, igdb_id, token) => {
+export const postNewGameRequest = async (name, company, platforms, max_players, gender, igdb_id, cover, release_date, token) => {
   try {
     const config = {
       headers: {
@@ -15,7 +15,9 @@ export const postNewGameRequest = async (name, company, platforms, max_players, 
         platforms: platforms,
         max_players: max_players,
         gender: gender,
-        igdb_id: igdb_id
+        igdb_id: igdb_id,
+        cover: cover,
+        release_date: release_date
     };
     const res = await axios.post(`${API}/game`, data, config);
     return res.data;

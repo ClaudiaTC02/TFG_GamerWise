@@ -7,16 +7,24 @@ import { Link } from "react-router-dom";
 export function GameCarousel({ game }) {
   const platformMap = {
     PS4: "PlayStation",
+    PS3: "PlayStation",
     PS5: "PlayStation",
     XONE: "Xbox",
     XBOX: 'Xbox',
+    X360: "Xbox",
     "Series X": "Xbox",
     Switch: "Nintendo",
+    "3DS": "Nintendo",
     Linux: "PC",
     Mac: "PC",
+    Stadia: "PC",
     "Meta Quest 2": "VR",
     PSVR2: "VR",
-    PS1: 'PlayStation'
+    PSVR: "VR",
+    PS1: 'PlayStation',
+    "Steam VR": "VR",
+    "Win Phone": "Android",
+    "Oculus VR": "VR"
   };
   const uniquePlatforms = new Set();
 

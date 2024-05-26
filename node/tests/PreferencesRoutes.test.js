@@ -19,7 +19,8 @@ describe('PreferencesRoutes', () => {
             platforms: "name, name",
             max_players: 40,
             id: 1,
-            igdb_id: 1
+            igdb_id: 1,
+            release_date: 1716634021
         });
     })
     describe('[ routes / preferences ]', () => {
@@ -165,7 +166,8 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 40,
                 id: 2,
-                igdb_id: 50
+                igdb_id: 50,
+                release_date: 1716634021
             });
             // Act
             const {status, body} = await request.put('/preferences/2').send(newRating).set('Authorization', `Bearer ${authToken}`);
@@ -269,7 +271,8 @@ describe('PreferencesRoutes', () => {
                 platforms: "name, name",
                 max_players: 40,
                 id: 2,
-                igdb_id: 33
+                igdb_id: 33,
+                release_date: 1716634021
             });
             await PreferencesModel.create({ game_id:1, user_id:1, rating:2})
             await PreferencesModel.create({ game_id:2, user_id:1, rating:4})

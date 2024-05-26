@@ -171,10 +171,10 @@ export default function GameDetailPage() {
               <div className="detail-container-title">
                 <h1 className="detail-title">{gameDetails.name}</h1>
                 <h3 className="detail-subtitle">
-                  {gameDetails.involved_companies &&
-                    gameDetails.involved_companies
-                      .map((company) => company.company.name)
-                      .join(", ")}
+                  {gameDetails.involved_companies && gameDetails.involved_companies
+                    .map((company) => company.company.name)
+                    .filter((name) => name)
+                    .join(", ")}
                 </h3>
               </div>
               <div className="details-heart">
@@ -187,13 +187,14 @@ export default function GameDetailPage() {
             <p className="detail-gender">
               <span className="detail-bold">Género: </span>
               {gameDetails.genres &&
-                gameDetails.genres.map((genre) => genre.name).join(", ")}
+                gameDetails.genres.map((genre) => genre.name).filter((name) => name).join(", ")}
             </p>
             <p className="detail-platforms">
               <span className="detail-bold">Plataformas: </span>
               {gameDetails.platforms &&
                 gameDetails.platforms
                   .map((platforms) => platforms.abbreviation)
+                  .filter((abbreviation) => abbreviation)
                   .join(", ")}
             </p>
             <div className="detail-container-description-web">

@@ -8,9 +8,8 @@ import { createGameLogic, getGameLogic } from "../logic/GameLogic.js";
 // create a new Game
 export const createGame = async (req, res) => {
     try {
-        const { name, company, platforms, max_players, gender, igdb_id } = req.body;
-        console.log(name, company, platforms, max_players, gender, igdb_id)
-        const { success, newGame, error } = await createGameLogic(name, company, platforms, max_players, gender, Number(igdb_id));
+        const { name, company, platforms, max_players, gender, igdb_id, release_date, cover } = req.body;
+        const { success, newGame, error } = await createGameLogic(name, company, platforms, max_players, gender, Number(igdb_id), cover, Number(release_date));
         if (success) {
             res.status(201).json({ message: "Game created successfully", game: newGame });
         } else {
