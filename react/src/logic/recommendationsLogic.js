@@ -13,7 +13,7 @@ export const getLandingRecommendationsLogic = async (token) => {
     const detailedRecommendations = await Promise.all(gameDetailsPromises)
     return detailedRecommendations;
   } catch (error) {
-    throw new Error(error.response.data.message);
+    return null
   }
 };
 
@@ -32,6 +32,6 @@ export const getListRecommendationsLogic = async (token, list_id) => {
   }));
   return mappedGameData
   } catch (error) {
-    throw new Error(error.response.data.message);
+    return null
   }
 }

@@ -31,6 +31,11 @@ def recomendar_juegos(user_id, model_path='svd_model.pkl'):
 
     df['userId'] = user_encoder.fit_transform(df['userId'])
     df['gameId'] = game_encoder.fit_transform(df['gameId'])
+
+    # Verificar si el user_id existe en los datos
+    if user_id not in user_encoder.classes_:
+        return []  # O alguna otra lógica para usuarios nuevos
+    
     encoded_user_id = user_encoder.transform([user_id])[0]
 
     # Paso 4: Preparar los datos para Surprise

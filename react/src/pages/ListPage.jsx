@@ -32,9 +32,9 @@ export function ListPage() {
     const fetchListDetails = async () => {
       try {
         const list_result = await getGamesOfListWithRatingLogic(id, token);
-        const recommendations = await getListRecommendationsLogic(token, id)
-        console.log(recommendations)
-        setRecommendations(recommendations)
+        const recommendations = await getListRecommendationsLogic(token, id);
+        console.log(recommendations);
+        setRecommendations(recommendations);
         console.log(list_result);
         setLoading(false);
         if (list_result) {
@@ -149,10 +149,12 @@ export function ListPage() {
         token={token}
         list={list}
       />
-      <CarouselSection
-        gamesData={recommendations}
-        text="Creemos que podrías incluir"
-      />
+      {recommendations && (
+        <CarouselSection
+          gamesData={recommendations}
+          text="Creemos que podrías incluir"
+        />
+      )}
       <Footer />
     </>
   );

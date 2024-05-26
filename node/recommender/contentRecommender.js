@@ -10,8 +10,9 @@ export const listRecommendations = async (req, res) => {
   const { list_id } = req.params;
   console.log(list_id);
   const games = await getAllGamesLogic(list_id);
+  if(!games.games){ res.json(null); return}
+  console.log(games.games);
   const gameIds = games.games.map((game) => game.id);
-  console.log(gameIds);
   const gameIdsJson = JSON.stringify(gameIds);
   // Obtener la ruta absoluta al archivo de Python
   const pythonScriptPath = path.resolve(__dirname, "content.py");

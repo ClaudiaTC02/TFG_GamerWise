@@ -11,6 +11,7 @@ export const landingRecommendations = async (req, res) => {
 // Obtener la ruta absoluta al archivo de Python
 const pythonScriptPath = path.resolve(__dirname, 'landingRecommender.py');
 const modelPath = path.resolve(__dirname, 'svd_model.pkl');
+if(!user_id) {res.json(null); return}
 // Llamar al script de Python con la ruta absoluta
 const pythonProcess = spawn("python", [pythonScriptPath, user_id, modelPath]);
   let recommendations = "";
