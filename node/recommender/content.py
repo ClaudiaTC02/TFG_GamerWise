@@ -20,7 +20,6 @@ games_df['features'] = games_df[['gender', 'company', 'platforms']].apply(lambda
 # Paso 4: Vectoriza las características
 tfidf_vectorizer = TfidfVectorizer()
 tfidf_matrix = tfidf_vectorizer.fit_transform(games_df['features'])
-games_df = games_df[['id', 'name', 'igdb_id', 'features']]
 
 # Paso 5: Calcula la similitud del coseno entre los juegos
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
@@ -50,12 +49,22 @@ def recommend_games_based_on_list(game_list, games_df, cosine_sim, top_n=10):
 # Bloque principal
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Uso: python landingRecommender.py <game_list>")
+        print("Uso: python content.py <game_list>")
         sys.exit(1)
 
-    game_list = sys.argv[1]
+    # Convertir la cadena JSON a una lista
+    try:
+        game_list = json.loads(sys.argv[1])
+        if not isinstance(game_list, list):
+            raise ValueError("El argumento proporcionado no es una lista válida.")
+    except json.JSONDecodeError:
+        print("Error: El argumento proporcionado no es una cadena JSON válida.")
+        sys.exit(1)
+    except ValueError as ve:
+        print(f"Error: {ve}")
+        sys.exit(1)
     # Obtener recomendaciones
-    recommended_games = recommend_games_based_on_list([45,48,49], games_df, cosine_sim)
+    recommended_games = recommend_games_based_on_list(game_list, games_df, cosine_sim)
     # Convertir a JSON y imprimir
     recommended_games_json = recommended_games.to_json(orient='records')
     print(recommended_games_json)
