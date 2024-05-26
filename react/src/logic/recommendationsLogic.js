@@ -1,5 +1,5 @@
 import { getGameDetailsRequest } from "../api/igdb";
-import { getLandingRecommendations } from "../api/recommendations";
+import { getLandingRecommendations, getListRecommendations } from "../api/recommendations";
 
 export const getLandingRecommendationsLogic = async (token) => {
   try {
@@ -13,6 +13,25 @@ export const getLandingRecommendationsLogic = async (token) => {
     const detailedRecommendations = await Promise.all(gameDetailsPromises)
     return detailedRecommendations;
   } catch (error) {
-    throw new Error(error.response.data.message);
+    return null
   }
 };
+
+export const getListRecommendationsLogic = async (token, list_id) => {
+  try {
+    const recommendations = await getListRecommendations(token, list_id);
+    const mappedGameData = recommendations.map(game => ({
+      game: {
+          id: game.igdb_id,
+          name: game.name,
+          cover: { url: game.cover },
+          first_release_date: game.release_date,
+          genres: game.gender.split(',').map(genre => ({ name: genre.trim() })),
+          platforms: game.platforms.split(',').map(platform => ({ name: platform.trim() })),
+      }
+  }));
+  return mappedGameData
+  } catch (error) {
+    return null
+  }
+}

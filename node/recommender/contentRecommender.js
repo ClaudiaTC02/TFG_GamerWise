@@ -1,19 +1,23 @@
-import { getUserIdFromToken } from "../utils/auth.js";
 import { spawn } from "node:child_process";
-import { fileURLToPath } from 'node:url';
-import  path  from "path"
+import { fileURLToPath } from "node:url";
+import path from "path";
+import { getAllGamesLogic } from "../logic/ListGameLogic.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const landingRecommendations = async (req, res) => {
-  const user_id = getUserIdFromToken(req);
-// Obtener la ruta absoluta al archivo de Python
-const pythonScriptPath = path.resolve(__dirname, 'landingRecommender.py');
-const modelPath = path.resolve(__dirname, 'svd_model.pkl');
-if(!user_id) {res.json(null); return}
-// Llamar al script de Python con la ruta absoluta
-const pythonProcess = spawn("python", [pythonScriptPath, user_id, modelPath]);
+export const listRecommendations = async (req, res) => {
+  const { list_id } = req.params;
+  console.log(list_id);
+  const games = await getAllGamesLogic(list_id);
+  if(!games.games){ res.json(null); return}
+  console.log(games.games);
+  const gameIds = games.games.map((game) => game.id);
+  const gameIdsJson = JSON.stringify(gameIds);
+  // Obtener la ruta absoluta al archivo de Python
+  const pythonScriptPath = path.resolve(__dirname, "content.py");
+  // Llamar al script de Python con la ruta absoluta
+  const pythonProcess = spawn("python", [pythonScriptPath, gameIdsJson]);
   let recommendations = "";
   // Output process
   pythonProcess.stdout.on("data", (data) => {

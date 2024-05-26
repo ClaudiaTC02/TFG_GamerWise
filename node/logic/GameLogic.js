@@ -46,6 +46,20 @@ export async function getGameLogic(igdb_id) {
     }
 }
 
+// get all games
+export async function getAllGamesLogic() {
+    try {
+        // Get games
+        const games = await GameModel.findAll();
+        if(games.length <= 0){
+            throw new Error("No games found");
+        }
+        return { success: true, games };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
 //----------------------------------------------------------------------
 // Modular functions
 //----------------------------------------------------------------------
