@@ -8,15 +8,16 @@ import { useEffect, useState } from "react";
 import { getGamesOfListWithRatingLogic } from "../logic/listLogic";
 import { ModalDeleteList, ModalUpdateList } from "../components/ModalLists";
 import { CarouselSection } from "../components/CarouselSection";
-import datamock from "../mock/latestGame.json";
 import { Loading } from "../components/Loading";
 import { Footer } from "../components/Footer";
+import { getListRecommendationsLogic } from "../logic/recommendationsLogic";
 
 export function ListPage() {
   const { id } = useParams();
   const { token } = useAuth();
   const [list, setList] = useState([]);
   const [games, setGames] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [showList, setShowList] = useState(false);
@@ -31,6 +32,9 @@ export function ListPage() {
     const fetchListDetails = async () => {
       try {
         const list_result = await getGamesOfListWithRatingLogic(id, token);
+        const recommendations = await getListRecommendationsLogic(token, id)
+        console.log(recommendations)
+        setRecommendations(recommendations)
         console.log(list_result);
         setLoading(false);
         if (list_result) {
@@ -146,7 +150,7 @@ export function ListPage() {
         list={list}
       />
       <CarouselSection
-        gamesData={datamock}
+        gamesData={recommendations}
         text="Creemos que podrías incluir"
       />
       <Footer />
