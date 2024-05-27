@@ -99,7 +99,10 @@ def get_hybrid_recommendations(user_id, game_info, model_path='svd_model.pkl'):
     collaborative_recommendations = get_collaborative_recommendations(user_id)
     content_recommendations = [(rec[1], rec[2], 0) for rec in content_recommendations]
     collaborative_recommendations = [(rec['gameId'], rec['gameName'], rec['estimatedRating']) for rec in collaborative_recommendations]
-    hybrid_recommendations = list(set(content_recommendations + collaborative_recommendations))
+    combined_recommendations = list(set(content_recommendations + collaborative_recommendations))
+    hybrid_recommendations = [{"igdb_id": rec[0], "name": rec[1], "estimatedRating": rec[2]} if isinstance(rec, tuple) 
+                        else {"igdb_id": rec['gameId'], "name": rec['gameName'], "estimatedRating": rec['estimatedRating']}
+                        for rec in combined_recommendations]
     return hybrid_recommendations[:10]
 
 if __name__ == "__main__":

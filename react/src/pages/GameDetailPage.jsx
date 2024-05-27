@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { CarouselSection } from "../components/CarouselSection";
-import datamock from "../mock/latestGame.json";
 import { Header } from "../components/Header";
 import { defaultCoverIcon } from "../components/Icons";
 import "../styles/GameDetailPage.css";
@@ -23,11 +22,13 @@ import {
 import { Loading } from "../components/Loading";
 import { SearchBar } from "../components/SearchBar";
 import { Footer } from "../components/Footer";
+import { getGameRecommendationsLogic } from "../logic/recommendationsLogic";
 
 export default function GameDetailPage() {
   const { id } = useParams();
   const { token } = useAuth();
   const [gameDetails, setGameDetails] = useState([]);
+  const [recommendationsGame, setRecommendationsGame] = useState([]);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -42,6 +43,31 @@ export default function GameDetailPage() {
         const game = await getGameDetailsRequest(id);
         if (game.length > 0) {
           setGameDetails(game[0]);
+          const company =
+            (game[0].involved_companies &&
+              game[0].involved_companies
+                .map((company) => company.company.name)
+                .join(", ")) ||
+            "anonymus";
+          const platforms =
+            (game[0].platforms &&
+              game[0].platforms
+                .map((platforms) => platforms.abbreviation)
+                .join(", ")) ||
+            "none";
+          const genres =
+            (game[0].genres &&
+              game[0].genres.map((genre) => genre.name).join(", ")) ||
+            "none";
+          const recommendations = await getGameRecommendationsLogic(
+            token,
+            id,
+            game[0].name,
+            company,
+            genres,
+            platforms
+          );
+          setRecommendationsGame(recommendations);
         } else {
           console.log("No se encontraron detalles del juego");
         }
@@ -171,10 +197,11 @@ export default function GameDetailPage() {
               <div className="detail-container-title">
                 <h1 className="detail-title">{gameDetails.name}</h1>
                 <h3 className="detail-subtitle">
-                  {gameDetails.involved_companies && gameDetails.involved_companies
-                    .map((company) => company.company.name)
-                    .filter((name) => name)
-                    .join(", ")}
+                  {gameDetails.involved_companies &&
+                    gameDetails.involved_companies
+                      .map((company) => company.company.name)
+                      .filter((name) => name)
+                      .join(", ")}
                 </h3>
               </div>
               <div className="details-heart">
@@ -187,7 +214,10 @@ export default function GameDetailPage() {
             <p className="detail-gender">
               <span className="detail-bold">Género: </span>
               {gameDetails.genres &&
-                gameDetails.genres.map((genre) => genre.name).filter((name) => name).join(", ")}
+                gameDetails.genres
+                  .map((genre) => genre.name)
+                  .filter((name) => name)
+                  .join(", ")}
             </p>
             <p className="detail-platforms">
               <span className="detail-bold">Plataformas: </span>
@@ -212,7 +242,12 @@ export default function GameDetailPage() {
           </p>
         </div>
       </section>
-      <CarouselSection gamesData={datamock} text="También puede gustarte" />
+      {recommendationsGame && (
+        <CarouselSection
+          gamesData={recommendationsGame}
+          text="También puede gustarte"
+        />
+      )}
       <Footer />
     </>
   );

@@ -1,5 +1,5 @@
 import { getGameDetailsRequest } from "../api/igdb";
-import { getLandingRecommendations, getListRecommendations } from "../api/recommendations";
+import { getGameRecommendations, getLandingRecommendations, getListRecommendations } from "../api/recommendations";
 
 export const getLandingRecommendationsLogic = async (token) => {
   try {
@@ -35,3 +35,19 @@ export const getListRecommendationsLogic = async (token, list_id) => {
     return null
   }
 }
+
+export const getGameRecommendationsLogic = async (token, igdb_id, name, company, genre, platforms) => {
+  try {
+    const recommendations = await getGameRecommendations(token, igdb_id, name, company, genre, platforms);
+    const gameDetailsPromises = recommendations.map(async (game) => {
+      const details = await getGameDetailsRequest(game.igdb_id);
+      return {
+        game: {...details[0]},
+      };
+    });
+    const detailedRecommendations = await Promise.all(gameDetailsPromises)
+    return detailedRecommendations;
+  } catch (error) {
+    return null
+  }
+};
