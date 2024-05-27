@@ -15,7 +15,7 @@ data = response.json()['games']
 games_df = pd.json_normalize(data)
 
 # Paso 3: Combina las características textuales para vectorización
-games_df['features'] = games_df[['gender', 'company', 'platforms']].apply(lambda x: ' '.join(x), axis=1)
+games_df['features'] = games_df[['name','gender', 'company', 'platforms']].apply(lambda x: ' '.join(x), axis=1)
 
 # Paso 4: Vectoriza las características
 tfidf_vectorizer = TfidfVectorizer()
