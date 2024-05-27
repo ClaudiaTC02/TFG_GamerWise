@@ -24,7 +24,9 @@ export function GameCarousel({ game }) {
     PS1: 'PlayStation',
     "Steam VR": "VR",
     "Win Phone": "Android",
-    "Oculus VR": "VR"
+    "Oculus VR": "VR",
+    Vita: "PlayStation",
+    WiiU: "Nintendo"
   };
   const uniquePlatforms = new Set();
 
