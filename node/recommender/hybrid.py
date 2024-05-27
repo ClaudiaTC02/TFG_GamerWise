@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelEncoder, MultiLabelBinarizer
 import json
 import numpy as np
 
-def get_content_based_recommendations(game_info, top_n=5):
+def get_content_based_recommendations(game_info, top_n=6):
     response = requests.get('http://localhost:8000/game')
     data = response.json()['games']
     content_df = pd.json_normalize(data)
@@ -39,9 +39,10 @@ def get_content_based_recommendations(game_info, top_n=5):
     similarity_scores = content_similarity[index]
     similar_indices = similarity_scores.argsort()[::-1][1:top_n+1]
     recommendations = content_df.loc[similar_indices].values
-    return recommendations.tolist()
+    recommendations = [rec for rec in recommendations if rec[1] != game_info['igdb_id']]
+    return recommendations
 
-def get_collaborative_recommendations(user_id, top_n=5):
+def get_collaborative_recommendations(user_id, exclude_game_id, top_n=5):
     # Colaborarive filter
     # Cargar el modelo entrenado
     with open(model_path, 'rb') as f:
@@ -87,21 +88,23 @@ def get_collaborative_recommendations(user_id, top_n=5):
     for pred in top_n_recommendations:
         game_title = df.loc[df['gameId'] == pred.iid, 'gameName'].iloc[0]
         original_game_id = game_encoder.inverse_transform([pred.iid])[0]
-        recomendaciones.append({
-            "gameId": int(original_game_id),
-            "gameName": game_title,
-            "estimatedRating": float(pred.est)
-        })
+        if original_game_id != exclude_game_id:
+            recomendaciones.append({
+                "gameId": int(original_game_id),
+                "gameName": game_title,
+                "estimatedRating": float(pred.est)
+            })
     return recomendaciones
 
 def get_hybrid_recommendations(user_id, game_info, model_path='svd_model.pkl'):
     content_recommendations = get_content_based_recommendations(game_info)
-    collaborative_recommendations = get_collaborative_recommendations(user_id)
-    content_recommendations = [(rec[1], rec[2], 0) for rec in content_recommendations]
-    collaborative_recommendations = [(rec['gameId'], rec['gameName'], rec['estimatedRating']) for rec in collaborative_recommendations]
+    game_id = game_info.get("igdb_id")
+    collaborative_recommendations = get_collaborative_recommendations(user_id, game_id)
+    content_recommendations = [(rec[1], rec[2]) for rec in content_recommendations]
+    collaborative_recommendations = [(rec['gameId'], rec['gameName']) for rec in collaborative_recommendations]
     combined_recommendations = list(set(content_recommendations + collaborative_recommendations))
-    hybrid_recommendations = [{"igdb_id": rec[0], "name": rec[1], "estimatedRating": rec[2]} if isinstance(rec, tuple) 
-                        else {"igdb_id": rec['gameId'], "name": rec['gameName'], "estimatedRating": rec['estimatedRating']}
+    hybrid_recommendations = [{"igdb_id": rec[0], "name": rec[1]} if isinstance(rec, tuple) 
+                        else {"igdb_id": rec['gameId'], "name": rec['gameName']}
                         for rec in combined_recommendations]
     return hybrid_recommendations[:10]
 

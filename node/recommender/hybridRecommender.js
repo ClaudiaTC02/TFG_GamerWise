@@ -10,13 +10,14 @@ export const gameRecommendations = async (req, res) => {
   const user_id = getUserIdFromToken(req);
   const { igdb_id, name, genre, platforms, company } = req.body;
   const data = {
-    igdb_id: igdb_id,
+    igdb_id: Number(igdb_id),
     name: name,
     genre: genre,
     platforms: platforms,
     company: company
   }
   const dataJson = JSON.stringify(data);
+  console.log(dataJson);
   // Obtener la ruta absoluta al archivo de Python
   const pythonScriptPath = path.resolve(__dirname, "hybrid.py");
   const modelPath = path.resolve(__dirname, "svd_model.pkl");

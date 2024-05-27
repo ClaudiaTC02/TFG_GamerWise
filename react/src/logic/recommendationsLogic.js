@@ -39,6 +39,7 @@ export const getListRecommendationsLogic = async (token, list_id) => {
 export const getGameRecommendationsLogic = async (token, igdb_id, name, company, genre, platforms) => {
   try {
     const recommendations = await getGameRecommendations(token, igdb_id, name, company, genre, platforms);
+    console.log(recommendations)
     const gameDetailsPromises = recommendations.map(async (game) => {
       const details = await getGameDetailsRequest(game.igdb_id);
       return {
