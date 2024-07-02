@@ -29,6 +29,7 @@ import gameRoutes from "./routes/GameRoutes.js";
 import listgameRoutes from "./routes/ListGameRoutes.js";
 import preferencesRoutes from "./routes/PreferencesRoutes.js";
 import steamRoutes from "./routes/SteamRoutes.js";
+import recommenderRoutes from "./routes/RecommenderRoutes.js";
 // import services
 import igdbRoutes from "./routes/igdbRoutes.js";
 import "dotenv/config";
@@ -57,6 +58,7 @@ igdbRoutes(app); // igdbRoutes will execute in /igdb
 userRoutes(app); // userRoutes will execute in /user
 listRoutes(app); // listRoutes will execute in /list
 steamRoutes(app); // steamRoutes will execute in /steam
+recommenderRoutes(app) //recommendationsRoutes will execute in /recommendations
 
 try {
   await db.authenticate();

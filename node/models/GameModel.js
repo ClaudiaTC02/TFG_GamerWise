@@ -20,6 +20,13 @@ const GameModel = db.define('game', {
         type: DataType.INTEGER,
         allowNull: false
     },
+    cover:{
+        type: DataType.STRING
+    },
+    release_date:{
+        type: DataType.INTEGER,
+        allowNull: false
+    },
     gender:{
         type: DataType.STRING,
         allowNull: false

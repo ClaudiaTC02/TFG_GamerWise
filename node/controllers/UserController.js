@@ -5,7 +5,8 @@ import {
   getBasicInfoLogic,
   updateUserLogic,
   deleteUserLogic,
-  deleteSteamLogic
+  deleteSteamLogic,
+  getUsersGamesAndRatingsLogic
 } from "../logic/UserLogic.js";
 import { getUserIdFromToken } from "../utils/auth.js";
 
@@ -133,3 +134,19 @@ export const deleteSteam = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// get users, games and ratings
+export const getUsersGamesAndRatings = async (req, res) => {
+  try {
+    const result = await getUsersGamesAndRatingsLogic();
+    if (result.success) {
+      res
+        .status(200)
+        .json({ message: "Information got successfully", info: result.info });
+    } else {
+      res.status(400).json({ message: result.error });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

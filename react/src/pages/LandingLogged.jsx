@@ -10,11 +10,14 @@ import { useEffect, useState } from "react";
 import { SearchBar } from "../components/SearchBar.jsx";
 import { pixelsIcon } from "../components/Icons.jsx";
 import { Footer } from "../components/Footer.jsx";
+import { getLandingRecommendationsLogic } from "../logic/recommendationsLogic.js";
+import { useAuth } from "../hooks/useAuth.js";
 
 export default function LandingLogged() {
   const [LatestgamesData, setLatestgamesData] = useState([]);
   const [UpcomminggamesData, setUpcomminggamesData] = useState([]);
-
+  const [RecommendationsLanding, setRecommendationsLanding] = useState([]);
+  const { token } = useAuth();
   useEffect(() => {
     const fetchLatestGames = async () => {
       try {
@@ -29,14 +32,26 @@ export default function LandingLogged() {
       try {
         const games = await getUpcommingGamesRequest();
         setUpcomminggamesData(games);
+        console.log(games)
       } catch (error) {
         console.log(error);
       }
     };
 
+    const fetchLandingRecommendations = async () => {
+      try {
+          const games = await getLandingRecommendationsLogic(token)
+          console.log(games)
+          setRecommendationsLanding(games)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     fetchUpcommingGames();
     fetchLatestGames();
-  }, []);
+    fetchLandingRecommendations();
+  }, [token]);
 
   return (
     <>
@@ -65,6 +80,7 @@ export default function LandingLogged() {
         </div>
         <SearchBar />
       </section>
+      {RecommendationsLanding.length == 0 ? null : <CarouselSection gamesData={RecommendationsLanding} text="Para ti"/>}
       <CarouselSection gamesData={LatestgamesData} text="Últimos estrenos" />
       <CarouselSection
         gamesData={UpcomminggamesData}

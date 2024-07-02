@@ -10,7 +10,7 @@ describe('GameRoutes', () => {
         })
         it('should create a new game', async () => {
             // Arrange
-            const game = {name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: 40, igdb_id: 1}
+            const game = {name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: 40, igdb_id: 1, release_date: 1716634021, cover: null}
             // Act
             const {status, body} = await request.post('/game').send(game).set('Authorization', `Bearer ${authToken}`);
             // Assert
@@ -31,7 +31,7 @@ describe('GameRoutes', () => {
     
         it('should NOT create a new game with invalid data type', async () => {
             // Arrange
-            const game = {name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: "40", igdb_id: 1}
+            const game = {name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: "40", igdb_id: 1, release_date: 1716634021, cover: null}
             // Act
             const {status, body} = await request.post('/game').send(game).set('Authorization', `Bearer ${authToken}`);
             // Assert
@@ -40,7 +40,7 @@ describe('GameRoutes', () => {
         })
         it('should get an existing game', async () => {
             // Arrange
-            const game = {id: 1,name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: 40, igdb_id: 1}
+            const game = {id: 1,name: "test", company: "test company", gender: "test gender", platforms: "name, name", max_players: 40, igdb_id: 1, release_date: 1716634021, cover: null}
             await GameModel.create(game)
             // Act
             const {status, body} = await request.get('/game/1').set('Authorization', `Bearer ${authToken}`);
