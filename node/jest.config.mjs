@@ -174,14 +174,15 @@ const config = {
   // This option allows use of a custom test runner
   // testRunner: "jest-circus/runner",
 
-  // A map from regular expressions to paths to transformers
-  // transform: undefined,
+// Indica a Jest que use babel-jest para traducir archivos JS modernos
+  transform: {
+    '^.+\\.(js|jsx|mjs|cjs)$': 'babel-jest',
+  },
 
-  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "\\\\node_modules\\\\",
-  //   "\\.pnp\\.[^\\\\]+$"
-  // ],
+  // Le dice a Jest: "Ignora node_modules, EXCEPTO la carpeta de apicalypse y axios"
+  transformIgnorePatterns: [
+    "node_modules/(?!(apicalypse|axios)/)"
+  ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
