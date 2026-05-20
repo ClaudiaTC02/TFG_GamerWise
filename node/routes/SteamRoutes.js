@@ -1,28 +1,29 @@
 import express from "express";
-import { verifyToken } from "../utils/auth.js";
 import {
   loginWithSteam,
-  callbackSteam,
+  loginSteamCallback,
   linkWithSteam,
-} from "../services/steamService.cjs";
+  linkSteamCallback
+} from "../services/steamService.js";
+
 const router = express.Router();
 
+// Rutas de Autenticación / Login
 router.get("/", loginWithSteam);
-router.get(
-  "/link/:token",
-  (req, res, next) => {
-    const token = req.params;
-    if (!token) {
-      return res.status(400).send("Token no proporcionado");
-    }
-    console.log(token);
-    res.cookie("steamToken", token, { maxAge: 900000, httpOnly: true });
-    next();
-  },
-  linkWithSteam
-);
-router.get("/callback", loginWithSteam, callbackSteam);
-router.get("/linkcallback", linkWithSteam, callbackSteam);
+router.get("/callback", loginSteamCallback);
+
+// Rutas de Vinculación de cuenta
+router.get("/link/:token", (req, res, next) => {
+  const { token } = req.params;
+  if (!token) {
+    return res.status(400).send("Token no proporcionado");
+  }
+  // Guardamos el token actual en una cookie segura para identificar al usuario al volver de Steam
+  res.cookie("steamToken", { token }, { maxAge: 900000, httpOnly: true });
+  next();
+}, linkWithSteam);
+
+router.get("/linkcallback", linkSteamCallback);
 
 export default (app) => {
   app.use("/steam", router);
