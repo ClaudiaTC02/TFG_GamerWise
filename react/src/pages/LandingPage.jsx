@@ -32,125 +32,141 @@ export default function LandingPage() {
   const scrollToSection = (id) => {
     document.getElementById(id).scrollIntoView({ behavior: "smooth" });
   };
-  return (
+return (
     <>
       <Header isLanding={true} headerClass={"landing-header"} />
-      <section id="home">
-        <div className="landing-title-container">
-          <h1 className="landing-title">
-            CADA <span className="highlited-text">JUGADOR</span> MERECE SU JUEGO{" "}
-            <span className="highlited-text">PERFECTO</span>
-          </h1>
-        </div>
-        <div className="landing-image-options-container">
-          <div className="landing-image-container">
-            <img
-              className="landing-photo"
-              src={landingPhotoIcon()}
-              alt="chica gamer"
-            ></img>
+      {/* NUEVO CONTENEDOR PRINCIPAL */}
+      <div className="landing-wrapper">
+        <section id="home">
+          <div className="landing-title-container">
+            <h1 className="landing-title">
+              CADA <span className="highlited-text">JUGADOR</span> MERECE SU JUEGO{" "}
+              <span className="highlited-text">PERFECTO</span>
+            </h1>
+
+          {/* SOLO WEB */}
+            <button
+              className="landing-joinus landing-joinus-desktop"
+              onClick={handleSignUp}
+            >
+              Únete
+            </button>
           </div>
-          <div className="landing-option-super-container">
-            <div className="landing-option-container">
-              <h3 className="landing-title-option">Organiza</h3>
-              <p className="landing-paragraph-option">
-                Añade juegos a listas únicas y puntúalos
+          <div className="landing-image-options-container">
+            <div className="landing-image-container">
+              <img
+                className="landing-photo"
+                src={landingPhotoIcon()}
+                alt="chica gamer"
+              />
+            </div>
+            <div className="landing-option-super-container">
+              <div className="landing-option-container">
+                <h3 className="landing-title-option">Organiza</h3>
+                <p className="landing-paragraph-option">
+                  Añade juegos a listas únicas y puntúalos
+                </p>
+              </div>
+              <div className="landing-option-container">
+                <h3 className="landing-title-option">Descubre</h3>
+                <p className="landing-paragraph-option">
+                  Recibe recomendaciones personalizadas
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="landing-end-container">
+            {/* SOLO MÓVIL */}
+            <button
+              className="landing-joinus landing-joinus-mobile"
+              onClick={handleSignUp}
+            >
+              Únete
+            </button>
+
+            <a className="landing-goDown" onClick={() => scrollToSection("posibilities")}>
+              <i className="bi bi-chevron-down"></i>
+            </a>
+          </div>
+        </section>
+
+        <section id="posibilities" className="landing-posibilities-section">
+          <h2 className="landing-posibilities-title">POSIBILIDADES</h2>
+          
+          {/* Contenedor Flex para agrupar las tarjetas en escritorio */}
+          <div className="posibilities-grid-container">
+            <div className="landing-posiibilities-container">
+              <div className="landing-title-posibilities-container">
+                <p className="landing-posibilities-image">
+                  <i className="bi bi-star-fill"></i>
+                </p>
+                <h5 className="landing-posibilities-subtitle">PUNTÚA TUS FAVORITOS</h5>
+              </div>
+              <p className="landing-posibilities-paragraph">
+                Añade la nota que el juego se merece. Tu perspectiva es fundamental
+                para ayudarte a decubrir joyas ocultas y nuevas experiencias que valen la pena
               </p>
             </div>
-            <div className="landing-option-container">
-              <h3 className="landing-title-option">Descubre</h3>
-              <p className="landing-paragraph-option">
-                Recibe recomendaciones personalizadas
+
+            <div className="landing-posiibilities-container">
+              <div className="landing-title-posibilities-container">
+                <p className="landing-posibilities-image">
+                  <i className="bi bi-search-heart-fill"></i>
+                </p>
+                <h5 className="landing-posibilities-subtitle">TODO EN UN MISMO LUGAR</h5>
+              </div>
+              <p className="landing-posibilities-paragraph">
+                Ya no necesitas saltar entre plataformas, aquí encontrarás un
+                universo de juegos con tan solo una búsqueda
+              </p>
+            </div>
+
+            <div className="landing-posiibilities-container">
+              <div className="landing-title-posibilities-container">
+                <p className="landing-posibilities-image">
+                  <i className="bi bi-robot"></i>
+                </p>
+                <h5 className="landing-posibilities-subtitle">EXPLORA NUEVOS JUEGOS</h5>
+              </div>
+              <p className="landing-posibilities-paragraph">
+                Rompe la monotonía y aventúrate en títulos que se adaptan
+                perfectamente a tu estilo. Deja que la Inteligencia Artificial eleve tu experiencia de juego
+              </p>
+            </div>
+
+            <div className="landing-posiibilities-container">
+              <div className="landing-title-posibilities-container">
+                <p className="landing-posibilities-image">
+                  <i className="bi bi-collection-fill"></i>
+                </p>
+                <h5 className="landing-posibilities-subtitle">ORGANIZA TU COLECCIÓN</h5>
+              </div>
+              <p className="landing-posibilities-paragraph">
+                Crea listas a medida para tus juegos favoritos y gestionalos como
+                nunca antes. Tendrás el control total sobre tu biblioteca de juegos
               </p>
             </div>
           </div>
-        </div>
-        <div className="landing-end-container">
-          <button className="landing-joinus" onClick={handleSignUp}>Únete</button>
-          <a className="landing-goDown" onClick={() => scrollToSection("posibilities")}>
-            <i className="bi bi-chevron-down"></i>
-          </a>
-        </div>
-      </section>
-      <section id="posibilities" className="landing-posibilities-section">
-        <h2 className="landing-posibilities-title">POSIBILIDADES</h2>
-        <div className="landing-posiibilities-container">
-          <div className="landing-title-posibilities-container">
-            <p className="landing-posibilities-image">
-              <i className="bi bi-star-fill"></i>
-            </p>
-            <h5 className="landing-posibilities-subtitle">
-              PUNTÚA TUS FAVORITOS
-            </h5>
-          </div>
-          <p className="landing-posibilities-paragraph">
-            Añade la nota que el juego se merece. Tu perspectiva es fundamental
-            para ayudarte a decubrir joyas ocultas y nuevas experiencias que
-            valen la pena
+        </section>
+
+        <section id="latest" className="landing-posibilities-section">
+          <h2 className="landing-latest-title">NUEVOS LANZAMIENTOS</h2>
+          <p className="landing-latest-paragraph">
+            Estamos comprometidos a mantenerte al tanto de las últimas
+            incorporaciones, asegurándonos de que siempre tengas algo nuevo que explorar
           </p>
-        </div>
-        <div className="landing-posiibilities-container">
-          <div className="landing-title-posibilities-container">
-            <p className="landing-posibilities-image">
-              <i className="bi bi-search-heart-fill"></i>
-            </p>
-            <h5 className="landing-posibilities-subtitle">
-              TODO EN UN MISMO LUGAR
-            </h5>
+          <SearchBar />
+          <div className="landing-games">
+            {LatestgamesData.length === 0 ? (
+              <Loading />
+            ) : (
+              LatestgamesData.map((game) => (
+                <GameCarousel game={game} key={game.id} />
+              ))
+            )}
           </div>
-          <p className="landing-posibilities-paragraph">
-            Ya no necesitas saltar entre plataformas, aquí encontrarás un
-            universo de juegos con tan solo una búsqueda
-          </p>
-        </div>
-        <div className="landing-posiibilities-container">
-          <div className="landing-title-posibilities-container">
-            <p className="landing-posibilities-image">
-              <i className="bi bi-robot"></i>
-            </p>
-            <h5 className="landing-posibilities-subtitle">
-              EXPLORA NUEVOS JUEGOS
-            </h5>
-          </div>
-          <p className="landing-posibilities-paragraph">
-            Rompe la monotonía y aventúrate en títulos que se adaptan
-            perfectamente a tu estilo. Deja que la Inteligencia Artificial eleve
-            tu experiencia de juego
-          </p>
-        </div>
-        <div className="landing-posiibilities-container">
-          <div className="landing-title-posibilities-container">
-            <p className="landing-posibilities-image">
-              <i className="bi bi-collection-fill"></i>
-            </p>
-            <h5 className="landing-posibilities-subtitle">
-              ORGANIZA TU COLECCIÓN
-            </h5>
-          </div>
-          <p className="landing-posibilities-paragraph">
-            Crea listas a medida para tus juegos favoritos y gestionalos como
-            nunca antes. Tendrás el control total sobre tu biblioteca de juegos
-          </p>
-        </div>
-      </section>
-      <section id="latest" className="landing-posibilities-section">
-        <h2 className="landing-latest-title">NUEVOS LANZAMIENTOS</h2>
-        <p className="landing-latest-paragraph">
-          Estamos comprometidos a mantenerte al tanto de las últimas
-          incorporaciones, asegurándonos de que siempre tengas algo nuevo que
-          explorar
-        </p>
-        <SearchBar />
-        <div className="landing-games">
-          {LatestgamesData.length == 0 ? (
-            <Loading />
-          ) : (
-            LatestgamesData.map((game) => (
-              <GameCarousel game={game} key={game.id} />
-            ))
-          )}
-        </div>
-      </section>
+        </section>
+      </div>
       <FooterLanding />
     </>
   );

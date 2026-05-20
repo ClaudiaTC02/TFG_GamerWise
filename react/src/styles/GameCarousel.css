@@ -38,20 +38,24 @@
   max-width: 1rem;
 }
 
+
 @media (min-width: 1025px) {
   .game-container {
-    padding: 0.3rem;
-    width: 170px;
+    padding: 0.8rem 0.6rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   .game-img {
-    max-width: 8.5rem;
+    max-width: 85%;
+    width: 85%;
     height: 10.5rem;
+    object-fit: cover;
   }
   .game-name {
-    font-size: 16px;
+    font-size: 0.9rem;
   }
-  .game-date{
-    font-size: 12px;
+  .game-date {
+    font-size: 0.75rem;
   }
   .info-game-container {
     height: 16rem;
