@@ -1,5 +1,7 @@
-const apicalypse = require("apicalypse").default;
-require("dotenv").config();
+import apicalypse from "apicalypse";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const requestOptions = {
   method: "post",
@@ -14,7 +16,7 @@ const requestOptions = {
 };
 
 // Obtain 10 games
-const getGamesLogic = async () => {
+export const getGamesLogic = async () => {
   try {
     const response = await apicalypse(requestOptions)
       .fields("name")
@@ -28,7 +30,7 @@ const getGamesLogic = async () => {
 };
 
 // Get latest games releases
-const getLatestReleasesLogic = async () => {
+export const getLatestReleasesLogic = async () => {
   try {
     const currentTime = Math.floor(Date.now() / 1000);
     const oneWeekBefore = currentTime - 7 * 24 * 60 * 60;
@@ -49,7 +51,7 @@ const getLatestReleasesLogic = async () => {
 };
 
 // Coming soon games
-const getUpcomingReleasesLogic = async () => {
+export const getUpcomingReleasesLogic = async () => {
   try {
     const currentTime = Math.floor(Date.now() / 1000);
     const oneWeekAfter = currentTime + 7 * 24 * 60 * 60;
@@ -70,17 +72,10 @@ const getUpcomingReleasesLogic = async () => {
 };
 
 // Search a specific game
-const searchGameByNameLogic = async (name) => {
+export const searchGameByNameLogic = async (name) => {
   const normalizeName = (str) => str.toLowerCase().replace(/-/g, ' ').replace(/[^a-z0-9\s']/g, '').replace(/\s+/g, ' ').trim();
   const normalizedSearchName = normalizeName(name);
   console.log('Normalized search name:', normalizedSearchName);
-  /*const date = new Date(dateString);
-  date.setMonth(0);
-  date.setDate(1);
-  const marcaTiempoUnixInicio = date.getTime() / 1000;
-  date.setMonth(11);
-  date.setDate(31);
-  const marcaTiempoUnixFinal = date.getTime() / 1000;*/
   try {
     const response = await apicalypse(requestOptions)
       .fields(
@@ -110,7 +105,7 @@ const searchGameByNameLogic = async (name) => {
 };
 
 // search a game with filter
-const searchGameWithFiltersLogic = async ({
+export const searchGameWithFiltersLogic = async ({
   name,
   category,
   platform,
@@ -145,7 +140,7 @@ const searchGameWithFiltersLogic = async ({
 };
 
 // Obtain details for a specific game
-const getGameDetailsLogic = async (id) => {
+export const getGameDetailsLogic = async (id) => {
   try {
     const response = await apicalypse(requestOptions)
       .fields(
@@ -162,13 +157,4 @@ const getGameDetailsLogic = async (id) => {
   } catch (error) {
     return { success: false, error: error.message };
   }
-};
-
-module.exports = {
-  getGamesLogic,
-  getLatestReleasesLogic,
-  getUpcomingReleasesLogic,
-  searchGameByNameLogic,
-  getGameDetailsLogic,
-  searchGameWithFiltersLogic,
 };

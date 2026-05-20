@@ -2,6 +2,7 @@ import { GameCarousel } from "./GameCarousel";
 import "../styles/CarouselSection.css";
 
 import Slider from "react-slick";
+const SlickSlider = Slider.default || Slider;
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Loading } from "./Loading";
@@ -43,7 +44,7 @@ export function CarouselSection({ gamesData, text }) {
     <section className="carousel-section">
       <h1 className="carousel-title">{text}</h1>
       <hr className="carousel-line" />
-      <Slider {...settings} className='carousel'>
+      <SlickSlider {...settings} className='carousel'>
         {gamesData.map((element) => {
           if (!uniqueGames.has(element.game.name)) {
             uniqueGames.add(element.game.name);
@@ -52,7 +53,7 @@ export function CarouselSection({ gamesData, text }) {
             return null;
           }
         })}
-      </Slider>
+      </SlickSlider>
     </section>
   );
 }

@@ -5,7 +5,7 @@ import {
     searchGameByName,
     getGameDetails,
     searchGameWithFilters
-  } from "../services/igdbService.cjs";
+  } from "../services/igdbService.js";
 import express from "express";
 
 const router = express.Router();
