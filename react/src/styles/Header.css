@@ -43,20 +43,55 @@ header {
   line-height: 50px;
   text-decoration: none;
   color: #000000;
+  position: relative;
+  display: inline-block; 
+  transition: color 0.25s ease;
 }
 
-.nav-list li:hover a:hover {
+.nav-list li a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 10px; 
+  left: 0;
+  background-color: #ef4f23;
+  transform-origin: bottom right;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-list li:hover a {
   cursor: pointer;
   color: #ef4f23;
 }
 
+.nav-list li:hover a::after {
+  transform: scaleX(1); 
+  transform-origin: bottom left;
+}
+
+
 .register-button {
   background-color: white;
   color: black;
-  border: 1px solid #ef4f23;
+  border: 2px solid #ef4f23;
   padding: 0.4rem 1rem;
   border-radius: 20px;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.register-button:hover {
+  background-color: #ef4f23;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(239, 79, 35, 0.6), 0 4px 10px rgba(239, 79, 35, 0.2);
+}
+
+.register-button:active {
+  transform: translateY(0);
 }
 
 .open-menu,

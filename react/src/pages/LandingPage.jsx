@@ -153,9 +153,9 @@ return (
           <h2 className="landing-latest-title">NUEVOS LANZAMIENTOS</h2>
           <p className="landing-latest-paragraph">
             Estamos comprometidos a mantenerte al tanto de las últimas
-            incorporaciones, asegurándonos de que siempre tengas algo nuevo que explorar
+            incorporaciones, asegurándonos de que siempre tengas algo nuevo que explorar.
           </p>
-          <SearchBar />
+          
           <div className="landing-games">
             {LatestgamesData.length === 0 ? (
               <Loading />
@@ -165,6 +165,14 @@ return (
               ))
             )}
           </div>
+        </section>
+
+        <section id="explore" className="landing-posibilities-section" style={{ backgroundColor: "#f9fafb" }}>
+          <h2 className="landing-latest-title">EXPLORA EL CATÁLOGO</h2>
+          <p className="landing-latest-paragraph">
+            ¿Buscas una aventura específica? Encuéntralo entre miles de opciones.
+          </p>
+          <SearchBar />
         </section>
       </div>
       <FooterLanding />

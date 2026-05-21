@@ -69,6 +69,9 @@ const LandingHeader = () => {
             <a href="#latest" onClick={() => scrollToSection("latest")}>{t("latest")}</a>
           </li>
           <li>
+            <a href="#explore" onClick={() => scrollToSection("explore")}>{t("explore")}</a>
+          </li>
+          <li>
             <a>
               <LanguageSelector />
             </a>

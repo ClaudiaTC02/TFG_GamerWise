@@ -64,7 +64,7 @@
 .form-select{
     font-size: 0.9rem;
     margin-bottom: 1rem;
-    width: 100%;
+    width: 100% !important;
     background-color:#fdfdfd
 }
 

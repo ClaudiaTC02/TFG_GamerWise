@@ -22,7 +22,6 @@ html {
   position: static;
   width: 100%;
   padding-top: 1.8rem;
-  z-index: 10;
 }
 
 .landing-joinus-desktop {
@@ -40,12 +39,40 @@ html {
 
 .landing-image-container {
   text-align: center;
-  position: static;
+  position: relative; 
   width: 100%;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
+}
+
+.landing-photo {
+  width: 100%;
+  max-width: 22.5rem;
+  height: auto;
+  max-height: 45vh;
+  object-fit: contain;
+  margin-top: 10%;
+  position: relative;
+  z-index: 2;
+}
+
+
+.landing-image-container::after {
+  content: '';
+  position: absolute;
+  top: 55%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px; 
+  height: 150px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 70%);
+  filter: blur(25px); 
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none; 
 }
 
 .landing-photo {
@@ -223,7 +250,7 @@ html {
   }
 
   .landing-image-container {
-    position: static;
+    position: relative;
     text-align: center;
     width: 100%;
     flex: 1;
@@ -402,8 +429,9 @@ html {
     border-radius: 30px;
     align-self: flex-start;
     transition:
-      transform 0.2s ease,
-      background-color 0.2s ease;
+    transform 0.2s ease,
+    background-color 0.2s ease;
+    animation: joinUsPulse 2.5s infinite;
   }
 
   .landing-joinus:hover {
@@ -415,7 +443,7 @@ html {
     display: inline-block;
     position: absolute;
     bottom: 25px;
-    left: 50%;
+    left: 49%;
     transform: translateX(-50%);
     font-size: 2.5rem;
     color: #111827;
@@ -433,7 +461,7 @@ html {
   }
 
   .landing-image-container {
-    position: static;
+    position: relative;
     text-align: center;
     width: 100%;
   }
@@ -550,6 +578,139 @@ html {
     margin-top: 2rem;
     width: 100%;
   }
+    /* ==========================================================================
+     LUCES
+     ========================================================================== */
+  .landing-image-container::after {
+    top: 50%; 
+    width: 300px;
+    height: 300px;
+    filter: blur(45px); 
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0) 70%);
+  }
+
+  #home::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0) 70%); /* Violeta */
+    filter: blur(90px);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .landing-title-container, 
+  .landing-image-options-container {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .landing-wrapper {
+    position: relative; 
+  }
+
+  .landing-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(239, 79, 35, 0.15) 0%, rgba(239, 79, 35, 0) 70%);
+    filter: blur(80px);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .landing-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 35%;
+    right: -15%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(239, 79, 35, 0.12) 0%, rgba(239, 79, 35, 0) 70%);
+    filter: blur(100px);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #home,
+  .landing-posibilities-section {
+    position: relative;
+    z-index: 1;
+  }
+
+  #posibilities {
+    position: relative;
+  }
+  
+  #posibilities::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: -15%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0) 70%); 
+    filter: blur(90px);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #latest {
+    position: relative;
+  }
+  
+  #latest::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(239, 79, 35, 0.12) 0%, rgba(239, 79, 35, 0) 70%);
+    filter: blur(100px);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #explore {
+    position: relative;
+  }
+  
+  #explore::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0) 70%); 
+    filter: blur(120px);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .landing-posibilities-title,
+  .landing-latest-title,
+  .landing-latest-paragraph,
+  .posibilities-grid-container,
+  .landing-games,
+  .super-search-container,
+  .form-search {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 /* ==========================================================================
@@ -572,5 +733,22 @@ html {
   }
   .landing-photo {
     max-width: 30rem;
+  }
+}
+
+@keyframes joinUsPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 61, 0, 0.35);
+  }
+
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 12px rgba(255, 61, 0, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 61, 0, 0);
   }
 }
