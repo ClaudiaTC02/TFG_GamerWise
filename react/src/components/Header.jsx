@@ -9,7 +9,8 @@ import { useAuth } from "../hooks/useAuth";
 
 export function Header({ isLanding, isLogged, headerClass }) {
   const navigate = useNavigate();
-  const handleLogo = () => {
+  const handleLogo = (e) => {
+    e.preventDefault()
     if (isLanding) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -42,13 +43,22 @@ const LandingHeader = () => {
   const handleSignIn = () => {
     navigate("/login");
   };
-  const scrollToSection = (id) => {
-    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-    setNavClassName("nav"); 
+  const scrollToSection = (e, id) => {
+    if (id === "home") {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const el = document.getElementById(id);
+      const headerHeight = document.querySelector("header").offsetHeight;
+      const top =
+        el.getBoundingClientRect().top + window.scrollY - headerHeight;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+    setNavClassName("nav");
   };
   return (
     <div className="options-container">
-      <button className="register-button" onClick={handleSignIn}>
+      <button className="register-button mobile" onClick={handleSignIn}>
         {t("button")}
       </button>
       <button className="open-menu" onClick={handleOpenMenu}>
@@ -60,16 +70,27 @@ const LandingHeader = () => {
         </button>
         <ul className="nav-list">
           <li>
-            <a href="#home" onClick={() => scrollToSection("home")}>{t("home")}</a>
+            <a href="#home" onClick={(e) => scrollToSection(e, "home")}>
+              {t("home")}
+            </a>
           </li>
           <li>
-            <a href="#posibilities" onClick={() => scrollToSection("posibilities")}>{t("posibilities")}</a>
+            <a
+              href="#posibilities"
+              onClick={(e) => scrollToSection(e, "posibilities")}
+            >
+              {t("posibilities")}
+            </a>
           </li>
           <li>
-            <a href="#latest" onClick={() => scrollToSection("latest")}>{t("latest")}</a>
+            <a href="#latest" onClick={(e) => scrollToSection(e, "latest")}>
+              {t("latest")}
+            </a>
           </li>
           <li>
-            <a href="#explore" onClick={() => scrollToSection("explore")}>{t("explore")}</a>
+            <a href="#explore" onClick={(e) => scrollToSection(e, "explore")}>
+              {t("explore")}
+            </a>
           </li>
           <li>
             <a>
@@ -78,13 +99,16 @@ const LandingHeader = () => {
           </li>
         </ul>
       </nav>
+      <button className="register-button pc" onClick={handleSignIn}>
+        {t("button")}
+      </button>
     </div>
   );
 };
 
 const LoggedHeader = () => {
   const [navClassName, setNavClassName] = useState("nav");
-  const {signOut} = useAuth();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleOpenMenu = () => {
@@ -94,20 +118,20 @@ const LoggedHeader = () => {
     setNavClassName("nav");
   };
   function handleLogout() {
-    signOut()
-    console.log('Sesión cerrada');
+    signOut();
+    console.log("Sesión cerrada");
   }
   function handleProfile() {
-    navigate('/profile');
+    navigate("/profile");
   }
   function handleSettings() {
-    navigate('/profile#options');
+    navigate("/profile#options");
   }
   return (
     <div className="options-container">
       <button className="open-menu" onClick={handleOpenMenu}>
         <div className="header-user-container">
-          <img className="user-image" src={userIcon()} alt='user'/>
+          <img className="user-image" src={userIcon()} alt="user" />
           <i className="bi bi-chevron-down"></i>
         </div>
       </button>
@@ -134,4 +158,4 @@ const LoggedHeader = () => {
       </nav>
     </div>
   );
-}
+};

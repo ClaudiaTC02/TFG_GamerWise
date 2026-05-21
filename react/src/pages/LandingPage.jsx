@@ -29,22 +29,30 @@ export default function LandingPage() {
   const handleSignUp = () => {
     navigate("/signup");
   };
-  const scrollToSection = (id) => {
-    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = (e, id) => {
+    const el = document.getElementById(id);
+    const headerHeight = document.querySelector("header").offsetHeight;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerHeight;
+    window.scrollTo({ top, behavior: "smooth" });
   };
-return (
+  return (
     <>
       <Header isLanding={true} headerClass={"landing-header"} />
+      <div className="light-top-left"></div>
+      <div className="light-top-right"></div>
+      <div className="light-bottom-left"></div>
+      <div className="light-bottom-right"></div>
+      <div className="wireframe-pattern"></div>
       {/* NUEVO CONTENEDOR PRINCIPAL */}
       <div className="landing-wrapper">
         <section id="home">
           <div className="landing-title-container">
             <h1 className="landing-title">
-              CADA <span className="highlited-text">JUGADOR</span> MERECE SU JUEGO{" "}
-              <span className="highlited-text">PERFECTO</span>
+              CADA <span className="highlited-text">JUGADOR</span> MERECE SU
+              JUEGO <span className="highlited-text">PERFECTO</span>
             </h1>
 
-          {/* SOLO WEB */}
+            {/* SOLO WEB */}
             <button
               className="landing-joinus landing-joinus-desktop"
               onClick={handleSignUp}
@@ -84,7 +92,10 @@ return (
               Únete
             </button>
 
-            <a className="landing-goDown" onClick={() => scrollToSection("posibilities")}>
+            <a
+              className="landing-goDown"
+              onClick={(e) => scrollToSection(e, "posibilities")}
+            >
               <i className="bi bi-chevron-down"></i>
             </a>
           </div>
@@ -92,7 +103,7 @@ return (
 
         <section id="posibilities" className="landing-posibilities-section">
           <h2 className="landing-posibilities-title">POSIBILIDADES</h2>
-          
+
           {/* Contenedor Flex para agrupar las tarjetas en escritorio */}
           <div className="posibilities-grid-container">
             <div className="landing-posiibilities-container">
@@ -100,11 +111,14 @@ return (
                 <p className="landing-posibilities-image">
                   <i className="bi bi-star-fill"></i>
                 </p>
-                <h5 className="landing-posibilities-subtitle">PUNTÚA TUS FAVORITOS</h5>
+                <h5 className="landing-posibilities-subtitle">
+                  PUNTÚA TUS FAVORITOS
+                </h5>
               </div>
               <p className="landing-posibilities-paragraph">
-                Añade la nota que el juego se merece. Tu perspectiva es fundamental
-                para ayudarte a decubrir joyas ocultas y nuevas experiencias que valen la pena
+                Añade la nota que el juego se merece. Tu perspectiva es
+                fundamental para ayudarte a decubrir joyas ocultas y nuevas
+                experiencias que valen la pena
               </p>
             </div>
 
@@ -113,7 +127,9 @@ return (
                 <p className="landing-posibilities-image">
                   <i className="bi bi-search-heart-fill"></i>
                 </p>
-                <h5 className="landing-posibilities-subtitle">TODO EN UN MISMO LUGAR</h5>
+                <h5 className="landing-posibilities-subtitle">
+                  TODO EN UN MISMO LUGAR
+                </h5>
               </div>
               <p className="landing-posibilities-paragraph">
                 Ya no necesitas saltar entre plataformas, aquí encontrarás un
@@ -126,11 +142,14 @@ return (
                 <p className="landing-posibilities-image">
                   <i className="bi bi-robot"></i>
                 </p>
-                <h5 className="landing-posibilities-subtitle">EXPLORA NUEVOS JUEGOS</h5>
+                <h5 className="landing-posibilities-subtitle">
+                  EXPLORA NUEVOS JUEGOS
+                </h5>
               </div>
               <p className="landing-posibilities-paragraph">
                 Rompe la monotonía y aventúrate en títulos que se adaptan
-                perfectamente a tu estilo. Deja que la Inteligencia Artificial eleve tu experiencia de juego
+                perfectamente a tu estilo. Deja que la Inteligencia Artificial
+                eleve tu experiencia de juego
               </p>
             </div>
 
@@ -139,11 +158,14 @@ return (
                 <p className="landing-posibilities-image">
                   <i className="bi bi-collection-fill"></i>
                 </p>
-                <h5 className="landing-posibilities-subtitle">ORGANIZA TU COLECCIÓN</h5>
+                <h5 className="landing-posibilities-subtitle">
+                  ORGANIZA TU COLECCIÓN
+                </h5>
               </div>
               <p className="landing-posibilities-paragraph">
-                Crea listas a medida para tus juegos favoritos y gestionalos como
-                nunca antes. Tendrás el control total sobre tu biblioteca de juegos
+                Crea listas a medida para tus juegos favoritos y gestionalos
+                como nunca antes. Tendrás el control total sobre tu biblioteca
+                de juegos
               </p>
             </div>
           </div>
@@ -153,9 +175,10 @@ return (
           <h2 className="landing-latest-title">NUEVOS LANZAMIENTOS</h2>
           <p className="landing-latest-paragraph">
             Estamos comprometidos a mantenerte al tanto de las últimas
-            incorporaciones, asegurándonos de que siempre tengas algo nuevo que explorar.
+            incorporaciones, asegurándonos de que siempre tengas algo nuevo que
+            explorar.
           </p>
-          
+
           <div className="landing-games">
             {LatestgamesData.length === 0 ? (
               <Loading />
@@ -167,10 +190,11 @@ return (
           </div>
         </section>
 
-        <section id="explore" className="landing-posibilities-section" style={{ backgroundColor: "#f9fafb" }}>
+        <section id="explore" className="landing-posibilities-section">
           <h2 className="landing-latest-title">EXPLORA EL CATÁLOGO</h2>
           <p className="landing-latest-paragraph">
-            ¿Buscas una aventura específica? Encuéntralo entre miles de opciones.
+            ¿Buscas una aventura específica? Encuéntralo entre miles de
+            opciones.
           </p>
           <SearchBar />
         </section>
