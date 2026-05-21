@@ -1,47 +1,39 @@
 import "../styles/GameCarousel.css";
-import { GamePlatformIcon } from "./GamePlatformIcon ";
+import { GamePlatformIcon } from "./GamePlatformIcon"; 
 import { defaultCoverIcon } from "./Icons";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
 export function GameCarousel({ game }) {
   const platformMap = {
-    PS4: "PlayStation",
-    PS3: "PlayStation",
-    PS5: "PlayStation",
-    XONE: "Xbox",
-    XBOX: 'Xbox',
-    X360: "Xbox",
-    "Series X": "Xbox",
-    Switch: "Nintendo",
-    "3DS": "Nintendo",
-    Linux: "PC",
-    Mac: "PC",
-    Stadia: "PC",
-    "Meta Quest 2": "VR",
-    PSVR2: "VR",
-    PSVR: "VR",
-    PS1: 'PlayStation',
-    "Steam VR": "VR",
-    "Win Phone": "Android",
-    "Oculus VR": "VR",
-    Vita: "PlayStation",
-    WiiU: "Nintendo"
+    PS4: "PlayStation", PS3: "PlayStation", PS5: "PlayStation", PS1: "PlayStation", Vita: "PlayStation",
+    XONE: "Xbox", XBOX: "Xbox", X360: "Xbox", "Series X": "Xbox", "Series X|S": "Xbox",
+    Switch: "Nintendo", "3DS": "Nintendo", WiiU: "Nintendo", "Switch 2": "Nintendo",
+    Linux: "PC", Mac: "PC", Stadia: "PC",
+    "Meta Quest 2": "VR", PSVR2: "VR", PSVR: "VR", "Steam VR": "VR", "Oculus VR": "VR",
+    "Win Phone": "Android"
   };
-  const uniquePlatforms = new Set();
 
-  const mergedPlatforms = game.game.platforms.map((platform) => {
-    return platformMap[platform.abbreviation] || platform.abbreviation;
-  });
+  const groupedPlatforms = {};
 
-  mergedPlatforms.forEach((platform) => {
-    uniquePlatforms.add(platform);
-  });
+  if (game.game.platforms) {
+    game.game.platforms.forEach((platform) => {
+      const groupName = platformMap[platform.abbreviation] || platform.abbreviation;
+      if (!groupedPlatforms[groupName]) {
+        groupedPlatforms[groupName] = [];
+      }
+      if (!groupedPlatforms[groupName].includes(platform.abbreviation)) {
+        groupedPlatforms[groupName].push(platform.abbreviation);
+      }
+    });
+  }
 
-  const date = moment.unix(game.game.first_release_date).format("DD/MM/YYYY");
+  const date = game.game.first_release_date 
+    ? moment.unix(game.game.first_release_date).format("DD/MM/YYYY") 
+    : "TBA";
 
   return (
-    <Link to={`/game/${game.game.id}`} className="game-link" style={{'textDecoration': 'none', 'color': 'inherit'}}>
+    <Link to={`/game/${game.game.id}`} className="game-link">
       <div className="game-container">
         <div className="info-game-container">
           <img
@@ -49,14 +41,19 @@ export function GameCarousel({ game }) {
             src={game.game.cover ? game.game.cover.url.replace("t_thumb", "t_cover_big") : defaultCoverIcon()}
             alt={game.game.name}
           />
-          <div>
-            <h4 className="game-name">{game.game.name}</h4>
+          <div className="game-name-container">
+            <h4 className="game-name" title={game.game.name}>{game.game.name}</h4>
           </div>
           <p className="game-date">{date}</p>
         </div>
+        
         <div className="game-platforms">
-          {[...uniquePlatforms].map((platform, index) => (
-            <GamePlatformIcon key={index} platform={platform} />
+          {Object.entries(groupedPlatforms).map(([groupName, specificPlatforms], index) => (
+            <GamePlatformIcon 
+              key={index} 
+              platform={groupName} 
+              specificPlatforms={specificPlatforms} 
+            />
           ))}
         </div>
       </div>

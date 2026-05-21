@@ -154,8 +154,9 @@ html {
 }
 .landing-games {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.8rem;
+  align-items: stretch;
 }
 
 /* ==========================================================================
@@ -327,7 +328,7 @@ html {
   }
 
   .landing-games {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.2rem;
   }
 }

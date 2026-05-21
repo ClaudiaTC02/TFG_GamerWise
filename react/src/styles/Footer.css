@@ -12,6 +12,7 @@ footer {
   position: relative;
   bottom: 0;
   width: 100%;
+  padding-top: 50px;
 }
 
 .footer-landing-container {
@@ -71,7 +72,7 @@ footer {
 }
 
 /* ==========================================================================
-   RESPONSIVE MÓVIL (Hasta 550px) - Tu diseño original intacto
+   RESPONSIVE MÓVIL (Hasta 550px)
    ========================================================================== */
 @media screen and (max-width: 550px) {
   footer {
@@ -110,7 +111,7 @@ footer {
 }
 
 /* ==========================================================================
-   NUEVO: AJUSTE INTERMEDIO PARA IPAD / TABLETS (Desde 551px hasta 1024px)
+   AJUSTE INTERMEDIO PARA IPAD / TABLETS (Desde 551px hasta 1024px)
    ========================================================================== */
 @media screen and (min-width: 551px) and (max-width: 1024px) {
   footer {
@@ -153,7 +154,7 @@ footer {
 }
 
 /* ==========================================================================
-   RESPONSIVE ESCRITORIO (A partir de 1025px) - Tu diseño corregido
+   RESPONSIVE ESCRITORIO (A partir de 1025px)
    ========================================================================== */
 @media screen and (min-width: 1025px) {
   .footer-landing-container {

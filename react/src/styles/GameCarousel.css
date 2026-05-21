@@ -1,66 +1,158 @@
+.game-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
 .game-container {
-  padding: 0.5rem;
+  border-radius: 12px; 
+  overflow: hidden;
+  padding: 0; 
   margin: 0.3rem;
   border: 2px solid #ef4f23;
-  width: 100px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  height: 100%;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.game-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(239, 79, 35, 0.15); 
+}
+
 .info-game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 11.5rem;
+  width: 100%;
 }
+
 .game-img {
-  max-width: 4.5rem;
-  height: 6.5rem;
+  width: 100%;
+  max-width: 100%; 
+  aspect-ratio: 3/4; 
+  object-fit: cover;
+  border-radius: 0;
+  margin-bottom: 0.4rem; 
+}
+
+.game-name-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start; 
+  justify-content: center;
+  min-height: 2.3em; 
+  margin-bottom: 0; 
+  padding: 0 0.4rem; 
+  box-sizing: border-box;
 }
 
 .game-name {
-  margin-top: 0.5rem;
-  font-size: 13px;
+  margin: 0;
+  font-size: 0.8rem; 
+  text-align: center;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; 
   overflow: hidden;
-  text-align: center;
+  line-height: 1.1; 
 }
+
 .game-date {
-  margin-bottom: 0.5rem;
-  font-size: 13px;
+  margin: 0; 
+  font-size: 0.7rem; 
+  color: #666;
+  padding: 0.2rem 0 0.5rem 0; 
 }
+
 .game-platforms {
-  display: flex;
-  align-items: start;
-  justify-content: space-around;
+  display: none; 
 }
 
-.platform {
-  max-width: 1rem;
+.platform-icon {
+  width: 1rem;
+  height: 1rem;
+  object-fit: contain;
+  cursor: help;
 }
 
+.platform-badge {
+  font-size: 0.6rem;
+  background-color: #ef4f23;
+  color: white;
+  padding: 0.1rem 0.2rem;
+  font-weight: bold;
+  cursor: help;
+  white-space: nowrap;
+}
 
-@media (min-width: 1025px) {
+/* -------------------------------------------
+   RESPONSIVE DESIGN (Tablets / iPad)
+   ------------------------------------------- */
+@media (min-width: 768px) {
   .game-container {
-    padding: 0.8rem 0.6rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .game-img {
-    max-width: 85%;
-    width: 85%;
-    height: 10.5rem;
-    object-fit: cover;
-  }
-  .game-name {
-    font-size: 0.9rem;
-  }
-  .game-date {
-    font-size: 0.75rem;
+    padding: 0.8rem; 
+    border-radius: 16px; 
+    justify-content: space-between; 
   }
   .info-game-container {
-    height: 16rem;
+    width: auto;
   }
-  .platform {
-    max-width: 1.3rem;
+  .game-img {
+    max-width: 150px;
+    margin-bottom: 0.8rem; 
+    border-radius: 10px;
+  }
+  .game-name-container {
+    padding: 0;
+    min-height: 2.8em;
+  }
+  .game-name {
+    font-size: 1.2rem; 
+    line-height: 1.3; 
+  }
+  .game-date {
+    font-size: 1rem; 
+    margin-bottom: 0.8rem; 
+    padding: 0;
+  }
+  
+  .game-platforms {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto; 
+    min-height: 24px;
+  }
+
+  .platform-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  .platform-badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.3rem;
+  }
+}
+
+/* -------------------------------------------
+   RESPONSIVE DESIGN (PC)
+   ------------------------------------------- */
+@media (min-width: 1025px) {
+  .game-container {
+    padding: 1rem;
+  }
+  .game-img {
+    max-width: 170px;
+  }
+  .game-name {
+    font-size: 1.1rem;
   }
 }
