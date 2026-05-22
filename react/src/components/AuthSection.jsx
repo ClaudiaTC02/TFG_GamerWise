@@ -9,8 +9,9 @@ export function AuthSection({ texts, onSubmit, children, error, actionRoute }) {
     await loginWithSteamRequest()
   }
   return (
-    <section>
-      <Header />
+    <>
+    <Header />
+    <section className="auth-page-wrapper">
       <div className="auth-container">
         <h1>
           ¡<span className="highlited-text">{texts.highlited}</span>{" "}
@@ -37,5 +38,6 @@ export function AuthSection({ texts, onSubmit, children, error, actionRoute }) {
         </p>
       </div>
     </section>
+    </>
   );
 }

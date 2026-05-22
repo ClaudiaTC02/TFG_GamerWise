@@ -112,6 +112,21 @@ header {
   display: none;
 }
 
+header > :last-child:not(.options-container):not(a) {
+  width: auto;
+  min-width: 130px;
+  max-width: 200px; 
+}
+
+header select {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
 /* ==========================================================================
    NUEVO: AJUSTE PARA ESCRITORIO 
    ========================================================================== */

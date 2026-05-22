@@ -1,9 +1,16 @@
+.auth-page-wrapper {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  flex-direction: column;
+}
+
 .auth-container {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 90%;
+  flex-grow: 1;
 }
 
 h1 {
@@ -40,17 +47,12 @@ form {
   margin: 1rem 1rem 2rem 1rem;
 }
 
-.button-form {
-  margin-top: 2rem;
-  padding: 0.5rem;
-}
-
-.steam-container{
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 50%;
+.steam-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
 }
 
 .steam-paragraph {
@@ -59,45 +61,139 @@ form {
   font-size: 15px;
 }
 
-.steam-register {
-  margin: 0.3rem;
-  background-color: transparent;
-  border: 1px solid #ff3d00;
-  font-size: 2rem;
-  color: black;
-  padding: 0.3rem;
-}
-
 .final-paragraph {
   margin: 0 auto;
   margin-top: 3rem;
 }
 
-.error-message{
+.error-message {
   margin: 0 auto;
   color: red;
 }
 
+form input:focus {
+  outline: none;
+  border-bottom-color: #ff3d00;
+  box-shadow: 0 5px 6px -4px rgba(255, 61, 0, 0.3);
+}
+
+.button-form {
+  margin-top: 2rem;
+  padding: 0.7rem;
+  background-color: #ff4e18;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-form:hover {
+  background-color: #e63700;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 61, 0, 0.3);
+}
+
+.button-form:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(255, 61, 0, 0.3);
+}
+
+.steam-register {
+  margin: 0.3rem;
+  background-color: transparent;
+  border: 1px solid #ff4e18;
+  font-size: 2rem;
+  color: black;
+  padding: 0.3rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.steam-register:hover {
+  background-color: rgba(255, 61, 0, 0.05);
+  border-color: #ff3d00;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 61, 0, 0.15);
+}
+
+.steam-register:active {
+  transform: translateY(0);
+  background-color: rgba(255, 61, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(255, 61, 0, 0.15);
+}
+
+a.highlited-text {
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+a.highlited-text:hover {
+  color: #e63700;
+  text-decoration: underline;
+  text-shadow: 0 0 8px rgba(255, 61, 0, 0.4);
+  transform: scale(1.05);
+}
+
+a.highlited-text:active {
+  transform: scale(0.95);
+  text-shadow: none;
+}
+
 @media (min-width: 1025px) {
-  .auth-container {
-    width: 50%;
+.auth-page-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+    background-attachment: fixed;
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cstyle%3E.s%7Bfill%3Anone%3Bstroke%3A%23111827%3Bstroke-width%3A1.5%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg opacity='0.05'%3E%3Cpolygon class='s' points='20%2C35 30%2C15 40%2C35'%2F%3E%3Ccircle class='s' cx='90' cy='25' r='10'%2F%3E%3Crect class='s' x='15' y='70' width='20' height='20'%2F%3E%3Cline class='s' x1='82' y1='65' x2='98' y2='81'%2F%3E%3Cline class='s' x1='98' y1='65' x2='82' y2='81'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
   }
+
+  .auth-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 4rem auto;
+    background-color: #fdfdfd;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.05),
+      0 1px 5px rgba(0, 0, 0, 0.03);
+  }
+
+  h1,
+  .subtitle {
+    margin-left: 0;
+    text-align: center;
+  }
+
   h1 {
     font-size: 1.8rem;
+    margin-top: 0;
   }
-  .steam-register{
+
+  .steam-register {
     font-size: 1.5rem;
     padding: 0.2rem 3rem;
   }
-  .steam-paragraph{
+
+  .steam-paragraph {
     margin-top: 0.3rem;
   }
-  .final-paragraph{
+
+  .final-paragraph {
     margin-top: 1.5rem;
+    text-align: center;
   }
+
   form {
     display: flex;
     flex-direction: column;
-    margin: 1rem;
+    margin: 1.5rem 0;
   }
 }
