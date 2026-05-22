@@ -13,7 +13,7 @@ export function AuthSection({ texts, onSubmit, children, error, actionRoute }) {
     <Header />
     <section className="auth-page-wrapper">
       <div className="auth-container">
-        <h1>
+        <h1 className="auth-title">
           ¡<span className="highlited-text">{texts.highlited}</span>{" "}
           {texts.title}
         </h1>

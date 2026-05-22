@@ -1,7 +1,19 @@
-.logged-container-section{
-  margin: 0;
-  background: linear-gradient(#EAEAEA, #eaeaea67);
+/* ==========================================================================
+   ESTILOS GENERALES Y MÓVIL (Hasta 550px)
+   ========================================================================== */
+.landing-logged-wrapper {
+  width: 100%;
 }
+.logged-container-section {
+  margin: 0;
+  background: linear-gradient(#EAEAEA, rgba(234, 234, 234, 0));
+  padding: 1rem 1rem 5rem 1rem; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  width: 100%;
+}
+
 .logged-section {
   display: flex;
   align-items: center;
@@ -9,27 +21,33 @@
   padding: 2rem 0;
   position: relative;
   z-index: 1;
+  width: 100%;
 }
+
 .logged-pixels-container {
   flex: 0 0 auto;
   margin: 1rem;
 }
+
 .logged-pixels {
   width: 20px;
 }
+
 .logged-title-container {
-  flex-grow: 1;
   text-align: center;
 }
+
 .logged-title {
   margin: 0;
   font-size: 30px;
 }
+
 .logged-subtitle {
   font-size: 23px;
   font-weight: bold;
   margin-top: 0.3rem;
 }
+
 .underline-text {
   position: relative;
 }
@@ -43,24 +61,102 @@
   height: 2px;
   background-color: #ef4f23;
 }
+
 .flipped {
   transform: scaleX(-1);
 }
 
+/* Margen para los carruseles */
+.carousels-container {
+  padding: 0 1rem; 
+  margin-top: 2rem;
+}
+
+.search-bar-wrapper {
+  width: 90%; /* Ancho en móvil/tablet */
+  margin: 0 auto;
+}
+
+/* Forzamos al elemento principal dentro del SearchBar a ocupar el 100% del wrapper */
+.search-bar-wrapper > * {
+  max-width: none !important;
+}
+
+/* ==========================================================================
+   TABLET E IPAD (Desde 551px hasta 1024px)
+   ========================================================================== */
+@media screen and (min-width: 551px) and (max-width: 1024px) {
+  /* Limitamos el buscador y los carruseles al 90% para que respiren */
+  .carousels-container,
+  .logged-container-section > div:last-child,
+  .search-bar-container {
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .carousels-container {
+    padding: 0; 
+  }
+}
+
+
+/* ==========================================================================
+   ESCRITORIO (A partir de 1025px)
+   ========================================================================== */
 @media (min-width: 1025px) {
   .logged-section {
-    padding: 2rem 30rem;
+    padding: 2rem 0;
+    max-width: 800px; /* Mantiene el título y los píxeles agrupados en el centro */
+    margin: 0 auto;
   }
+
+  /* Aquí está la magia: Hacemos que el buscador y los carruseles midan exactamente lo mismo (1200px) */
+  .logged-container-section > div:last-child,
+  .search-bar-container,
+  .carousels-container { 
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto;
+  }
+
   .logged-title {
     font-size: 35px;
   }
+  
   .logged-subtitle {
     font-size: 26px;
   }
+  
   .underline-text::before {
     height: 3px;
   }
+  
   .logged-pixels {
     width: 25px;
+  }
+  
+  .carousels-container {
+    padding: 0; 
+  }
+
+  .search-bar-wrapper {
+    width: 100%;
+    max-width: 1200px; /* Aquí igualamos el tamaño con los carruseles */
+  }
+}
+
+
+/* ==========================================================================
+   PANTALLAS MUY GRANDES (A partir de 1400px o 1920px)
+   ========================================================================== */
+@media (min-width: 1400px) {
+  /* Si la pantalla es enorme, buscador y carruseles crecen juntos hasta 1400px */
+  .logged-container-section > div:last-child,
+  .search-bar-container,
+  .carousels-container {
+    max-width: 1400px;
+  }
+  .search-bar-wrapper {
+    max-width: 1400px;
   }
 }

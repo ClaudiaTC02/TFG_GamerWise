@@ -91,6 +91,21 @@
   white-space: nowrap;
 }
 
+.platform-more-badge {
+  font-size: 0.6rem;
+  background-color: #f0f0f0;
+  color: #555;
+  padding: 0.15rem 0.25rem;
+  font-weight: bold;
+  cursor: help;
+  border-radius: 4px;
+  white-space: nowrap;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* -------------------------------------------
    RESPONSIVE DESIGN (Tablets / iPad)
    ------------------------------------------- */
@@ -137,6 +152,11 @@
     height: 1.4rem;
   }
   .platform-badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.3rem;
+  }
+
+  .platform-more-badge {
     font-size: 0.75rem;
     padding: 0.15rem 0.3rem;
   }

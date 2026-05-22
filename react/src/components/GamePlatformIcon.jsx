@@ -9,6 +9,7 @@ import {
 } from "./Icons";
 
 export function GamePlatformIcon({ platform, specificPlatforms }) {
+  if (!platform || platform === "undefined") return null;
   let iconSrc = "";
 
   switch (platform) {

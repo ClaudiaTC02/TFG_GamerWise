@@ -166,7 +166,7 @@ a.highlited-text:active {
       0 1px 5px rgba(0, 0, 0, 0.03);
   }
 
-  h1,
+  .auth-title,
   .subtitle {
     margin-left: 0;
     text-align: center;

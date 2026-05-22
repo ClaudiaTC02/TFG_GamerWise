@@ -53,39 +53,45 @@ export default function LandingLogged() {
     fetchLandingRecommendations();
   }, [token]);
 
-  return (
+return (
     <>
       <Header isLogged={true} />
-      <section className="logged-container-section">
-        <div className="logged-section">
-          <div className="logged-pixels-container">
-            <img className="logged-pixels" src={pixelsIcon()} alt="pixeles" />
+      <div className="landing-logged-wrapper"> 
+        <section className="logged-container-section">
+          <div className="logged-section">
+            <div className="logged-pixels-container">
+              <img className="logged-pixels" src={pixelsIcon()} alt="pixeles" />
+            </div>
+            <div className="logged-title-container">
+              <h1 className="logged-title">
+                <span className="highlited-text">Explora</span> el catálogo
+              </h1>
+              <h2 className="logged-subtitle">
+                Tu <span className="underline-text">búsqueda</span> tus{" "}
+                <span className="highlited-text">Reglas</span>
+              </h2>
+            </div>
+            <div className="logged-pixels-container">
+              <img
+                className="logged-pixels flipped"
+                src={pixelsIcon()}
+                alt="pixeles"
+              />
+            </div>
           </div>
-          <div className="logged-title-container">
-            <h1 className="logged-title">
-              <span className="highlited-text">Explora</span> el catálogo
-            </h1>
-            <h2 className="logged-subtitle">
-              Tu <span className="underline-text">búsqueda</span> tus{" "}
-              <span className="highlited-text">Reglas</span>
-            </h2>
+          <div className="search-bar-wrapper">
+            <SearchBar />
           </div>
-          <div className="logged-pixels-container">
-            <img
-              className="logged-pixels flipped"
-              src={pixelsIcon()}
-              alt="pixeles"
-            />
-          </div>
+        </section>
+        <div className="carousels-container">
+          {RecommendationsLanding.length === 0 ? null : <CarouselSection gamesData={RecommendationsLanding} text="Para ti"/>}
+          <CarouselSection gamesData={LatestgamesData} text="Últimos estrenos" />
+          <CarouselSection
+            gamesData={UpcomminggamesData}
+            text="Próximos lanzamientos"
+          />
         </div>
-        <SearchBar />
-      </section>
-      {RecommendationsLanding.length == 0 ? null : <CarouselSection gamesData={RecommendationsLanding} text="Para ti"/>}
-      <CarouselSection gamesData={LatestgamesData} text="Últimos estrenos" />
-      <CarouselSection
-        gamesData={UpcomminggamesData}
-        text="Próximos lanzamientos"
-      />
+      </div>
       <Footer />
     </>
   );

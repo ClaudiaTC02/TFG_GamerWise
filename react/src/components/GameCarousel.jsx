@@ -16,8 +16,9 @@ export function GameCarousel({ game }) {
 
   const groupedPlatforms = {};
 
-  if (game.game.platforms) {
+if (game.game.platforms) {
     game.game.platforms.forEach((platform) => {
+      if (!platform || !platform.abbreviation) return; 
       const groupName = platformMap[platform.abbreviation] || platform.abbreviation;
       if (!groupedPlatforms[groupName]) {
         groupedPlatforms[groupName] = [];
@@ -32,31 +33,63 @@ export function GameCarousel({ game }) {
     ? moment.unix(game.game.first_release_date).format("DD/MM/YYYY") 
     : "TBA";
 
-  return (
-    <Link to={`/game/${game.game.id}`} className="game-link">
-      <div className="game-container">
-        <div className="info-game-container">
-          <img
-            className="game-img"
-            src={game.game.cover ? game.game.cover.url.replace("t_thumb", "t_cover_big") : defaultCoverIcon()}
-            alt={game.game.name}
-          />
-          <div className="game-name-container">
-            <h4 className="game-name" title={game.game.name}>{game.game.name}</h4>
-          </div>
-          <p className="game-date">{date}</p>
+const MAX_VISIBLE_PLATFORMS = 3; 
+const platformEntries = Object.entries(groupedPlatforms);
+const totalGroups = platformEntries.length;
+
+let visiblePlatforms;
+let hiddenPlatforms;
+
+if (totalGroups <= MAX_VISIBLE_PLATFORMS + 1) {
+  visiblePlatforms = platformEntries;
+  hiddenPlatforms = [];
+} else {
+  visiblePlatforms = platformEntries.slice(0, MAX_VISIBLE_PLATFORMS);
+  hiddenPlatforms = platformEntries.slice(MAX_VISIBLE_PLATFORMS);
+}
+
+const numHiddenGroups = hiddenPlatforms.length;
+let hiddenPlatformsText = "";
+if (numHiddenGroups > 0) {
+  hiddenPlatformsText = hiddenPlatforms
+    .flatMap(([_, specificPlatforms]) => specificPlatforms) 
+    .join(", "); 
+}
+
+return (
+  <Link to={`/game/${game.game.id}`} className="game-link">
+    <div className="game-container">
+      <div className="info-game-container">
+        <img
+          className="game-img"
+          src={game.game.cover ? game.game.cover.url.replace("t_thumb", "t_cover_big") : defaultCoverIcon()}
+          alt={game.game.name}
+        />
+        <div className="game-name-container">
+          <h4 className="game-name" title={game.game.name}>{game.game.name}</h4>
         </div>
-        
-        <div className="game-platforms">
-          {Object.entries(groupedPlatforms).map(([groupName, specificPlatforms], index) => (
-            <GamePlatformIcon 
-              key={index} 
-              platform={groupName} 
-              specificPlatforms={specificPlatforms} 
-            />
-          ))}
-        </div>
+        <p className="game-date">{date}</p>
       </div>
-    </Link>
-  );
+      
+      <div className="game-platforms">
+        {visiblePlatforms.map(([groupName, specificPlatforms], index) => (
+          <GamePlatformIcon 
+            key={index} 
+            platform={groupName} 
+            specificPlatforms={specificPlatforms} 
+          />
+        ))}
+
+        {numHiddenGroups > 0 && (
+          <span 
+            className="platform-more-badge" 
+            title={`Otras plataformas: ${hiddenPlatformsText}`}
+          >
+            +{numHiddenGroups}
+          </span>
+        )}
+      </div>
+    </div>
+  </Link>
+);
 }

@@ -13,12 +13,12 @@ export function CarouselSection({ gamesData, text }) {
   }
   const uniqueGames = new Set();
 
-  const settings = {
+const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 8,
-    slidesToScroll: 3,
+    slidesToShow: 7, 
+    slidesToScroll: 2, 
     responsive: [
       {
         breakpoint: 1024,
@@ -35,6 +35,15 @@ export function CarouselSection({ gamesData, text }) {
           slidesToShow: 3,
           slidesToScroll: 2,
           initialSlide: 1,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 550,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
           infinite: true,
         },
       },
