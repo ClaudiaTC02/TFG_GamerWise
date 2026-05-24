@@ -6,11 +6,10 @@
 }
 .logged-container-section {
   margin: 0;
-  background: linear-gradient(#EAEAEA, rgba(234, 234, 234, 0));
-  padding: 1rem 1rem 5rem 1rem; 
+  background: linear-gradient(#eaeaea, rgba(234, 234, 234, 0));
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   width: 100%;
 }
 
@@ -66,18 +65,16 @@
   transform: scaleX(-1);
 }
 
-/* Margen para los carruseles */
 .carousels-container {
-  padding: 0 1rem; 
+  padding: 0 1rem;
   margin-top: 2rem;
 }
 
 .search-bar-wrapper {
-  width: 90%; /* Ancho en móvil/tablet */
+  width: 90%;
   margin: 0 auto;
 }
 
-/* Forzamos al elemento principal dentro del SearchBar a ocupar el 100% del wrapper */
 .search-bar-wrapper > * {
   max-width: none !important;
 }
@@ -86,57 +83,203 @@
    TABLET E IPAD (Desde 551px hasta 1024px)
    ========================================================================== */
 @media screen and (min-width: 551px) and (max-width: 1024px) {
-  /* Limitamos el buscador y los carruseles al 90% para que respiren */
   .carousels-container,
   .logged-container-section > div:last-child,
   .search-bar-container {
     width: 90%;
     margin: 0 auto;
   }
-  
+
   .carousels-container {
-    padding: 0; 
+    padding: 0;
   }
 }
-
 
 /* ==========================================================================
    ESCRITORIO (A partir de 1025px)
    ========================================================================== */
 @media (min-width: 1025px) {
+  .carousels-container {
+    padding: 0;
+    counter-reset: section-counter;
+  }
+
+  .carousel-section {
+    position: relative;
+    padding: 2rem 0;
+    margin-left: 0;
+    margin-bottom: 4rem;
+    z-index: 1;
+  }
+  .carousel-section:first-child {
+    margin-top: 3rem;
+  }
+  .carousel-section:last-child {
+    margin-bottom: 6rem;
+  }
+  .carousel-title {
+    font-size: 30px;
+    margin-left: 1.5rem;
+  }
+  .carousel-line {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .carousel {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  .logged-container-section {
+    margin: 0;
+    background: linear-gradient(#eaeaea, rgba(234, 234, 234, 0));
+    padding: 1rem 1rem 5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logged-section {
+    position: relative;
+    z-index: 2;
+  }
+
+  .logged-container-section::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(17, 24, 39, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(17, 24, 39, 0.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: linear-gradient(to bottom, transparent 10%, black 90%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 10%, black 90%);
+  }
+
+  .logged-container-section::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(
+        6px 6px at 30px 40px,
+        rgba(239, 79, 35, 0.4),
+        transparent
+      ),
+      radial-gradient(
+        8px 8px at 80px 120px,
+        rgba(139, 92, 246, 0.35),
+        transparent
+      ),
+      radial-gradient(
+        5px 5px at 180px 190px,
+        rgba(17, 24, 39, 0.25),
+        transparent
+      ),
+      radial-gradient(
+        7px 7px at 110px 60px,
+        rgba(239, 79, 35, 0.4),
+        transparent
+      ),
+      radial-gradient(
+        9px 9px at 220px 250px,
+        rgba(139, 92, 246, 0.35),
+        transparent
+      );
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    animation: floatPixels 25s linear infinite;
+  }
+
+  @keyframes floatPixels {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-300px);
+    }
+  }
+
+  .search-bar-wrapper {
+    position: relative;
+    z-index: 3;
+  }
+
+  .search-bar-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 120%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(239, 79, 35, 0.12) 0%,
+      rgba(139, 92, 246, 0.06) 40%,
+      transparent 65%
+    );
+    filter: blur(20px);
+    z-index: -1;
+    pointer-events: none;
+    animation: pulseAura 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseAura {
+    0% {
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(0.98);
+    }
+    100% {
+      opacity: 0.85;
+      transform: translate(-50%, -50%) scale(1.02);
+    }
+  }
+
   .logged-section {
     padding: 2rem 0;
-    max-width: 800px; /* Mantiene el título y los píxeles agrupados en el centro */
+    max-width: 800px;
     margin: 0 auto;
   }
 
-  /* Aquí está la magia: Hacemos que el buscador y los carruseles midan exactamente lo mismo (1200px) */
   .logged-container-section > div:last-child,
   .search-bar-container,
-  .carousels-container { 
+  .carousels-container {
     width: 100%;
-    max-width: 1200px; 
+    max-width: 1200px;
     margin: 0 auto;
   }
 
   .logged-title {
     font-size: 35px;
   }
-  
+
   .logged-subtitle {
     font-size: 26px;
   }
-  
+
   .underline-text::before {
     height: 3px;
   }
-  
+
   .logged-pixels {
     width: 25px;
   }
-  
+
   .carousels-container {
-    padding: 0; 
+    padding: 0;
   }
 
   .search-bar-wrapper {
@@ -144,7 +287,6 @@
     max-width: 1200px; /* Aquí igualamos el tamaño con los carruseles */
   }
 }
-
 
 /* ==========================================================================
    PANTALLAS MUY GRANDES (A partir de 1400px o 1920px)

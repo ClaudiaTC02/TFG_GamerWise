@@ -1,18 +1,49 @@
 .carousel-section {
   margin-left: 0.5rem;
+  margin-bottom: 3.5rem;
+  position: relative;
 }
-.carousel-title {
-  font-size: 25px;
-  margin-left: 1rem;
+
+.carousel-section:first-child {
+  margin-top: 3rem;
 }
+
+.carousel-section:last-child {
+  margin-bottom: 6rem;
+}
+
+.carousel-title::before {
+  content: "///";
+  color: #ef4f23;
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin-right: 12px;
+  opacity: 0.8;
+  vertical-align: middle;
+}
+
 .carousel-line {
-  margin-top: 0;
-  margin-left: 1rem;
-  height: 2px;
-  width: 80px;
-  border: 2px solid #ef4f23;
-  opacity: 1;
+  margin-left: 1.5rem;
+  margin-bottom: 2rem;
+  width: 60px;
+  height: 4px;
+  background-color: #ef4f23;
+  border: none;
+  border-radius: 2px;
+  position: relative;
 }
+
+.carousel-line::after {
+  content: "";
+  position: absolute;
+  right: -15px;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #8b5cf6;
+  border-radius: 50%;
+}
+
 .carousel {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -33,6 +64,27 @@
 }
 
 @media (min-width: 1025px) {
+  /* Hacemos que cada carrusel sume 1 al contador */
+.carousel-section {
+  counter-increment: section-counter;
+  /* ... tus otros estilos ... */
+}
+
+/* Creamos el número gigante detrás del título */
+.carousel-section::after {
+  content: "0" counter(section-counter); /* Imprime "01", "02", etc. */
+  position: absolute;
+  top: -20px; /* Ajusta para que quede detrás del texto del título */
+  left: 2rem; /* Alineado un poco a la izquierda */
+  font-size: 150px; /* Tamaño gigante */
+  font-weight: 900;
+  letter-spacing: -5px;
+  color: rgba(17, 24, 39, 0.03); /* Un gris casi imperceptible */
+  z-index: -2; /* Al fondo del todo */
+  pointer-events: none;
+  line-height: 1;
+}
+
   .slick-prev {
     display: block !important;
     left: -35px !important;

@@ -32,7 +32,7 @@ const settings = {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 2,
           initialSlide: 1,
           infinite: true,
@@ -41,8 +41,8 @@ const settings = {
       {
         breakpoint: 550,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
+          slidesToShow: 3,
+          slidesToScroll: 2,
           initialSlide: 0,
           infinite: true,
         },
@@ -52,7 +52,7 @@ const settings = {
   return (
     <section className="carousel-section">
       <h1 className="carousel-title">{text}</h1>
-      <hr className="carousel-line" />
+      <div className="carousel-line"></div>
       <SlickSlider {...settings} className='carousel'>
         {gamesData.map((element) => {
           if (!uniqueGames.has(element.game.name)) {
