@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { CarouselSection } from "../components/CarouselSection";
 import { Header } from "../components/Header";
 import { defaultCoverIcon } from "../components/Icons";
@@ -20,19 +20,18 @@ import {
   deleteGameToLikeList,
 } from "../logic/listLogic";
 import { Loading } from "../components/Loading";
-import { SearchBar } from "../components/SearchBar";
 import { Footer } from "../components/Footer";
 import { getGameRecommendationsLogic } from "../logic/recommendationsLogic";
 
 export default function GameDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { token } = useAuth();
   const [gameDetails, setGameDetails] = useState([]);
   const [recommendationsGame, setRecommendationsGame] = useState([]);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  // Modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -45,31 +44,19 @@ export default function GameDetailPage() {
           setGameDetails(game[0]);
           const company =
             (game[0].involved_companies &&
-              game[0].involved_companies
-                .map((company) => company.company.name)
-                .join(", ")) ||
+              game[0].involved_companies.map((c) => c.company.name).join(", ")) ||
             "anonymus";
           const platforms =
             (game[0].platforms &&
-              game[0].platforms
-                .map((platforms) => platforms.abbreviation)
-                .join(", ")) ||
+              game[0].platforms.map((p) => p.abbreviation).join(", ")) ||
             "none";
           const genres =
-            (game[0].genres &&
-              game[0].genres.map((genre) => genre.name).join(", ")) ||
+            (game[0].genres && game[0].genres.map((g) => g.name).join(", ")) ||
             "none";
           const recommendations = await getGameRecommendationsLogic(
-            token,
-            id,
-            game[0].name,
-            company,
-            genres,
-            platforms
+            token, id, game[0].name, company, genres, platforms
           );
           setRecommendationsGame(recommendations);
-        } else {
-          console.log("No se encontraron detalles del juego");
         }
       } catch (error) {
         console.log(error);
@@ -81,8 +68,8 @@ export default function GameDetailPage() {
         if (game) {
           const like = await checkIfGameIsLiked(game.game[0].id, token);
           setIsFavorite(like);
-          const rating = await getRatingRequest(game.game[0].id, token);
-          setRating(rating);
+          const r = await getRatingRequest(game.game[0].id, token);
+          setRating(r);
           setRated(true);
         }
       } catch (error) {
@@ -127,127 +114,316 @@ export default function GameDetailPage() {
     }
   };
 
-  const handleAddList = () => {
-    handleShow();
+  const handleAddList = () => handleShow();
+
+  const renderStars = () =>
+    Array.from({ length: 5 }, (_, i) => i + 1).map((i) => (
+      <span
+        key={i}
+        onClick={() => handleRatingChange(i)}
+        className={
+          rated
+            ? i <= rating ? "bi bi-star-fill rated" : "bi bi-star rated"
+            : i <= rating ? "bi bi-star-fill" : "bi bi-star"
+        }
+      />
+    ));
+
+  const getHeroBackground = () => {
+    if (gameDetails.artworks?.length > 0)
+      return gameDetails.artworks[0].url.replace("t_thumb", "t_1080p");
+    if (gameDetails.screenshots?.length > 0)
+      return gameDetails.screenshots[0].url.replace("t_thumb", "t_1080p");
+    return null;
   };
 
-  const renderStars = () => {
-    const stars = [];
-    const maxRating = 5;
-    for (let i = 1; i <= maxRating; i++) {
-      stars.push(
-        <span
-          key={i}
-          onClick={() => handleRatingChange(i)}
-          className={
-            rated
-              ? i <= rating
-                ? "bi bi-star-fill rated"
-                : "bi bi-star rated"
-              : i <= rating
-              ? "bi bi-star-fill"
-              : "bi bi-star"
-          }
-        />
-      );
-    }
-    return stars;
-  };
+  const heroBackground = getHeroBackground();
 
-  if (gameDetails.length === 0) {
-    return <Loading />;
-  }
+  const releaseDate = gameDetails.first_release_date
+    ? new Date(gameDetails.first_release_date * 1000).toLocaleDateString("es-ES", {
+        year: "numeric", month: "short", day: "numeric",
+      })
+    : null;
+
+  if (gameDetails.length === 0) return <Loading />;
+
+  /* ── Bloques reutilizables ── */
+  const MetaChips = () => (
+    <div className="gd-meta-chips">
+      {releaseDate && (
+        <div className="gd-chip">
+          <i className="bi bi-calendar3" />
+          <div>
+            <span className="gd-chip-label">Lanzamiento</span>
+            <span className="gd-chip-val">{releaseDate}</span>
+          </div>
+        </div>
+      )}
+      {gameDetails.platforms && (
+        <div className="gd-chip">
+          <i className="bi bi-controller" />
+          <div>
+            <span className="gd-chip-label">Plataformas</span>
+            <span className="gd-chip-val">
+              {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).join(" · ")}
+            </span>
+          </div>
+        </div>
+      )}
+      {gameDetails.involved_companies && (
+        <div className="gd-chip">
+          <i className="bi bi-building" />
+          <div>
+            <span className="gd-chip-label">Desarrolladora</span>
+            <span className="gd-chip-val">
+              {gameDetails.involved_companies.map((c) => c.company.name).filter(Boolean)[0]}
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <>
       <Header isLogged={true} />
-      <section className="logged-container-section">
-        <div style={{ paddingTop: "1rem" }}>
-          <SearchBar />
+
+      {/* ══════════════════════════════════
+          HERO
+      ══════════════════════════════════ */}
+      <section className="gd-hero">
+        <div className="gd-hero-bg">
+          {heroBackground && (
+            <img src={heroBackground} alt="" className="gd-hero-art" />
+          )}
+          <div className="gd-hero-grad" />
         </div>
-      </section>
-      <section className="detail-section">
-        <div className="detail-container">
-          <div className="detail-container-right">
-            <img
-              className="detail-cover"
-              src={
-                gameDetails.cover
-                  ? gameDetails.cover.url.replace("t_thumb", "t_cover_big")
-                  : defaultCoverIcon()
-              }
-              alt={gameDetails.name}
-            />
-            <p className="detail-rating">Puntúalo</p>
-            <div className="detail-star-container">{renderStars()}</div>
-            <button className="detail-addList-button" onClick={handleAddList}>
-              Añadir a lista
-            </button>
-            <ModalWindow
-              show={show}
-              handleClose={handleClose}
-              gameName={gameDetails.name}
-              igdb_id={id}
-              gameDetails={gameDetails}
-              onAddToLikeList={() => setIsFavorite(true)}
-            />
-          </div>
-          <div className="detail-container-left">
-            <div className="detail-container-info">
-              <div className="detail-container-title">
-                <h1 className="detail-title">{gameDetails.name}</h1>
-                <h3 className="detail-subtitle">
-                  {gameDetails.involved_companies &&
-                    gameDetails.involved_companies
-                      .map((company) => company.company.name)
-                      .filter((name) => name)
-                      .join(", ")}
-                </h3>
-              </div>
-              <div className="details-heart">
-                <i
-                  className={isFavorite ? "bi bi-heart-fill" : "bi bi-heart"}
-                  onClick={handleAddToFav}
-                ></i>
+
+        <div className="gd-hero-topbar">
+          <button className="gd-back-btn" onClick={() => navigate(-1)} aria-label="Volver">
+            <i className="bi bi-arrow-left" />
+          </button>
+        </div>
+
+        {/* Desktop hero: dos filas */}
+        <div className="gd-hero-content">
+
+          {/* Fila 1: portada flotante + título */}
+          <div className="gd-hero-row1">
+            <div className="gd-cover-wrap">
+              <img
+                className="gd-cover-img"
+                src={
+                  gameDetails.cover
+                    ? gameDetails.cover.url.replace("t_thumb", "t_cover_big")
+                    : defaultCoverIcon()
+                }
+                alt={gameDetails.name}
+              />
+            </div>
+            <div className="gd-hero-title-block">
+              {gameDetails.involved_companies && (
+                <p className="gd-studio">
+                  {gameDetails.involved_companies
+                    .map((c) => c.company.name).filter(Boolean).join(" · ")}
+                </p>
+              )}
+              <h1 className="gd-title">{gameDetails.name}</h1>
+              <div className="gd-tags">
+                {gameDetails.genres &&
+                  gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
+                    <span key={i} className="gd-tag">{name}</span>
+                  ))}
               </div>
             </div>
-            <p className="detail-gender">
-              <span className="detail-bold">Género: </span>
-              {gameDetails.genres &&
-                gameDetails.genres
-                  .map((genre) => genre.name)
-                  .filter((name) => name)
-                  .join(", ")}
+          </div>
+
+          {/* Fila 2: meta chips a la izq, estrellas + botones a la dcha */}
+          <div className="gd-hero-row2">
+            <MetaChips />
+
+            <div className="gd-hero-actions-group">
+              <div className="gd-stars-inline">
+                <span className="gd-chip-label">Tu puntuación</span>
+                <div className="gd-stars">{renderStars()}</div>
+              </div>
+              <div className="gd-bar-div" />
+              <button className="gd-btn-add" onClick={handleAddList}>
+                <i className="bi bi-plus-lg" /> Añadir a mis listas
+              </button>
+              <button
+                className={`gd-btn-fav${isFavorite ? " is-fav" : ""}`}
+                onClick={handleAddToFav}
+                aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
+              >
+                <i className={isFavorite ? "bi bi-heart-fill" : "bi bi-heart"} />
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════
+          MÓVIL: zona oscura + card blanca
+      ══════════════════════════════════ */}
+      <div className="gd-mobile-only">
+        <div className="gd-mob-title-area">
+          {gameDetails.involved_companies && (
+            <p className="gd-mob-studio">
+              {gameDetails.involved_companies.map((c) => c.company.name).filter(Boolean).join(" · ")}
             </p>
-            <p className="detail-platforms">
-              <span className="detail-bold">Plataformas: </span>
-              {gameDetails.platforms &&
-                gameDetails.platforms
-                  .map((platforms) => platforms.abbreviation)
-                  .filter((abbreviation) => abbreviation)
-                  .join(", ")}
+          )}
+          <h1 className="gd-mob-title">{gameDetails.name}</h1>
+          <div className="gd-tags">
+            {gameDetails.genres &&
+              gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
+                <span key={i} className="gd-tag">{name}</span>
+              ))}
+          </div>
+        </div>
+
+        <div className="gd-mob-card">
+          <div className="gd-mob-stars-row">
+            <span className="gd-mob-stars-label">Tu puntuación</span>
+            <div className="gd-stars">{renderStars()}</div>
+          </div>
+
+          <button className="gd-btn-add gd-btn-full" onClick={handleAddList}>
+            <i className="bi bi-plus-lg" /> Añadir a mis listas
+          </button>
+          <button
+            className={`gd-mob-fav-btn${isFavorite ? " is-fav" : ""}`}
+            onClick={handleAddToFav}
+          >
+            <i className={isFavorite ? "bi bi-heart-fill" : "bi bi-heart"} />
+            {isFavorite ? "Guardado en favoritos" : "Guardar en favoritos"}
+          </button>
+
+          <div className="gd-mob-meta">
+            {releaseDate && (
+              <div className="gd-mob-meta-item">
+                <i className="bi bi-calendar3" />
+                <div>
+                  <span className="gd-mob-meta-label">Lanzamiento</span>
+                  <span className="gd-mob-meta-val">{releaseDate}</span>
+                </div>
+              </div>
+            )}
+            {gameDetails.platforms && (
+              <div className="gd-mob-meta-item">
+                <i className="bi bi-controller" />
+                <div>
+                  <span className="gd-mob-meta-label">Plataformas</span>
+                  <span className="gd-mob-meta-val">
+                    {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).join(", ")}
+                  </span>
+                </div>
+              </div>
+            )}
+            {gameDetails.involved_companies && (
+              <div className="gd-mob-meta-item">
+                <i className="bi bi-building" />
+                <div>
+                  <span className="gd-mob-meta-label">Desarrolladora</span>
+                  <span className="gd-mob-meta-val">
+                    {gameDetails.involved_companies.map((c) => c.company.name).filter(Boolean)[0]}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="gd-mob-section">
+            <h2 className="gd-sec-label">Descripción</h2>
+            <p className="gd-desc-text">
+              {gameDetails.summary ?? "No hay descripción disponible para este título."}
             </p>
-            <div className="detail-container-description-web">
-              <h5 className="detail-title-description">Desripción</h5>
-              <p className="detail-text-description">
-                {gameDetails.summary && gameDetails.summary}
+          </div>
+
+          {gameDetails.genres && (
+            <div className="gd-mob-section">
+              <h2 className="gd-sec-label">Géneros</h2>
+              <div className="gd-badges">
+                {gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
+                  <span key={i} className="gd-badge gd-badge--genre">{name}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {gameDetails.platforms && (
+            <div className="gd-mob-section">
+              <h2 className="gd-sec-label">Plataformas</h2>
+              <div className="gd-badges">
+                {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).map((abbr, i) => (
+                  <span key={i} className="gd-badge gd-badge--platform">{abbr}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {recommendationsGame?.length > 0 && (
+            <div className="gd-mob-section">
+              <CarouselSection gamesData={recommendationsGame} text="También puede gustarte" />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════
+          DESKTOP: body
+      ══════════════════════════════════ */}
+      <div className="gd-desktop-only">
+        <div className="gd-desktop-body">
+          <div className="gd-desktop-grid">
+            <main className="gd-desktop-main">
+              <h2 className="gd-sec-label">Descripción</h2>
+              <p className="gd-desc-text">
+                {gameDetails.summary ?? "No hay descripción disponible para este título."}
               </p>
-            </div>
+            </main>
+            <aside className="gd-desktop-aside">
+              {gameDetails.genres && (
+                <div className="gd-aside-sec">
+                  <h2 className="gd-sec-label">Géneros</h2>
+                  <div className="gd-badges">
+                    {gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
+                      <span key={i} className="gd-badge gd-badge--genre">{name}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {gameDetails.platforms && (
+                <div className="gd-aside-sec">
+                  <h2 className="gd-sec-label">Plataformas</h2>
+                  <div className="gd-badges">
+                    {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).map((abbr, i) => (
+                      <span key={i} className="gd-badge gd-badge--platform">{abbr}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </aside>
           </div>
+
+          {recommendationsGame?.length > 0 && (
+            <div className="gd-desktop-recs">
+              <CarouselSection gamesData={recommendationsGame} text="También puede gustarte" />
+            </div>
+          )}
         </div>
-        <div className="detail-container-description">
-          <h5 className="detail-title-description">Desripción</h5>
-          <p className="detail-text-description">
-            {gameDetails.summary && gameDetails.summary}
-          </p>
-        </div>
-      </section>
-      {recommendationsGame && (
-        <CarouselSection
-          gamesData={recommendationsGame}
-          text="También puede gustarte"
-        />
-      )}
+      </div>
+
+      <ModalWindow
+        show={show}
+        handleClose={handleClose}
+        gameName={gameDetails.name}
+        igdb_id={id}
+        gameDetails={gameDetails}
+        onAddToLikeList={() => setIsFavorite(true)}
+      />
+
       <Footer />
     </>
   );

@@ -33,19 +33,33 @@ if (game.game.platforms) {
     ? moment.unix(game.game.first_release_date).format("DD/MM/YYYY") 
     : "TBA";
 
-const MAX_VISIBLE_PLATFORMS = 3; 
+const MAX_CONTAINER_WIDTH = 140;
+const ICON_WIDTH = 30;
+const TEXT_BADGE_WIDTH = 80;
+const MORE_BADGE_WIDTH = 40;
+
 const platformEntries = Object.entries(groupedPlatforms);
 const totalGroups = platformEntries.length;
 
-let visiblePlatforms;
-let hiddenPlatforms;
+let visiblePlatforms = [];
+let hiddenPlatforms = [];
+let currentWidth = 0;
 
-if (totalGroups <= MAX_VISIBLE_PLATFORMS + 1) {
-  visiblePlatforms = platformEntries;
-  hiddenPlatforms = [];
-} else {
-  visiblePlatforms = platformEntries.slice(0, MAX_VISIBLE_PLATFORMS);
-  hiddenPlatforms = platformEntries.slice(MAX_VISIBLE_PLATFORMS);
+
+for (let i = 0; i < totalGroups; i++) {
+  const [groupName, specificPlatforms] = platformEntries[i];
+  const isIcon = ["Nintendo", "PC", "PlayStation", "Xbox", "Android", "iOS", "VR"].includes(groupName);
+  const elementWidth = isIcon ? ICON_WIDTH : TEXT_BADGE_WIDTH;
+  const isLastElement = i === totalGroups - 1;
+  const requiredSpace = currentWidth + elementWidth + (isLastElement ? 0 : MORE_BADGE_WIDTH);
+
+  if (requiredSpace <= MAX_CONTAINER_WIDTH) {
+    visiblePlatforms.push(platformEntries[i]);
+    currentWidth += elementWidth;
+  } else {
+    hiddenPlatforms = platformEntries.slice(i);
+    break;
+  }
 }
 
 const numHiddenGroups = hiddenPlatforms.length;
