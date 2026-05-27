@@ -38,36 +38,25 @@ export function ListsProfile() {
   };
 
   const getColor = (name) => {
-    let color;
     switch (name) {
       case "Playing":
-        color = "#FF0000";
-        break;
+        return "#ef4f23";
       case "Completed":
-        color = "#136422";
-        break;
+        return "#136422";
       case "Like":
-        color = "#BF17D3";
-        break;
+        return "#BF17D3";
       case "Dropped":
-        color = "#490C0C";
-        break;
+        return "#555";
       default:
-        if (name.length <= 5) {
-          color = "#FF2222";
-        } else if (name.length <= 8) {
-          color = "blue";
-        } else {
-          color = "darkorange";
-        }
-        break;
+        if (name.length <= 5) return "#ef4f23";
+        if (name.length <= 8) return "#2563eb";
+        return "#ea580c";
     }
-    return color;
   };
 
   useEffect(() => {
     const filtered = lists.filter((list) =>
-      list.name.toLowerCase().includes(searchTerm.toLowerCase())
+      list.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setFilteredLists(filtered);
   }, [searchTerm, lists]);
@@ -84,6 +73,12 @@ export function ListsProfile() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
+
+      <div className="list-section-header">
+        <span className="list-section-title">Mis listas</span>
+        <div class="carousel-line"></div>
+      </div>
+
       <section className="list-section">
         <div onClick={handleOpenModalCreate}>
           <ListPreview name="+" color="#F2F2F2" newlist={true} />

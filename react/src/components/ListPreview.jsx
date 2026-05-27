@@ -1,7 +1,7 @@
 import "../styles/ListSection.css";
 
 export function ListPreview({ name, color, newlist, list_id }) {
-  const handleListClick = () => {
+    const handleListClick = () => {
     if (newlist) {
       console.log("crear nueva lista");
     } else {
@@ -10,15 +10,17 @@ export function ListPreview({ name, color, newlist, list_id }) {
   };
   return (
     <div
-      style={{
-        border:`2px solid ${color}`,
-        color: "black",
-        backgroundColor: newlist ? color : "rgb(249 249 249)" 
-      }}
-      className="list-container"
+      className={`list-container${newlist ? " list-container--new" : ""}`}
+      style={{ "--list-color": color }}
       onClick={handleListClick}
     >
-      {name}
+      {!newlist && (
+        <span
+          className="list-container__dot"
+          style={{ background: color }}
+        />
+      )}
+      <span className="list-container__name">{name}</span>
     </div>
   );
 }

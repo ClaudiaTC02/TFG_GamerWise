@@ -32,84 +32,82 @@ export function ProfilePage() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
-      if (hash === "lists" || hash === "ratings" || hash === "options") {
+      if (["lists", "ratings", "options"].includes(hash)) {
         setActiveComponent(hash);
       } else {
         setActiveComponent("lists");
       }
     };
-
     window.addEventListener("hashchange", handleHashChange);
     handleHashChange();
-
-    return () => {
-      window.removeEventListener("hashchange", handleHashChange);
-    };
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   const [activeComponent, setActiveComponent] = useState("lists");
-  const handleClick = (componente) => {
-    setActiveComponent(componente);
-  };
+  const handleClick = (componente) => setActiveComponent(componente);
 
-  // Función para actualizar el nombre del usuario
   const updateUser = async (newName) => {
-    try {
-      setUser({ ...user, name: newName });
-    } catch (error) {
-      console.log(error);
-    }
+    try { setUser({ ...user, name: newName }); }
+    catch (error) { console.log(error); }
   };
 
-  // Función para actualizar el token de steam
   const updateUserSteam = (newSteamValue) => {
     setUser((prevUser) => ({ ...prevUser, steam: newSteamValue }));
   };
+
   return (
     <>
       <Header isLogged={true} />
+
       <section>
         <div className="profile-background">
-          <div className="profile-img-container">
+          <div className="profile-background-glow" />
+          <div className="profile-background-fade" />
+        </div>
+        <div className="profile-img-container">
+          <div className="profile-img-inner">
             <img src={userIcon()} alt="user-photo" className="profile-img" />
           </div>
         </div>
         <div className="profile-texts-container">
-          <p className="profile-subtitle">
-            {gamesCount && gamesCount.counted_playing} Playing
-          </p>
-          <h1 className="profile-title">{user && user.name}</h1>
-          <p className="profile-subtitle">
-            {gamesCount && gamesCount.counted_completed} Completed
-          </p>
+          <h1 className="profile-title">{user?.name ?? "—"}</h1>
+          <div className="profile-stats-row">
+            <p className="profile-subtitle">
+              <span className="profile-stat-number">
+                {gamesCount?.counted_playing ?? 0}
+              </span>
+              <span className="profile-stat-label">Playing</span>
+            </p>
+            <p className="profile-subtitle">
+              <span className="profile-stat-number">
+                {gamesCount?.counted_completed ?? 0}
+              </span>
+              <span className="profile-stat-label">Completed</span>
+            </p>
+          </div>
         </div>
       </section>
+
       <nav className="profile-nav">
         <ul>
           <li>
-            <a
-              href="#lists"
+            <a href="#lists"
               className={activeComponent === "lists" ? "active" : ""}
-              onClick={() => handleClick("lists")}
-            >
+              onClick={() => handleClick("lists")}>
               Listas
             </a>
           </li>
           <li>
-            <a
-              href="#ratings"
+            <a href="#ratings"
               className={activeComponent === "ratings" ? "active" : ""}
-              onClick={() => handleClick("ratings")}
-            >
+              onClick={() => handleClick("ratings")}>
               Puntuaciones
             </a>
           </li>
           <li>
-            <a
-              href="#options"
+            <a href="#options"
               className={activeComponent === "options" ? "active" : ""}
-              onClick={() => handleClick("options")}
-            >
+              onClick={() => handleClick("options")}>
               Opciones
             </a>
           </li>
@@ -119,8 +117,9 @@ export function ProfilePage() {
       {activeComponent === "lists" && <ListsProfile />}
       {activeComponent === "ratings" && <RatingProfile />}
       {activeComponent === "options" && (
-        <SettingsProfile updateUser={updateUser} user={user} updateUserSteam={updateUserSteam}/>
+        <SettingsProfile updateUser={updateUser} user={user} updateUserSteam={updateUserSteam} />
       )}
+
       <Footer />
     </>
   );

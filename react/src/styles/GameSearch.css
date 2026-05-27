@@ -3,35 +3,32 @@
   margin: 1rem auto;
   padding: 0;
   display: grid;
-  width: 90%; 
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  width: 90%;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 15px;
   justify-content: space-between;
 }
 
 .game-li {
   text-align: center;
-  width: 100%; 
+  width: 100%;
 }
-.no-found-games{
+.no-found-games {
   margin: 1rem 4.5rem;
   margin-bottom: 3rem;
 }
 
-/* ==========================================================================
-   RESPONSIVE DESIGN (MÓVIL)
-   ========================================================================== */
 @media screen and (max-width: 550px) {
   .games-search {
     width: 100%;
     padding: 0 1rem;
     box-sizing: border-box;
     margin-top: 1rem;
-    
-    grid-template-columns: repeat(2, 1fr); 
+
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
-  .no-found-games{
+  .no-found-games {
     margin: 0;
   }
 }

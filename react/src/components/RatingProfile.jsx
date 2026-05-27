@@ -4,14 +4,16 @@ import {
   getAllRatingsOfUserRequest,
   getGamesWithSpecificRatingRequest,
 } from "../api/rating";
-import BarChart from "./BarChart";
 import { GameSearch } from "./GameSearch";
 import { getGameDetailsRequest } from "../api/igdb";
+import { HorizontalBars } from "./BarChart"; 
+import '../styles/RatingSection.css';
 
 export function RatingProfile() {
   const [ratings, setRatings] = useState();
   const [value, setValue] = useState(null);
   const [games, setGames] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { token } = useAuth();
 
   useEffect(() => {
@@ -19,7 +21,6 @@ export function RatingProfile() {
       try {
         const ratingsResponse = await getAllRatingsOfUserRequest(token);
         setRatings(ratingsResponse);
-        console.log(ratingsResponse);
       } catch (error) {
         console.log(error);
       }
@@ -27,46 +28,79 @@ export function RatingProfile() {
     fetchData();
   }, [token]);
 
-  const getGamesRated = async (value) => {
-    const ratedGames = await getGamesWithSpecificRatingRequest(token, value);
-    
-    console.log(ratedGames);
-    const ratedDetailedGames = await Promise.all(
-      ratedGames.map(async (game) => {
-        const game_details = await getGameDetailsRequest(game.igdb_id);
-        const details = {
-          id: game_details[0].id,
-          name: game_details[0].name,
-          year: game_details[0].first_release_date,
-          cover: game_details[0].cover,
-        }
-        return details; 
-      })
-    );
-    console.log(ratedDetailedGames)
-    setGames(ratedDetailedGames);
+  const getGamesRated = async (stars) => {
+    setLoading(true);
+    try {
+      const ratedGames = await getGamesWithSpecificRatingRequest(token, stars);
+      const ratedDetailedGames = await Promise.all(
+        ratedGames.map(async (game) => {
+          const game_details = await getGameDetailsRequest(game.igdb_id);
+          return {
+            id: game_details[0].id,
+            name: game_details[0].name,
+            year: game_details[0].first_release_date,
+            cover: game_details[0].cover,
+          };
+        })
+      );
+      setGames(ratedDetailedGames);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Función para manejar el clic en la barra
-  const handleBarClick = async (label, value) => {
-    console.log(`Se ha hecho clic en la barra ${label} con valor ${value}`);
+  const handleBarClick = async (label, count) => {
+    console.log(`Clic en barra ${label} con valor ${count}`);
     setValue(label);
+    setGames(null);
     await getGamesRated(label);
   };
+
   return (
-    <>
-      {ratings && <BarChart scores={ratings} onBarClick={handleBarClick} />}
-      {value && games && (
-        <>
-          <section className="rating-section-container">
-            <h2 className="rating-title-clicked">{`Juegos Puntuados con ${value} estrella`}</h2>
-            <hr className="rating-hr" />
-            <div className="rating-games">
-              <GameSearch games={games} />
+    <div className="rating-profile-outer">
+      <div className="rating-profile-wrapper">
+        <div className="bar-chart-container">
+          {ratings && (
+            <HorizontalBars
+              scores={ratings}
+              onBarClick={handleBarClick}
+              activeValue={value}
+            />
+          )}
+        </div>
+        
+        <section className="rating-section-container">
+          {!value && (
+            <div className="rating-empty-state">
+              <span className="rating-empty-icon">☆</span>
+              <p>Selecciona una puntuación para ver los juegos</p>
             </div>
-          </section>
-        </>
-      )}
-    </>
+          )}
+
+          {value && loading && (
+            <div className="rating-empty-state">
+              <p>Cargando juegos...</p>
+            </div>
+          )}
+
+          {value && !loading && games && (
+            <>
+              <div className="rating-header">
+                <h2 className="rating-title-clicked">
+                  ☆ {value} estrella{value !== 1 ? "s" : ""}
+                  <span className="rating-count-badge">{games.length} juegos</span>
+                </h2>
+                <hr className="rating-hr" />
+              </div>
+              <div className="rating-games">
+                <GameSearch games={games} />
+              </div>
+            </>
+          )}
+        </section>
+      </div>
+    </div>
   );
 }

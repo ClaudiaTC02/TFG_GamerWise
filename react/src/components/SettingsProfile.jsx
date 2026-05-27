@@ -26,7 +26,7 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
       try {
         const lists = await getAllListOfUserRequest(token);
         const filteredLists = lists.filter(
-          (list) => !forbiddenNames.includes(list.name)
+          (list) => !forbiddenNames.includes(list.name),
         );
         setLists(filteredLists);
       } catch (error) {
@@ -37,7 +37,6 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
     fetchData();
   }, [token, user]);
 
-  // Modal
   const [showEmail, setShowEmail] = useState(false);
   const [showPasword, setShowPassword] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -58,13 +57,8 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
     }
   };
 
-  const handleListChange = (event) => {
-    setSelectedList(event.target.value);
-  };
-
-  const handleInputChange = (event) => {
-    setDeleteInput(event.target.value);
-  };
+  const handleListChange = (event) => setSelectedList(event.target.value);
+  const handleInputChange = (event) => setDeleteInput(event.target.value);
 
   const handleDeleteList = async () => {
     const id = selectedList;
@@ -73,28 +67,16 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
         await deleteListRequest(id, token);
         setDeleteInput("");
         setSelectedList("");
-        const updatedLists = lists.filter((list) => list.id !== id);
+
+        const updatedLists = lists.filter(
+          (list) => String(list.id) !== String(id),
+        );
+
         setLists(updatedLists);
       } catch (error) {
         console.log("Algo salió mal");
       }
-    } else {
-      console.log(
-        "Por favor, escribe 'ELIMINAR' para confirmar la eliminación."
-      );
     }
-  };
-
-  const handleOpenModalEmail = () => {
-    handleShowEmail();
-  };
-
-  const handleOpenModalPasword = () => {
-    handleShowPassword();
-  };
-
-  const handleOpenModalDelete = () => {
-    handleShowDelete();
   };
 
   const handleSteam = async () => {
@@ -105,7 +87,7 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
   const handleDeleteSteam = async () => {
     try {
       await deleteSteamRequest(token);
-      updateUserSteam(!connectedSteam)
+      updateUserSteam(!connectedSteam);
       setConnectedSteam(false);
     } catch (error) {
       console.log(error);
@@ -114,35 +96,36 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
 
   return (
     <section className="settings-section">
+      <div className="settings-section-header">
+        <span className="settings-section-title">Ajustes</span>
+        <div class="carousel-line"></div>
+      </div>
+
       <div className="settings-main-container">
         <div className="settings-container-left">
           <h4 className="settings-title">Perfil</h4>
         </div>
         <div className="settings-container-right">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <p className="settings-change-name">Cambiar nombre</p>
-              <FormInput
-                type="text"
-                name="name"
-                register={register}
-                errors={errors}
-                isSubmitted={isSubmitted}
-                noIcon={true}
-                style_error={{
-                  "margin-left": "20px",
-                  "margin-bottom": "0.2rem",
-                }}
-              >
-                Noa
-              </FormInput>
-              <button className="settings-name-button" type="submit">
-                Aplicar cambios
-              </button>
-            </div>
+            <p className="settings-change-name">Cambiar nombre</p>
+            <FormInput
+              type="text"
+              name="name"
+              register={register}
+              errors={errors}
+              isSubmitted={isSubmitted}
+              noIcon={true}
+              style_error={{ marginLeft: "20px", marginBottom: "0.2rem" }}
+            >
+              Noa
+            </FormInput>
+            <button className="settings-name-button" type="submit">
+              Aplicar cambios
+            </button>
           </form>
         </div>
       </div>
+
       <div className="settings-main-container">
         <div className="settings-container-left">
           <h4 className="settings-title">Cuenta</h4>
@@ -161,31 +144,34 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
                 </a>
               )}
             </li>
-            <li className="settings-li" onClick={handleOpenModalPasword}>
+            <li className="settings-li" onClick={() => handleShowPassword()}>
               <a className="settings-link">Cambiar contraseña</a>
             </li>
-            <li className="settings-li" onClick={handleOpenModalEmail}>
+            <li className="settings-li" onClick={() => handleShowEmail()}>
               <a className="settings-link">Cambiar E-mail</a>
             </li>
-            <li className="settings-li" onClick={handleOpenModalDelete}>
-              <a className="settings-link">Eliminar Perfil y Datos</a>
+            <li className="settings-li" onClick={() => handleShowDelete()}>
+              <a className="settings-link" style={{ color: "#e05555" }}>
+                Eliminar Perfil y Datos
+              </a>
             </li>
           </ul>
         </div>
       </div>
+
       <div className="settings-main-container">
         <div className="settings-container-left">
           <h4 className="settings-title">Gestionar Listas</h4>
         </div>
         <div className="settings-container-right">
           <div className="settings-container-list">
-            <p className="settings-change-name">Eliminar Listas</p>
+            <p className="settings-change-name">Eliminar lista</p>
             <select
               className="form-select"
               value={selectedList}
               onChange={handleListChange}
             >
-              <option>Elige una Lista..</option>
+              <option>Elige una Lista...</option>
               {lists &&
                 lists.map((list) => (
                   <option value={list.id} key={list.id}>
@@ -195,7 +181,7 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
             </select>
             <div className="input-wrapper">
               <input
-                placeholder="Escribe ELIMINAR para borrar"
+                placeholder="Escribe ELIMINAR para confirmar"
                 value={deleteInput}
                 onChange={handleInputChange}
               />
@@ -206,6 +192,7 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
           </div>
         </div>
       </div>
+
       <ModalEmail
         show={showEmail}
         handleClose={handleCloseEmail}
