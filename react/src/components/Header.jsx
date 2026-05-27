@@ -10,7 +10,7 @@ import { useAuth } from "../hooks/useAuth";
 export function Header({ isLanding, isLogged, headerClass }) {
   const navigate = useNavigate();
   const handleLogo = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (isLanding) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -45,7 +45,7 @@ const LandingHeader = () => {
   };
   const scrollToSection = (e, id) => {
     if (id === "home") {
-      e.preventDefault()
+      e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       const el = document.getElementById(id);
@@ -124,8 +124,8 @@ const LoggedHeader = () => {
   function handleProfile() {
     navigate("/profile");
   }
-  function handleSettings() {
-    navigate("/profile#options");
+  function handleHome() {
+    navigate("/");
   }
   return (
     <div className="options-container">
@@ -141,21 +141,24 @@ const LoggedHeader = () => {
         </button>
         <ul className="nav-list">
           <li>
+            <a onClick={handleHome}>Inicio</a>
+          </li>
+          <li>
             <a onClick={handleProfile}>Mi perfil</a>
-          </li>
-          <li>
-            <a onClick={handleSettings}>Ajustes</a>
-          </li>
-          <li>
-            <a onClick={handleLogout}>Cerrar sesión</a>
           </li>
           <li>
             <a>
               <LanguageSelector />
             </a>
           </li>
+          <li>
+            <a className="signout-button mobile" onClick={handleLogout}>Cerrar sesión</a>
+          </li>
         </ul>
       </nav>
+      <button className="signout-button pc" onClick={handleLogout}>
+        Cerrar sesión
+      </button>
     </div>
   );
 };

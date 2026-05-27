@@ -35,29 +35,28 @@ header {
 .nav-list {
   list-style-type: none;
   display: flex;
-  gap: 1.5rem; /* Un pelín más de hueco para que respiren */
-  align-items: center; /* Esto centra los enlaces verticalmente en lugar del line-height */
+  gap: 1.5rem;
+  align-items: center;
   margin-bottom: 0;
 }
 
 .nav-list li a {
   font-size: 17px;
-  /* Eliminamos el line-height: 50px; */
-  padding: 0.5rem 0; /* Le damos aire arriba y abajo de la palabra */
+  padding: 0.5rem 0;
   text-decoration: none;
   color: #000000;
   position: relative;
-  display: inline-block; /* CRÍTICO: estabiliza la caja para que el bottom: 0 funcione */
+  display: inline-block;
   transition: color 0.25s ease;
 }
 
 .nav-list li a::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   transform: scaleX(0);
   height: 2px;
-  bottom: 0; /* Ahora el 0 es literalmente la base de la palabra */
+  bottom: 0;
   left: 0;
   background-color: #ef4f23;
   transform-origin: bottom right;
@@ -70,10 +69,38 @@ header {
 }
 
 .nav-list li:hover a::after {
-  transform: scaleX(1); 
+  transform: scaleX(1);
   transform-origin: bottom left;
 }
 
+.signout-button {
+  background-color: transparent;
+  color: #e05555;
+  border: 1px solid #e05555;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.signout-button:hover {
+  background-color: #e05555;
+  color: white;
+  border-color: #e05555;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(224, 85, 85, 0.3);
+}
+
+.signout-button:active {
+  transform: translateY(0);
+}
+
+.signout-button.mobile {
+  display: none;
+}
 
 .register-button {
   background-color: white;
@@ -83,14 +110,16 @@ header {
   border-radius: 20px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .register-button:hover {
   background-color: #ef4f23;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(239, 79, 35, 0.6), 0 4px 10px rgba(239, 79, 35, 0.2);
+  box-shadow:
+    0 0 15px rgba(239, 79, 35, 0.6),
+    0 4px 10px rgba(239, 79, 35, 0.2);
 }
 
 .register-button:active {
@@ -115,7 +144,7 @@ header {
 header > :last-child:not(.options-container):not(a) {
   width: auto;
   min-width: 130px;
-  max-width: 200px; 
+  max-width: 200px;
 }
 
 header select {
@@ -150,6 +179,17 @@ header select {
    RESPONSIVE MÓVIL
    ========================================================================== */
 @media screen and (max-width: 1024px) {
+  .signout-button.pc {
+    display: none;
+  }
+
+  .signout-button.mobile {
+    display: block;
+    color: #e05555;
+    font-weight: 600;
+    margin-top: 1rem;
+    padding: 0.7rem;
+  }
   .register-button.mobile {
     display: block;
   }
@@ -172,7 +212,7 @@ header select {
     right: 0;
     bottom: 0;
     background-color: rgb(248, 248, 248);
-    padding: 2rem;
+    padding: 3rem;
     box-shadow: 0 0 0 100vmax rgb(0, 0, 0, 0.5);
   }
   .nav.visible {
