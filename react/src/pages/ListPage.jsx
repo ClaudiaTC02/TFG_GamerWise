@@ -1,16 +1,17 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
-import { backArrowIcon, deleteIcon, editIcon } from "../components/Icons";
+import { deleteIcon, editIcon } from "../components/Icons";
 import { ListGame } from "../components/ListGame";
+import { CarouselSection } from "../components/CarouselSection";
 import "../styles/ListPage.css";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { getGamesOfListWithRatingLogic } from "../logic/listLogic";
 import { ModalDeleteList, ModalUpdateList } from "../components/ModalLists";
-import { CarouselSection } from "../components/CarouselSection";
 import { Loading } from "../components/Loading";
 import { Footer } from "../components/Footer";
 import { getListRecommendationsLogic } from "../logic/recommendationsLogic";
+import moment from "moment";
 
 export function ListPage() {
   const { id } = useParams();
@@ -32,16 +33,12 @@ export function ListPage() {
     const fetchListDetails = async () => {
       try {
         const list_result = await getGamesOfListWithRatingLogic(id, token);
-        const recommendations = await getListRecommendationsLogic(token, id);
-        console.log(recommendations);
-        setRecommendations(recommendations);
-        console.log(list_result);
+        const recs = await getListRecommendationsLogic(token, id);
+        setRecommendations(recs);
         setLoading(false);
         if (list_result) {
           setList(list_result.list);
           setGames(list_result.games);
-        } else {
-          console.log("No se encontraron detalles del juego");
         }
       } catch (error) {
         console.log(error);
@@ -57,85 +54,170 @@ export function ListPage() {
     navigate("/profile#lists");
   };
 
-  const handleUpdateList = (updatedList) => {
-    setList(updatedList);
-  };
-
+  const handleUpdateList = (updatedList) => setList(updatedList);
   const updateGameList = (gameIdToDelete) => {
-    setGames((prevList) =>
-      prevList.filter((game) => game.id !== gameIdToDelete)
-    );
+    setGames((prev) => prev.filter((game) => game.id !== gameIdToDelete));
   };
 
-  const handleOpenModalList = (event) => {
-    event.preventDefault();
-    handleShowList();
-  };
+  if (loading) return <Loading />;
 
-  const handleOpenModalDelete = (event) => {
-    event.preventDefault();
-    handleShowDelete();
-  };
-
-  if (loading) {
-    return <Loading />;
-  }
+  const canEdit = !forbiddenNames.includes(list.name);
+  const hasRecs = Array.isArray(recommendations) && recommendations.length > 0;
 
   return (
-    <>
+    <div className="list-page-wrapper">
       <Header isLogged={true} />
-      <div className="list-back-container">
-        <a className="list-back" onClick={handleClick}>
-          {backArrowIcon()}
+
+      {/* ── Hero mobile ── */}
+      <div className="list-mobile-hero">
+        <a className="list-back-arrow" onClick={handleClick}>
+          ←
         </a>
-      </div>
-      <div className="list-titles-container">
-        <div className="list-title-container">
-          <h1 className="list-title">Lista {list.name}</h1>
-          <hr className="list-hr" />
-        </div>
-        <div className="list-edit-container">
-          {forbiddenNames.includes(list.name) ? null : (
-            <>
-              <a
-                className="list-edit-options edit"
-                onClick={handleOpenModalList}
-              >
-                {editIcon()}
-              </a>
-              <a
-                className="list-edit-options delete"
-                onClick={handleOpenModalDelete}
-              >
-                {deleteIcon()}
-              </a>
-            </>
+        <div className="list-mobile-hero-text">
+          <h1>{list.name}</h1>
+          {list.description && list.description !== "null" && (
+            <p>{list.description}</p>
           )}
         </div>
-      </div>
-      <p className="list-description">
-        {list.description != "null" && list.description}
-      </p>
-      {games.length != 0 ? (
-        <main className="list-games-container">
-          {games.map((game) => (
-            <Link
-              key={game.id}
-              to={`/game/${game.igdb_id}`}
-              className="game-link"
-              style={{ textDecoration: "none", color: "inherit" }}
+        {canEdit && (
+          <div className="list-mobile-edit">
+            <a
+              className="list-edit-options edit"
+              onClick={(e) => {
+                e.preventDefault();
+                handleShowList();
+              }}
             >
-              <ListGame
-                game={game}
-                list_id={id}
-                updateGameList={updateGameList}
+              {editIcon()}
+            </a>
+            <a
+              className="list-edit-options delete"
+              onClick={(e) => {
+                e.preventDefault();
+                handleShowDelete();
+              }}
+            >
+              {deleteIcon()}
+            </a>
+          </div>
+        )}
+      </div>
+
+      <div className="list-content-area">
+        <div className="list-main-col">
+          <div className="list-header">
+            <div className="list-title-row">
+              <div className="list-title-left">
+                <a
+                  className="list-back"
+                  onClick={handleClick}
+                  title="Volver al perfil"
+                >
+                  ←
+                </a>
+                <div>
+                  <h1 className="list-title">{list.name}</h1>
+                  <span className="list-accent" />
+                  {list.description && list.description !== "null" && (
+                    <p className="list-description">{list.description}</p>
+                  )}
+                </div>
+              </div>
+              {canEdit && (
+                <div className="list-edit-container">
+                  <a
+                    className="list-edit-options edit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleShowList();
+                    }}
+                    title="Editar lista"
+                  >
+                    {editIcon()}
+                  </a>
+                  <a
+                    className="list-edit-options delete"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleShowDelete();
+                    }}
+                    title="Eliminar lista"
+                  >
+                    {deleteIcon()}
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="list-games-panel">
+            {games.length > 0 ? (
+              <main className="list-games-container">
+                {games.map((game) => (
+                  <ListGame
+                    key={game.id}
+                    game={game}
+                    list_id={id}
+                    updateGameList={updateGameList}
+                  />
+                ))}
+              </main>
+            ) : (
+              <p className="no-games-list">No hay juegos en esta lista</p>
+            )}
+          </div>
+
+          {/* Carrusel mobile */}
+          {hasRecs && (
+            <div className="list-recs-mobile">
+              <CarouselSection
+                gamesData={recommendations}
+                text="Podrías incluir"
               />
-            </Link>
-          ))}
-        </main>
-      ) : (
-        <p className="no-games-list">No hay juegos en esta lista</p>
-      )}
+            </div>
+          )}
+        </div>
+
+        {/* ── Sidebar desktop ── */}
+        {hasRecs && (
+          <aside className="list-sidebar">
+            <div className="list-sidebar-sticky">
+              <div className="list-sidebar-header">Recomendaciones</div>
+              <div className="list-recs-list">
+                {recommendations.map((element) => {
+                  const game = element.game;
+                  const coverUrl = game.cover
+                    ? game.cover.url.replace("t_thumb", "t_cover_big")
+                    : "";
+                  const releaseDate = game.first_release_date
+                    ? moment.unix(game.first_release_date).format("YYYY")
+                    : null;
+                  return (
+                    <Link
+                      key={element.id}
+                      to={`/game/${game.id}`}
+                      className="rec-card-v"
+                    >
+                      <img
+                        src={coverUrl}
+                        alt={game.name}
+                        className="rec-card-v-img"
+                      />
+                      <div className="rec-card-v-info">
+                        <span className="rec-card-v-name">{game.name}</span>
+                        {releaseDate && (
+                          <span className="rec-card-v-date">{releaseDate}</span>
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </aside>
+        )}
+      </div>
+
       <ModalUpdateList
         show={showList}
         handleClose={handleCloseList}
@@ -149,13 +231,7 @@ export function ListPage() {
         token={token}
         list={list}
       />
-      {recommendations && (
-        <CarouselSection
-          gamesData={recommendations}
-          text="Creemos que podrías incluir"
-        />
-      )}
       <Footer />
-    </>
+    </div>
   );
 }

@@ -1,82 +1,172 @@
-.listgame-border {
-  padding: 0.2rem;
-  margin: 0.3rem;
-  border: 2px solid #ef4f23;
-  width: fit-content;
+.listgame-card {
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
   position: relative;
-  height: 170px;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.listgame-button {
-  background-color: transparent;
-  color: #ffb7b7;
-  font-size: 1.2rem;
-  margin: 0;
-  padding: 0;
-  left: 90px;
-  top: -15px;
-  border: 0;
+.listgame-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
-.listgame-button:hover {
-  color: red;
-  outline: none;
-  border: 0;
-}
-
-.listgame-game-img {
-  width: 6rem;
+.listgame-img-wrap {
   position: relative;
-  height: 128px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #1a1a1a;
 }
-.listgame-info-container {
-  background-color: rgba(0, 0, 0, 0.342);
+
+.listgame-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.listgame-overlay {
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 96px;
-  bottom: 35px;
-}
-.listgame-rating-container {
-  display: flex;
-  align-items: center;
-}
-
-.listgame-rating-img {
-  font-size: 1.3rem;
-  color: rgb(255, 217, 0);
-  margin: 0;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, transparent 55%);
+  pointer-events: none;
 }
 
 .listgame-rating {
-  font-size: 1.3rem;
-  margin: 0 0 0 0.3rem;
-  font-weight: bold;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
   color: white;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.listgame-star {
+  color: #ffd900;
+  font-size: 0.78rem;
+}
+
+.listgame-delete-btn {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: rgba(0, 0, 0, 0.52);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffb7b7;
+  cursor: pointer;
+  font-size: 0.7rem;
+  line-height: 1;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 0;
+}
+
+.listgame-delete-btn:hover,
+.listgame-delete-btn:focus {
+  background: rgba(220, 50, 50, 0.85);
+  color: white;
+  outline: none;
 }
 
 .listgame-name {
-  margin-top: 0.5rem;
-  font-size: 13px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  padding: 8px 8px 9px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
   overflow: hidden;
-  text-align: center;
-  font-weight: bold;
+  text-overflow: ellipsis;
+  margin: 0;
 }
 
 @media (min-width: 1025px) {
-  .listgame-border {
-    height: 240px;
+  .listgame-name {
+    font-size: 0.8rem;
+    padding: 9px 10px 10px;
   }
-  .listgame-game-img {
-    width: 9rem;
-    height: 192px;
-  }
-  .listgame-info-container {
-    bottom: 40px;
-    width: 144px;
-  }
+}
+
+.listgame-confirm-modal .modal-dialog {
+  max-width: 380px;
+  margin-top: 8vh;
+  width: 90%;
+}
+
+.listgame-confirm-modal .modal-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.listgame-confirm-modal .modal-confirm-text {
+  font-size: 0.92rem;
+  color: #444;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.listgame-confirm-modal .modal-confirm-text strong {
+  color: #1a1a1a;
+}
+
+.listgame-confirm-modal .modal-delete-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.listgame-confirm-modal .modal-btn {
+  flex: 1;
+  padding: 0.55rem 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none !important;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+  display: block;
+  text-align: center;
+  line-height: normal;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.listgame-confirm-modal .modal-btn:active {
+  transform: scale(0.97);
+}
+
+.listgame-confirm-modal .modal-btn-cancel {
+  background: #e2e2e2 !important;
+  color: #444 !important;
+}
+
+.listgame-confirm-modal .modal-btn-cancel:hover {
+  background: #d2d2d2 !important;
+}
+
+.listgame-confirm-modal .modal-btn-delete {
+  background: #ef4f23 !important;
+  color: white !important;
+}
+
+.listgame-confirm-modal .modal-btn-delete:hover {
+  background: #c93d18 !important;
 }
