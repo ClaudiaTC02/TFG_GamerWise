@@ -149,6 +149,9 @@
 }
 
 @media (max-width: 540px) {
+  .icon_search{
+    left: 50px;
+  }
   .list-section {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 10px;
