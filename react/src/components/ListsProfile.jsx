@@ -43,10 +43,12 @@ export function ListsProfile() {
         return "#ef4f23";
       case "Completed":
         return "#136422";
-      case "Like":
+      case "Favorites":
         return "#BF17D3";
       case "Dropped":
         return "#555";
+      case "Owned":
+        return "#0003b8";
       default:
         if (name.length <= 5) return "#ef4f23";
         if (name.length <= 8) return "#2563eb";

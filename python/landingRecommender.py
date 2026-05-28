@@ -6,10 +6,7 @@ from surprise import Dataset, Reader
 from sklearn.preprocessing import LabelEncoder, MultiLabelBinarizer
 import json
 
-def recomendar_juegos(user_id, model_path='svd_model.pkl'):
-    # Cargar el modelo entrenado
-    with open(model_path, 'rb') as f:
-        modelo = pickle.load(f)
+def recomendar_juegos(user_id, modelo):
 
     # Paso 1: Obtener los datos del endpoint
     response = requests.get('http://localhost:8000/user/all')

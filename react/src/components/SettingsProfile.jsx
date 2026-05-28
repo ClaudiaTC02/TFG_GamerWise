@@ -21,7 +21,7 @@ export function SettingsProfile({ updateUser, user, updateUserSteam }) {
   const [connectedSteam, setConnectedSteam] = useState(false);
 
   useEffect(() => {
-    const forbiddenNames = ["Playing", "Completed", "Like", "Dropped"];
+    const forbiddenNames = ["Playing", "Completed", "Favorites", "Dropped", "Owned"];
     const fetchData = async () => {
       try {
         const lists = await getAllListOfUserRequest(token);

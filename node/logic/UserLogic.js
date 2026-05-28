@@ -62,7 +62,7 @@ export const createUserLogic = async (email, name, password) => {
       description: "Games Completed",
     });
     await ListModel.create({
-      name: "Like",
+      name: "Favorites",
       user_id: user.id,
       description: "Games that I Liked",
     });
@@ -70,6 +70,11 @@ export const createUserLogic = async (email, name, password) => {
       name: "Dropped",
       user_id: user.id,
       description: "Games dropped",
+    });
+    await ListModel.create({
+      name: "Owned",
+      user_id: user.id,
+      description: "Games that I own",
     });
 
     return { success: true };
@@ -275,7 +280,7 @@ export const getUsersGamesAndRatingsLogic = async () => {
         {
           model: ListModel,
           where: {
-            name: ["Like", "Completed", "Playing"],
+            name: ["Favorites", "Completed", "Playing", "Owned"],
           },
           through: { model: ListGameModel },
           include: [

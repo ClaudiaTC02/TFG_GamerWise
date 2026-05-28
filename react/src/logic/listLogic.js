@@ -130,7 +130,7 @@ export const getGamesOfListWithRatingLogic = async (list_id, token) => {
 
 export const addGameToLikeList = async (token, gameDetails, id) => {
   try {
-    const list_like = await getListOfAUserRequest("Like", token);
+    const list_like = await getListOfAUserRequest("Favorites", token);
     await addGameToListLogic(list_like.id, gameDetails, id, token)
   } catch (error) {
     throw new Error(error.response.data.message);
@@ -139,7 +139,7 @@ export const addGameToLikeList = async (token, gameDetails, id) => {
 
 export const deleteGameToLikeList = async (token, id) => {
   try {
-    const list_like = await getListOfAUserRequest("Like", token);
+    const list_like = await getListOfAUserRequest("Favorites", token);
     const game = await getGameRequest(id, token);
     await deleteGameFromListRequest(list_like.id, game.game[0].id, token)
   } catch (error) {
@@ -149,7 +149,7 @@ export const deleteGameToLikeList = async (token, id) => {
 
 export const checkIfGameIsLiked = async (game_id, token) => {
   try {
-    const list_like = await getListOfAUserRequest("Like", token);
+    const list_like = await getListOfAUserRequest("Favorites", token);
     if (!list_like) return;
     let games = [];
     try {

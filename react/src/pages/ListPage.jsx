@@ -34,7 +34,9 @@ export function ListPage() {
       try {
         const list_result = await getGamesOfListWithRatingLogic(id, token);
         const recs = await getListRecommendationsLogic(token, id);
-        setRecommendations(recs);
+        if (recs && recs.length > 0) {
+          setRecommendations(recs);
+        }
         setLoading(false);
         if (list_result) {
           setList(list_result.list);
@@ -47,7 +49,7 @@ export function ListPage() {
     fetchListDetails();
   }, [id, token]);
 
-  const forbiddenNames = ["Playing", "Completed", "Like", "Dropped"];
+  const forbiddenNames = ["Playing", "Completed", "Favorites", "Dropped", "Owned"];
 
   const handleClick = (event) => {
     event.preventDefault();

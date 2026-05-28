@@ -32,7 +32,6 @@ export default function LandingLogged() {
       try {
         const games = await getUpcommingGamesRequest();
         setUpcomminggamesData(games);
-        console.log(games)
       } catch (error) {
         console.log(error);
       }
@@ -41,8 +40,9 @@ export default function LandingLogged() {
     const fetchLandingRecommendations = async () => {
       try {
           const games = await getLandingRecommendationsLogic(token)
-          console.log(games)
-          setRecommendationsLanding(games)
+          if (games && games.length > 0) {
+            setRecommendationsLanding(games);
+          }
       } catch (error) {
         console.log(error);
       }

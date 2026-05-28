@@ -29,6 +29,7 @@ export default function GameDetailPage() {
   const { token } = useAuth();
   const [gameDetails, setGameDetails] = useState([]);
   const [recommendationsGame, setRecommendationsGame] = useState([]);
+  const [loadingRecs, setLoadingRecs] = useState(false);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -42,9 +43,12 @@ export default function GameDetailPage() {
         const game = await getGameDetailsRequest(id);
         if (game.length > 0) {
           setGameDetails(game[0]);
+
           const company =
             (game[0].involved_companies &&
-              game[0].involved_companies.map((c) => c.company.name).join(", ")) ||
+              game[0].involved_companies
+                .map((c) => c.company.name)
+                .join(", ")) ||
             "anonymus";
           const platforms =
             (game[0].platforms &&
@@ -53,10 +57,26 @@ export default function GameDetailPage() {
           const genres =
             (game[0].genres && game[0].genres.map((g) => g.name).join(", ")) ||
             "none";
-          const recommendations = await getGameRecommendationsLogic(
-            token, id, game[0].name, company, genres, platforms
-          );
-          setRecommendationsGame(recommendations);
+
+          setLoadingRecs(true);
+
+          getGameRecommendationsLogic(
+            token,
+            id,
+            game[0].name,
+            company,
+            genres,
+            platforms,
+          )
+            .then((recommendations) => {
+              if (recommendations && recommendations.length > 0) {
+                setRecommendationsGame(recommendations);
+              }
+            })
+            .catch((error) =>
+              console.log("Error cargando recomendaciones:", error),
+            )
+            .finally(() => setLoadingRecs(false)); // Apagamos el loader al terminar
         }
       } catch (error) {
         console.log(error);
@@ -123,8 +143,12 @@ export default function GameDetailPage() {
         onClick={() => handleRatingChange(i)}
         className={
           rated
-            ? i <= rating ? "bi bi-star-fill rated" : "bi bi-star rated"
-            : i <= rating ? "bi bi-star-fill" : "bi bi-star"
+            ? i <= rating
+              ? "bi bi-star-fill rated"
+              : "bi bi-star rated"
+            : i <= rating
+              ? "bi bi-star-fill"
+              : "bi bi-star"
         }
       />
     ));
@@ -140,9 +164,14 @@ export default function GameDetailPage() {
   const heroBackground = getHeroBackground();
 
   const releaseDate = gameDetails.first_release_date
-    ? new Date(gameDetails.first_release_date * 1000).toLocaleDateString("es-ES", {
-        year: "numeric", month: "short", day: "numeric",
-      })
+    ? new Date(gameDetails.first_release_date * 1000).toLocaleDateString(
+        "es-ES",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        },
+      )
     : null;
 
   if (gameDetails.length === 0) return <Loading />;
@@ -165,7 +194,10 @@ export default function GameDetailPage() {
           <div>
             <span className="gd-chip-label">Plataformas</span>
             <span className="gd-chip-val">
-              {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).join(" · ")}
+              {gameDetails.platforms
+                .map((p) => p.abbreviation)
+                .filter(Boolean)
+                .join(" · ")}
             </span>
           </div>
         </div>
@@ -176,7 +208,11 @@ export default function GameDetailPage() {
           <div>
             <span className="gd-chip-label">Desarrolladora</span>
             <span className="gd-chip-val">
-              {gameDetails.involved_companies.map((c) => c.company.name).filter(Boolean)[0]}
+              {
+                gameDetails.involved_companies
+                  .map((c) => c.company.name)
+                  .filter(Boolean)[0]
+              }
             </span>
           </div>
         </div>
@@ -200,14 +236,17 @@ export default function GameDetailPage() {
         </div>
 
         <div className="gd-hero-topbar">
-          <button className="gd-back-btn" onClick={() => navigate(-1)} aria-label="Volver">
+          <button
+            className="gd-back-btn"
+            onClick={() => navigate(-1)}
+            aria-label="Volver"
+          >
             <i className="bi bi-arrow-left" />
           </button>
         </div>
 
         {/* Desktop hero: dos filas */}
         <div className="gd-hero-content">
-
           {/* Fila 1: portada flotante + título */}
           <div className="gd-hero-row1">
             <div className="gd-cover-wrap">
@@ -225,15 +264,22 @@ export default function GameDetailPage() {
               {gameDetails.involved_companies && (
                 <p className="gd-studio">
                   {gameDetails.involved_companies
-                    .map((c) => c.company.name).filter(Boolean).join(" · ")}
+                    .map((c) => c.company.name)
+                    .filter(Boolean)
+                    .join(" · ")}
                 </p>
               )}
               <h1 className="gd-title">{gameDetails.name}</h1>
               <div className="gd-tags">
                 {gameDetails.genres &&
-                  gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
-                    <span key={i} className="gd-tag">{name}</span>
-                  ))}
+                  gameDetails.genres
+                    .map((g) => g.name)
+                    .filter(Boolean)
+                    .map((name, i) => (
+                      <span key={i} className="gd-tag">
+                        {name}
+                      </span>
+                    ))}
               </div>
             </div>
           </div>
@@ -254,13 +300,16 @@ export default function GameDetailPage() {
               <button
                 className={`gd-btn-fav${isFavorite ? " is-fav" : ""}`}
                 onClick={handleAddToFav}
-                aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
+                aria-label={
+                  isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"
+                }
               >
-                <i className={isFavorite ? "bi bi-heart-fill" : "bi bi-heart"} />
+                <i
+                  className={isFavorite ? "bi bi-heart-fill" : "bi bi-heart"}
+                />
               </button>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -271,15 +320,23 @@ export default function GameDetailPage() {
         <div className="gd-mob-title-area">
           {gameDetails.involved_companies && (
             <p className="gd-mob-studio">
-              {gameDetails.involved_companies.map((c) => c.company.name).filter(Boolean).join(" · ")}
+              {gameDetails.involved_companies
+                .map((c) => c.company.name)
+                .filter(Boolean)
+                .join(" · ")}
             </p>
           )}
           <h1 className="gd-mob-title">{gameDetails.name}</h1>
           <div className="gd-tags">
             {gameDetails.genres &&
-              gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
-                <span key={i} className="gd-tag">{name}</span>
-              ))}
+              gameDetails.genres
+                .map((g) => g.name)
+                .filter(Boolean)
+                .map((name, i) => (
+                  <span key={i} className="gd-tag">
+                    {name}
+                  </span>
+                ))}
           </div>
         </div>
 
@@ -316,7 +373,10 @@ export default function GameDetailPage() {
                 <div>
                   <span className="gd-mob-meta-label">Plataformas</span>
                   <span className="gd-mob-meta-val">
-                    {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).join(", ")}
+                    {gameDetails.platforms
+                      .map((p) => p.abbreviation)
+                      .filter(Boolean)
+                      .join(", ")}
                   </span>
                 </div>
               </div>
@@ -327,7 +387,11 @@ export default function GameDetailPage() {
                 <div>
                   <span className="gd-mob-meta-label">Desarrolladora</span>
                   <span className="gd-mob-meta-val">
-                    {gameDetails.involved_companies.map((c) => c.company.name).filter(Boolean)[0]}
+                    {
+                      gameDetails.involved_companies
+                        .map((c) => c.company.name)
+                        .filter(Boolean)[0]
+                    }
                   </span>
                 </div>
               </div>
@@ -337,7 +401,8 @@ export default function GameDetailPage() {
           <div className="gd-mob-section">
             <h2 className="gd-sec-label">Descripción</h2>
             <p className="gd-desc-text">
-              {gameDetails.summary ?? "No hay descripción disponible para este título."}
+              {gameDetails.summary ??
+                "No hay descripción disponible para este título."}
             </p>
           </div>
 
@@ -345,9 +410,14 @@ export default function GameDetailPage() {
             <div className="gd-mob-section">
               <h2 className="gd-sec-label">Géneros</h2>
               <div className="gd-badges">
-                {gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
-                  <span key={i} className="gd-badge gd-badge--genre">{name}</span>
-                ))}
+                {gameDetails.genres
+                  .map((g) => g.name)
+                  .filter(Boolean)
+                  .map((name, i) => (
+                    <span key={i} className="gd-badge gd-badge--genre">
+                      {name}
+                    </span>
+                  ))}
               </div>
             </div>
           )}
@@ -356,17 +426,32 @@ export default function GameDetailPage() {
             <div className="gd-mob-section">
               <h2 className="gd-sec-label">Plataformas</h2>
               <div className="gd-badges">
-                {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).map((abbr, i) => (
-                  <span key={i} className="gd-badge gd-badge--platform">{abbr}</span>
-                ))}
+                {gameDetails.platforms
+                  .map((p) => p.abbreviation)
+                  .filter(Boolean)
+                  .map((abbr, i) => (
+                    <span key={i} className="gd-badge gd-badge--platform">
+                      {abbr}
+                    </span>
+                  ))}
               </div>
             </div>
           )}
 
-          {recommendationsGame?.length > 0 && (
+          {loadingRecs ? (
             <div className="gd-mob-section">
-              <CarouselSection gamesData={recommendationsGame} text="También puede gustarte" />
+              <h2 className="gd-sec-label">También puede gustarte</h2>
+              <Loading />
             </div>
+          ) : (
+            recommendationsGame?.length > 0 && (
+              <div className="gd-mob-section">
+                <CarouselSection
+                  gamesData={recommendationsGame}
+                  text="También puede gustarte"
+                />
+              </div>
+            )
           )}
         </div>
       </div>
@@ -380,7 +465,8 @@ export default function GameDetailPage() {
             <main className="gd-desktop-main">
               <h2 className="gd-sec-label">Descripción</h2>
               <p className="gd-desc-text">
-                {gameDetails.summary ?? "No hay descripción disponible para este título."}
+                {gameDetails.summary ??
+                  "No hay descripción disponible para este título."}
               </p>
             </main>
             <aside className="gd-desktop-aside">
@@ -388,9 +474,14 @@ export default function GameDetailPage() {
                 <div className="gd-aside-sec">
                   <h2 className="gd-sec-label">Géneros</h2>
                   <div className="gd-badges">
-                    {gameDetails.genres.map((g) => g.name).filter(Boolean).map((name, i) => (
-                      <span key={i} className="gd-badge gd-badge--genre">{name}</span>
-                    ))}
+                    {gameDetails.genres
+                      .map((g) => g.name)
+                      .filter(Boolean)
+                      .map((name, i) => (
+                        <span key={i} className="gd-badge gd-badge--genre">
+                          {name}
+                        </span>
+                      ))}
                   </div>
                 </div>
               )}
@@ -398,19 +489,33 @@ export default function GameDetailPage() {
                 <div className="gd-aside-sec">
                   <h2 className="gd-sec-label">Plataformas</h2>
                   <div className="gd-badges">
-                    {gameDetails.platforms.map((p) => p.abbreviation).filter(Boolean).map((abbr, i) => (
-                      <span key={i} className="gd-badge gd-badge--platform">{abbr}</span>
-                    ))}
+                    {gameDetails.platforms
+                      .map((p) => p.abbreviation)
+                      .filter(Boolean)
+                      .map((abbr, i) => (
+                        <span key={i} className="gd-badge gd-badge--platform">
+                          {abbr}
+                        </span>
+                      ))}
                   </div>
                 </div>
               )}
             </aside>
           </div>
 
-          {recommendationsGame?.length > 0 && (
+          {loadingRecs ? (
             <div className="gd-desktop-recs">
-              <CarouselSection gamesData={recommendationsGame} text="También puede gustarte" />
+              <Loading />
             </div>
+          ) : (
+            recommendationsGame?.length > 0 && (
+              <div className="gd-desktop-recs">
+                <CarouselSection
+                  gamesData={recommendationsGame}
+                  text="También puede gustarte"
+                />
+              </div>
+            )
           )}
         </div>
       </div>

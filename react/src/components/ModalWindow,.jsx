@@ -18,7 +18,7 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails, 
   const { token } = useAuth();
   const [add, setAdd] = useState(false)
 
-  useEffect(() => {
+useEffect(() => {
     const fetchLists = async () => {
       try {
         const listsData = await getListAndCountedGamesLogic(token, igdb_id);
@@ -27,9 +27,10 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails, 
         console.error("Error fetching lists:", error);
       }
     };
-
-    fetchLists();
-  }, [token, igdb_id, add]);
+    if (show) {
+      fetchLists();
+    }
+  }, [token, igdb_id, add, show]);
 
   const handleCheckboxChange = (listId) => {
     if (selectedItems.includes(listId)) {
@@ -43,7 +44,7 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails, 
     try {
       for (const listId of selectedItems) {
         const list = lists.find((list) => list.id === listId);
-        if (list.name === "Like") {
+        if (list.name === "Favorites") {
           onAddToLikeList();
         }
         await addGameToListLogic(listId, gameDetails, igdb_id, token);
@@ -78,14 +79,18 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails, 
   };
 
 
-  const renderList = () => {
+const renderList = () => {
     if (filteredLists.length === 0) {
       return <p className="no-list-found-modular">No hay listas...</p>;
     } else {
       return (
         <ul className="list-group">
           {filteredLists.map((list) => (
-            <li className="list-group-item" key={list.id}>
+            /* 1. Añadimos la clase dinámica list-item-exists si ya contiene el juego */
+            <li 
+              className={`list-group-item ${list.exists ? "list-item-exists" : ""}`} 
+              key={list.id}
+            >
               <div className="form-check">
                 <input
                   className="form-check-input"
@@ -101,6 +106,8 @@ export function ModalWindow({show, handleClose, gameName, igdb_id, gameDetails, 
                     htmlFor={`listCheckbox${list.id}`}
                   >
                     {list.name}
+                    {/* 2. Añadimos un texto indicador visual al lado del nombre */}
+                    {list.exists && <span className="already-added-text">✓ En lista</span>}
                   </label>
                   <label
                     className="form-check-label"

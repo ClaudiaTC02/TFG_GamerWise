@@ -42,11 +42,7 @@ def get_content_based_recommendations(game_info, top_n=6):
     recommendations = [rec for rec in recommendations if rec[1] != game_info['igdb_id']]
     return recommendations
 
-def get_collaborative_recommendations(user_id, exclude_game_id, top_n=5):
-    # Colaborarive filter
-    # Cargar el modelo entrenado
-    with open(model_path, 'rb') as f:
-        modelo = pickle.load(f)
+def get_collaborative_recommendations(user_id, exclude_game_id, modelo, top_n=5):
         
     response = requests.get('http://localhost:8000/user/all')
     data = response.json()['info']
@@ -96,10 +92,10 @@ def get_collaborative_recommendations(user_id, exclude_game_id, top_n=5):
             })
     return recomendaciones
 
-def get_hybrid_recommendations(user_id, game_info, model_path='svd_model.pkl'):
+def get_hybrid_recommendations(user_id, game_info, modelo):
     content_recommendations = get_content_based_recommendations(game_info)
     game_id = game_info.get("igdb_id")
-    collaborative_recommendations = get_collaborative_recommendations(user_id, game_id)
+    collaborative_recommendations = get_collaborative_recommendations(user_id, game_id, modelo)
     content_recommendations = [(rec[1], rec[2]) for rec in content_recommendations]
     collaborative_recommendations = [(rec['gameId'], rec['gameName']) for rec in collaborative_recommendations]
     combined_recommendations = list(set(content_recommendations + collaborative_recommendations))
