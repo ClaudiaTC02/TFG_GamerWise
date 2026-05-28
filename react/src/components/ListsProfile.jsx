@@ -64,9 +64,9 @@ export function ListsProfile() {
   return (
     <>
       <div className="container-search-list">
-        <span className="icon_search">{searchIcon()}</span>
+        <span className="icon_search-list">{searchIcon()}</span>
         <input
-          className="input-search"
+          className="input-search-list"
           type="text"
           placeholder="Buscar por nombre..."
           value={searchTerm}

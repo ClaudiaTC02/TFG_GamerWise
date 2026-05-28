@@ -34,6 +34,7 @@ export const getLatestReleasesLogic = async () => {
   try {
     const currentTime = Math.floor(Date.now() / 1000);
     const oneWeekBefore = currentTime - 7 * 24 * 60 * 60;
+    
     const response = await apicalypse(requestOptions)
       .fields(
         "game.name, game.platforms.abbreviation, game.cover.url, date, game.first_release_date"
@@ -41,10 +42,21 @@ export const getLatestReleasesLogic = async () => {
       .where(
         `game.first_release_date > ${oneWeekBefore} & game.first_release_date < ${currentTime} & date < ${currentTime} & game.version_title = null`
       )
-      .limit(20)
+      .limit(50)
       .sort("date", "desc")
       .request("/release_dates");
-    return { success: true, data: response.data };
+
+    const uniqueGames = [];
+    const seenGameIds = new Set();
+
+    response.data.forEach((release) => {
+      if (release.game && !seenGameIds.has(release.game.id)) {
+        seenGameIds.add(release.game.id);
+        uniqueGames.push(release);
+      }
+    });
+
+    return { success: true, data: uniqueGames };
   } catch (error) {
     return { success: false, error: error.message };
   }
